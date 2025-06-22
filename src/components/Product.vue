@@ -75,14 +75,14 @@ export default{
 }
 
 .btn-compare{
-    background: var(--gold);
+    background: #cfa635;
     padding: 4px 16px;
     border-radius: 8px;
     margin-top: 8px;
-    opacity: 70%;
+    color: white;
 }
 .btn-compare:hover{
-    opacity: 100%;
+    background: #ffce42;
 }
 .product-container .image{
     max-width: 400px;

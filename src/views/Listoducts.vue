@@ -237,7 +237,7 @@ export default{
     cursor: pointer;
     display: none;
     border: 1px solid #00000080;
-    margin-top: 24px;
+    margin-top: 12px;
     width: fit-content;
     padding: 8px 24px;
     border-radius: 8px;

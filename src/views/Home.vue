@@ -87,7 +87,7 @@
                     <div class="assembly-item-container">
                         <div class="title">MIJ CRUX</div>
                         <img class="assembly-icon" src="../assets/home-icon/mij-crux.webp"/>
-                        <div @click="goto('mij-ccrux')" class="assembly-shop-button">SHOP NOW <i class="fas fa-long-arrow-alt-right"/></div>
+                        <div @click="goto('mij-crux')" class="assembly-shop-button">SHOP NOW <i class="fas fa-long-arrow-alt-right"/></div>
                         <div class="find-more">What this?</div>
                     </div>
                     <div class="assembly-item-container">
@@ -351,7 +351,7 @@ h3{
         gap: 24px;
         padding: 8px;
     }
-    .different-section{
+    .different-section, .special-section{
         padding: 8px;
     }
     .diff-item-container{

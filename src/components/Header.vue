@@ -105,6 +105,10 @@ export default{
     .menu-mobile{
         display: block;
         cursor: pointer;
+        height: 100%;
+        align-content: center;
+        width: 30px;
+        text-align: center;
     }
 }
 </style>

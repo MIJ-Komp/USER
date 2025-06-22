@@ -15,7 +15,7 @@
     <div v-for="menu in menus" class="menu-item-mobile ps-2 pt-2">
             <div style="display: flex; justify-content: space-between;">
                 <div class="menu-label me-3" @click.stop.prevent="goto(menu)">{{menu.name}}</div>
-                <i @click="menu.open = !menu.open" v-if="menu.items && menu.items.length > 0" 
+                <i style="padding-left: 24px;" @click="menu.open = !menu.open" v-if="menu.items && menu.items.length > 0" 
                 :class="!menu.open ? 'fa fa-angle-right' : 'fa fa-angle-down'"/>
             </div>
 

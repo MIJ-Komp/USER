@@ -2,7 +2,7 @@
 <div class="footer-container">
     <div class="footer-card">
         <b-row>
-            <b-col lg="4" cols="12" class="mb-2">
+            <b-col lg="4" md="4" cols="12" class="mb-2">
                 <div class="card-item">
                     <div>Metode Pengantaran</div>
                     <div class="footer-shipping-grid">
@@ -12,7 +12,7 @@
                     </div>
                 </div>
             </b-col>
-            <b-col lg   ="4" cols="12" class="mb-2">
+            <b-col lg="4" md="4" cols="12" class="mb-2">
                 <div class="card-item">
                 <b-row style="align-items: center;">
                     <b-col cols="4" class="p-0">
@@ -31,14 +31,14 @@
                 </b-row>
                 </div>
             </b-col>
-            <b-col lg="4" cols="12" class="mb-2">
+            <b-col lg="4" md="4" cols="12" class="mb-2">
                 <div class="card-item">
                 <b-row style="align-items: center;">
                     <b-col cols="3" class="pr-0">
                         <img src="/images/bank/free-ongkir.png"/>
                     </b-col>
                     <b-col cols="9">
-                        <h3 class="m-0" style="font-weight: 600; color: #00000090;">GRATIS ONGKIR</h3>
+                        <h3 class="m-0" style="font-size: 14px !important; font-weight: 600; color: #00000090;">GRATIS ONGKIR</h3>
                         <div style="line-height: 12px; font-weight: 400; font-size: 12px;">daerah Medan, Binjai, Deli Serdang sekitarnya</div>
                     </b-col>
                 </b-row>
@@ -57,7 +57,7 @@
                         <a style="text-decoration: none;" href="tel:+628116181628"><i class="fa fa-phone me-2" style="color: black !important;"/>+628 11618 1628</a>
                     </b-col>
                     <b-col cols="6">
-                        <a href="https://goo.gl/maps/1HozbTotkCKgpFaj6" target="_blank"> <i class="me-2 fa fa-map-marker" style="color: black !important;"/>Our Google Map</a>
+                        <a style="text-decoration: none;" href="https://goo.gl/maps/1HozbTotkCKgpFaj6" target="_blank"> <i class="me-2 fa fa-map-marker" style="color: black !important;"/>Our Google Map</a>
                     </b-col>
                 </b-row>
             </b-col>
@@ -177,14 +177,14 @@
     border: 1px solid #dedede;
     border-left: 5px solid #afafaf;
     padding: 8px 24px;
-    height: 80px;
+    height: 100%;
     align-content: center;
 }
 .footer-shipping-grid{
     display: grid;
     gap: 12px;
     align-items: center;
-    grid-template-columns: repeat(auto-fit, 70px);
+    grid-template-columns: repeat(auto-fit, 60px);
 }
 .footer-bank-grid{
     display: grid;
