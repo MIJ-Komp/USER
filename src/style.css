@@ -1,11 +1,29 @@
 @import '@fortawesome/fontawesome-free/css/all.min.css';
 
+:root {
+    --gold: #ffce42;
+}
+
+h3{
+    font-size: 47px;
+    margin: 0px;
+    font-family: 'Barlow Condensed', Helvetica, Arial, Lucida, sans-serif;
+    font-weight: 600;
+}
 body{
     margin: 0;
+}
+.flex-row{
+    display: flex;
+    flex-flow: wrap;
 }
 .color-gold{
     color: #ffce42;
 }
 .color-black{
     color: black;
+}
+
+.app-container{
+    overflow: auto;
 }

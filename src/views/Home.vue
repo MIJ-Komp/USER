@@ -57,52 +57,92 @@
                     <div class="assembly-item-container">
                         <div class="title">MIJ BASIC</div>
                         <img class="assembly-icon" src="../assets/home-icon/mij-basic.webp"/>
-                        <div class="assembly-shop-button">SHOP NOW <i class="fas fa-long-arrow-alt-right"/></div>
+                        <div @click="goto('mij-basic')" class="assembly-shop-button">SHOP NOW <i class="fas fa-long-arrow-alt-right"/></div>
                         <div class="find-more">What this?</div>
                     </div>
                     <div class="assembly-item-container">
                         <div class="title">MIJ PRIME</div>
                         <img class="assembly-icon" src="../assets/home-icon/mij-prime.webp"/>
-                        <div class="assembly-shop-button">SHOP NOW <i class="fas fa-long-arrow-alt-right"/></div>
+                        <div @click="goto('mij-prime')" class="assembly-shop-button">SHOP NOW <i class="fas fa-long-arrow-alt-right"/></div>
                         <div class="find-more">What this?</div>
                     </div>
                     <div class="assembly-item-container">
                         <div class="title">MIJ CORE</div>
                         <img class="assembly-icon" src="../assets/home-icon/mij-core.webp"/>
-                        <div class="assembly-shop-button">SHOP NOW <i class="fas fa-long-arrow-alt-right"/></div>
+                        <div @click="goto('mij-core')" class="assembly-shop-button">SHOP NOW <i class="fas fa-long-arrow-alt-right"/></div>
                         <div class="find-more">What this?</div>
                     </div>
                     <div class="assembly-item-container">
                         <div class="title">MIJ VEIL</div>
                         <img class="assembly-icon" src="../assets/home-icon/mij-veil.webp"/>
-                        <div class="assembly-shop-button">SHOP NOW <i class="fas fa-long-arrow-alt-right"/></div>
+                        <div @click="goto('mij-veil')" class="assembly-shop-button">SHOP NOW <i class="fas fa-long-arrow-alt-right"/></div>
                         <div class="find-more">What this?</div>
                     </div>
                     <div class="assembly-item-container">
                         <div class="title">MIJ ESSENCE</div>
                         <img class="assembly-icon" src="../assets/home-icon/mij-essence.webp"/>
-                        <div class="assembly-shop-button">SHOP NOW <i class="fas fa-long-arrow-alt-right"/></div>
+                        <div @click="goto('mij-essence')" class="assembly-shop-button">SHOP NOW <i class="fas fa-long-arrow-alt-right"/></div>
                         <div class="find-more">What this?</div>
                     </div>
                     <div class="assembly-item-container">
                         <div class="title">MIJ CRUX</div>
                         <img class="assembly-icon" src="../assets/home-icon/mij-crux.webp"/>
-                        <div class="assembly-shop-button">SHOP NOW <i class="fas fa-long-arrow-alt-right"/></div>
+                        <div @click="goto('mij-ccrux')" class="assembly-shop-button">SHOP NOW <i class="fas fa-long-arrow-alt-right"/></div>
                         <div class="find-more">What this?</div>
                     </div>
                     <div class="assembly-item-container">
                         <div class="title">MIJ MIST</div>
                         <img class="assembly-icon" src="../assets/home-icon/mij-mist.webp"/>
-                        <div class="assembly-shop-button">SHOP NOW <i class="fas fa-long-arrow-alt-right"/></div>
+                        <div @click="goto('mij-mist')" class="assembly-shop-button">SHOP NOW <i class="fas fa-long-arrow-alt-right"/></div>
                         <div class="find-more">What this?</div>
                     </div>
                     <div class="assembly-item-container">
                         <div class="title">MIJ SLEEK</div>
                         <img class="assembly-icon" src="../assets/home-icon/mij-sleek.webp"/>
-                        <div class="assembly-shop-button">SHOP NOW <i class="fas fa-long-arrow-alt-right"/></div>
+                        <div @click="goto('mij-sleek')" class="assembly-shop-button">SHOP NOW <i class="fas fa-long-arrow-alt-right"/></div>
                         <div class="find-more">What this?</div>
                     </div>
                 </div>
+            </div>
+            <div class="special-section">
+                <div class="home-title">
+                    <h3>special </h3>
+                    <h3 class="color-gold">series</h3>
+                </div>
+                <div class="assembly-items">
+                    <Product style="color: white;" v-for="product in products" :product="product"/>
+                </div>
+            </div>
+
+            <div style="margin-top: 64px;">
+                <div class="image-right-container">
+                    <div class="content">
+                        <h3>PC RAKITAN KHAS DARI KAMU</h3>
+                        <div>Pilih dari koleksi PC rakitan siap pakai racikan MIJ KOMP! Setiap unit telah dirakit dengan teliti, diuji secara menyeluruh, dan siap dikirim. Tingkatkan pengalaman komputasi Anda dengan performa terbaik dari konfigurasi PC unggulan kami, dirancang untuk memenuhi berbagai kebutuhan Anda.</div>
+                        <button class="shop-now-button">SHOP NOW <i class="ms-2 fas fa-long-arrow-alt-right"/></button>
+                    </div>
+                    <img class="content" src="../assets/home-icon/rakitan-khas.jpg">
+                </div>
+                <div class="image-left-container">
+                    <img class="content" src="../assets/home-icon/kunjungi-mij-komp.jpg">
+                    <div class="content">
+                        <h3>KUNJUNGI MIJ KOMP</h3>
+                        <div>MIJ KOMP adalah tempatnya. Dengan bantuan tim ahli kami, Anda bisa melihat dan membandingkan berbagai komponen secara langsung untuk membuat keputusan yang paling tepat. Datanglah ke MIJ KOMP dan lihat langsung bagaimana PC impian Anda dirakit. Dengan transparansi dan keterampilan tinggi, kami pastikan Anda puas dengan setiap langkahnya.</div>
+                        <button class="shop-now-button">VISIT US<i class="ms-2 fas fa-long-arrow-alt-right"/></button>
+                    </div>
+                </div>
+                <div class="image-right-container">
+                    <div class="content">
+                        <h3>KABEL RAPI, KINERJA MAKSIMAL</h3>
+                        <div>MIJ KOMP menawarkan solusi kabel manajemen yang rapi dan profesional. Dengan pengalaman dan keahlian kami, kami siap membantu Anda mengorganisir kabel-kabel dengan cara yang paling efisien dan estetis.</div>
+                        <button class="shop-now-button">Contact Us <i class="fas fa-long-arrow-alt-right"/></button>
+                    </div>
+                    <img class="content" src="../assets/home-icon/kinerja-maksimal.jpg">
+                </div>
+            </div>
+
+            <div class="portofolio">
+
             </div>
         </div>
     </div>
@@ -111,11 +151,68 @@
 <script>
 import SlideShow from '../components/SlideShow.vue'
 export default{
-    components:{SlideShow}
+    components:{SlideShow},
+    data(){
+        return{
+            products:[
+                {
+                    name: 'MIJ BASIC',
+                    image: 'src/assets/products/image-dummy.png',
+                    id: 1,
+                    priceStart: 6000000,
+                    priceEnd: 7000000,
+                }
+            ]
+        }
+    },
+    methods:{
+        goto(url){
+            this.$router.replace({ path: `/${url}`});
+        }
+    },
+     mounted(){
+        for(let index = 1; index < 8; index++) {
+            this.products.push({
+                    name: 'MIJ BASIC',
+                    image: 'src/assets/products/image-dummy.png',
+                    id: index + 1,
+                    price: 7000000,
+                })
+        }
+    }
 }
 </script>
 
 <style>
+.shop-now-button{
+    border-radius: 8px;
+    background: #14263e;
+    color: #f9ae00!important;
+    font-weight: 600;
+    border: 2px solid #14263e;
+    padding: 8px 26px;
+    margin-top: 20px;
+    align-self: center;
+}
+.shop-now-button:hover{
+    background: white;
+    color: #14263e !important;
+}
+.image-right-container, .image-left-container{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 40px;
+}
+.image-right-container .content, .image-left-container .content{
+    width: 48%;
+    padding: 24px;
+    text-align: justify;
+}
+.content h3{
+    font-size: 34px;
+    font-weight: 600;
+    color: #162B47 !important;
+}
 .home-title{
     text-transform: uppercase;
     color: #FFFFFF !important;
@@ -132,7 +229,7 @@ h3{
     font-family: 'Barlow Condensed', Helvetica, Arial, Lucida, sans-serif;
     font-weight: 600;
 }
-.different-section{
+.different-section, .special-section{
     background: #14263f!important;
     padding: 32px
 }
@@ -143,14 +240,17 @@ h3{
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(22%, 1fr));
     row-gap: 40px;
-    column-gap: 20px;
+    column-gap: 40px;
     padding: 16px;
+    justify-content: center;
+    place-items: center;
 }
 .diff-label{
     color: white;
     font-family: 'Titillium Web', Helvetica, Arial, Lucida, sans-serif;
     font-size: 13px;
     line-height: 1.2em;
+    margin-top: 12px;
     text-align: center;
 }
 .assembly-item-container .title{
@@ -162,6 +262,8 @@ h3{
 }
 .diff-item-container{
     justify-items: center;
+    width: 50%;
+    align-self: center;
 }
 
 .assembly-section{
@@ -170,7 +272,7 @@ h3{
 }
 .assembly-items{
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(32%, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(22%, 1fr));
     row-gap: 40px;
     column-gap: 20px;
     padding: 16px;
@@ -183,6 +285,9 @@ h3{
     justify-items: center;
     text-align: center;
     position: relative;
+    box-shadow: 0px 0px 30px 1px rgba(0,0,0,0.1);
+    border-radius: 8px;
+    padding: 12px;
 }
 .assembly-item-container .find-more{
     position: absolute;
@@ -223,5 +328,51 @@ h3{
     color: #14263e;
     background: white;
     border: 1px solid #14263e;
+}
+
+@media screen and (max-width: 800px) {
+    .image-right-container{
+        flex-direction: column-reverse;
+    }
+    .image-left-container{
+        flex-direction: column;
+    }
+    .image-right-container .content, .image-left-container .content{
+        width: 100%;
+    }
+    .assembly-section{
+        padding: 16px 4px;
+    }
+    .assembly-items{
+        grid-template-columns: repeat(auto-fit, minmax(40%, 1fr));
+    }
+    .diff-items{
+        grid-template-columns: repeat(auto-fit, minmax(25%, 1fr));
+        gap: 24px;
+        padding: 8px;
+    }
+    .different-section{
+        padding: 8px;
+    }
+    .diff-item-container{
+        width: 80%;
+    }
+    .assembly-item-container{
+        padding: 4px;
+    }
+    .assembly-item-container .title{
+        font-size: 20px !important;
+    }
+    .assembly-shop-button, .find-more{
+        padding: 8px !important;
+        font-size: 12px;
+    }
+    .home-title{
+        gap: 8px;
+        margin: 24px;
+    }
+    h3{
+        font-size: 32px;
+    }
 }
 </style>

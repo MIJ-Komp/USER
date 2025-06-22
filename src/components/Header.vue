@@ -1,48 +1,45 @@
 <template>
 <div class="mij-header">
-    <img class="logo"/>
+    <img class="logo" src="/favicon.webp" @click="goto('')"/>
     <div class="menu-container">
-        <div class="menu-label">HOME</div>
-        <div v-for="menu in menus">
-            <div class="menu-label">{{menu.name}}</div>
-            <i v-if="menu.items && menu.items.length > 0" class="fa fa-angle-down"/>
+        <div class="menu-mobile-container" v-click-outside="closeMenu" :style="openMenu?'display: flex !important;':''">
+            <NavMenu :menus="menus"/>
         </div>
-        <div class="menu-label">PORTOFOLIO</div>
-        <div class="menu-label">CONTACT US</div>
         <i class="fa fa-cart"/>
         <i class="fa fa-search"/>
+
+        <i class="fa fa-bars menu-mobile" @click.stop.prevent="toggleMenu()"/>
     </div>
 </div>
 </template>
 
 <script>
+import constant from '../constant/constant'
 export default{
     data(){
         return{
-            menus:[
-                {
-                    name: "SPECIAL SERIES",
-                    items: [
-
-                    ]
-                },
-                {
-                    name: "DESKTOP PC",
-                    items: [
-
-                    ]
-                },
-                {
-                    name: "KOMPONEN PC",
-                    items: [
-
-                    ]
-                },
-                {
-                    name: "MONITOR",
-                }
-            ]
+            menus: constant.menus,
+            openMenu: false
         }
+    },
+    methods:{
+        toggleMenu(){
+            this.openMenu = true
+        },
+        closeMenu(){
+            this.openMenu = false
+        },
+        goto(url, query) {
+         var content = document.getElementById("mij-content");
+         if (content) {
+            content.scrollTo({ top: 0, behavior: "smooth" });
+         }
+
+         setTimeout(() => {
+            // this.$router.replace(`/${url}`);
+            this.$router.replace({ path: `/${url}`, query: query});
+         }, 50);
+      },
     }
 }
 </script>
@@ -51,12 +48,16 @@ export default{
 .mij-header{
     height: 50px;
     background: white;
-    position: fixed;
+    position: fixed !important;
     top: 0;
+    position: relative;
     padding: 4px 12px;
     display: flex;
     justify-content: space-between;
-    width: 98vw;
+    z-index: 3;
+    width: 100%;
+    border-bottom: 1px solid #dedede;
+    box-shadow: 0px 0px 30px 1px rgba(0,0,0,0.1);
 }
 .logo{
     width:40px;
@@ -64,12 +65,44 @@ export default{
 }
 .menu-container{
     display: flex;
-    gap: 22px;
+    gap: 16px;
     align-items: center;
 }
 .menu-label{
     font-size: 12px;
     font-family: PT Sans, Helvetica Arial;
     font-weight: 600;
+    cursor: pointer;
+    color: black;
+}
+.menu-label:hover{
+    color: var(--gold);
+}
+.menu-mobile-container
+{
+    display: flex;
+    gap: 12px;
+}
+.menu-mobile{
+    display: none;
+}
+@media screen and (max-width: 800px) {
+    .menu-mobile-container{
+        position: absolute;
+        width: 300px;
+        max-width: 80%;
+        background: white;
+        display: none;
+        flex-direction: column;
+        top: 60px;
+        right: 10px;
+        padding: 10px;
+        border: 1px solid #dedede;
+        border-radius: 8px;
+    }
+    .menu-mobile{
+        display: block;
+        cursor: pointer;
+    }
 }
 </style>
