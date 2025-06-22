@@ -24,7 +24,7 @@
         <div>
             <div class="top-section">
                 <div class="p-3 product-image-container">
-                    <img class="product-image" src="../assets//products/product-detail-dummy.png"/>
+                    <img class="product-image" src="/images/product-detail-dummy.png"/>
                 </div>
                 <div class="product-info" >
                     <div style="border-bottom: 1px solid #dedede;">
@@ -196,9 +196,6 @@ export default{
             if(!rpString) return 0;
             return parseInt(rpString.replace(/[^\d]/g, '')) || 0
         },
-        handleRangeUpdate(val) {
-            console.log('Rentang harga terpilih:', val)
-        }
     },
     mounted(){
         if(this.$route.meta.product){
@@ -207,7 +204,7 @@ export default{
         else{
             this.product = {
                     name: 'MIJ BASIC',
-                    image: 'src/assets/products/image-dummy.png',
+                    image: '/images/image-dummy.png',
                     id: 1,
                     priceStart: 6000000,
                     priceEnd: 7000000,
@@ -347,7 +344,7 @@ export default{
         for(let index = 1; index < 20; index++) {
             this.relatedProducts.push({
                     name: 'MIJ BASIC',
-                    image: '../src/assets/products/image-dummy.png',
+                    image: '/images/image-dummy.png',
                     id: index + 1,
                     priceStart: 6000000,
                     priceEnd: 7000000,

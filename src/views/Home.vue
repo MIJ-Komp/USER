@@ -157,7 +157,7 @@ export default{
             products:[
                 {
                     name: 'MIJ BASIC',
-                    image: 'src/assets/products/image-dummy.png',
+                    image: '/images/image-dummy.png',
                     id: 1,
                     priceStart: 6000000,
                     priceEnd: 7000000,
@@ -174,7 +174,7 @@ export default{
         for(let index = 1; index < 8; index++) {
             this.products.push({
                     name: 'MIJ BASIC',
-                    image: 'src/assets/products/image-dummy.png',
+                    image: '/images/image-dummy.png',
                     id: index + 1,
                     price: 7000000,
                 })

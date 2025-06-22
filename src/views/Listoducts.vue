@@ -152,7 +152,7 @@ export default{
             products:[
                 {
                     name: 'MIJ BASIC',
-                    image: 'src/assets/products/image-dummy.png',
+                    image: '/images/image-dummy.png',
                     id: 1,
                     priceStart: 6000000,
                     priceEnd: 7000000,
@@ -168,14 +168,13 @@ export default{
           this.filterOpen = !this.filterOpen
         },
         handleRangeUpdate(val) {
-            console.log('Rentang harga terpilih:', val)
         }
     },
     mounted(){
         for(let index = 1; index < 100; index++) {
             this.products.push({
                     name: 'MIJ BASIC',
-                    image: 'src/assets/products/image-dummy.png',
+                    image: '/images/image-dummy.png',
                     id: index + 1,
                     priceStart: 6000000,
                     priceEnd: 7000000,
