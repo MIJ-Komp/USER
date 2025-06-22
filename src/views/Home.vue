@@ -209,8 +209,8 @@ export default{
     text-align: justify;
 }
 .content h3{
-    font-size: 34px;
-    font-weight: 600;
+    font-size: 34px !important;
+    font-weight: 600 !important;
     color: #162B47 !important;
 }
 .home-title{
@@ -224,10 +224,10 @@ export default{
     gap: 12px;
 }
 h3{
-    font-size: 47px;
-    margin: 0px;
-    font-family: 'Barlow Condensed', Helvetica, Arial, Lucida, sans-serif;
-    font-weight: 600;
+    font-size: 47px !important;
+    margin: 0px !important;
+    font-family: 'Barlow Condensed', Helvetica, Arial, Lucida, sans-serif !important;
+    font-weight: 600 !important;
 }
 .different-section, .special-section{
     background: #14263f!important;
