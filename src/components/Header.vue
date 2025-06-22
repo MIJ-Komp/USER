@@ -82,6 +82,7 @@ export default{
 {
     display: flex;
     gap: 12px;
+    height: 100%;
 }
 .menu-mobile{
     display: none;
@@ -96,6 +97,7 @@ export default{
         flex-direction: column;
         top: 60px;
         right: 10px;
+        height: unset;
         padding: 10px;
         border: 1px solid #dedede;
         border-radius: 8px;
