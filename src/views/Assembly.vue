@@ -299,4 +299,8 @@ export default{
             opacity: 0.5;
             pointer-events: none;
         }
+
+        h3{
+            font-size: 18px !important;
+        }
     </style>
