@@ -300,7 +300,7 @@ export default{
             pointer-events: none;
         }
 
-        h3{
+        .assembly-container h3{
             font-size: 18px !important;
         }
     </style>

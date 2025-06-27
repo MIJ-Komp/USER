@@ -30,7 +30,7 @@ export default{
             carouselConfig: {
                 itemsToShow: 1,
                 gap: 1,
-                autoplay: 5000,
+                autoplay: 3000,
                 wrapAround: true,
                 pauseAutoplayOnHover: true,
             }
