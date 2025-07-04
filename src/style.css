@@ -2,6 +2,7 @@
 
 :root {
     --gold: #ffce42;
+    color-scheme: light;
 }
 
 h3{
@@ -13,17 +14,23 @@ h3{
 body{
     margin: 0;
 }
-.flex-row{
-    display: flex;
-    flex-flow: wrap;
+
+.bg-gold-50{
+    background-color: #f4ecd9;
 }
+
 .color-gold{
     color: #ffce42;
 }
-.color-black{
-    color: black;
+
+.font-title{
+    font-family: 'Barlow Condensed', Helvetica, Arial, Lucida, sans-serif;
 }
 
-.app-container{
-    overflow: auto;
+.fs-sm {
+    font-size: 0.875em;
+}
+
+.fs-xm {
+    font-size: 0.700em;
 }

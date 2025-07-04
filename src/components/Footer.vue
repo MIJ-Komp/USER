@@ -1,14 +1,14 @@
 <template>
-<div class="footer-container">
+<div class="container">
     <div class="footer-card">
         <b-row>
             <b-col lg="4" md="4" cols="12" class="mb-2">
                 <div class="card-item">
                     <div>Metode Pengantaran</div>
-                    <div class="footer-shipping-grid">
-                        <img src="/images/shipping/sicepat.png"/>
-                        <img src="/images/shipping/jne.png"/>
-                        <img src="/images/shipping/anteraja.png"/>
+                    <div class="">
+                        <img src="/images/shipping/sicepat.png" height="25"/>
+                        <img src="/images/shipping/jne.png" height="25"/>
+                        <img src="/images/shipping/anteraja.png" height="25"/>
                     </div>
                 </div>
             </b-col>
@@ -21,11 +21,11 @@
                     <b-col cols="8">
                             <div>Secure Online Payments & Bank Transfer</div>
                             <div class="footer-bank-grid">
-                                <img src="/images/bank/mandiri-bank.png"/>
-                                <img src="/images/bank/bni-bank.png"/>
-                                <img src="/images/bank/permata-bank.png"/>
-                                <img src="/images/bank/visa.png"/>
-                                <img src="/images/bank/jcb-bank.png"/>
+                                <img height="15" src="/images/bank/mandiri-bank.png"/>
+                                <img height="15" src="/images/bank/bni-bank.png"/>
+                                <img height="15" src="/images/bank/permata-bank.png"/>
+                                <img height="15" src="/images/bank/visa.png"/>
+                                <img height="15" src="/images/bank/jcb-bank.png"/>
                             </div>
                     </b-col>
                 </b-row>
@@ -35,7 +35,7 @@
                 <div class="card-item">
                 <b-row style="align-items: center;">
                     <b-col cols="3" class="pr-0">
-                        <img src="/images/bank/free-ongkir.png"/>
+                        <img src="/images/bank/free-ongkir.png" height="35"/>
                     </b-col>
                     <b-col cols="9">
                         <h3 class="m-0" style="font-size: 14px !important; font-weight: 600; color: #00000090;">GRATIS ONGKIR</h3>

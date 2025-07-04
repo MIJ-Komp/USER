@@ -1,9 +1,9 @@
-import NavMenu from "./NavMenu.vue";
-import Product from "./Product.vue";
+import MenuItem from "./MenuItem.vue";
 import PriceRange from "./PriceRange.vue";
+import ProductCard from "./ProductCard.vue";
 
 export default{
-    NavMenu,
-    Product,
+    MenuItem,
+    ProductCard,
     PriceRange
 }

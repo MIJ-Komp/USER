@@ -2,10 +2,11 @@ import { createRouter, createWebHistory } from 'vue-router'
 import constant from '../constant/constant'
 import Home from '../views/Home.vue'
 import Assembly from '../views/Assembly.vue'
-import ListProducts from '../views/Listoducts.vue'
+// import ListProducts from '../views/ListProducts.vue'
 import ProductDetail from '../views/ProductDetail.vue'
 import Portofolio from '../views/Portofolio.vue'
 import ContactUs from '../views/ContactUs.vue'
+import ProductList from '../views/ProductList.vue'
 
 
 let routes = [
@@ -22,7 +23,7 @@ menus.forEach(menu => {
     { 
       path: menu.path.startsWith('/') ? menu.path : `/${menu.path}`, 
       name: menu.name, 
-      component: ListProducts, 
+      component: ProductList, 
       meta: {
         menu: menu
       }})

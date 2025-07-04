@@ -1,21 +1,25 @@
 
 <template>
-  <div class="app-container">
-    <Header/>
-    <router-view :key="$route.fullPath" class="mij-content"></router-view>
+  <div>
+    <Navbar/>
+    <router-view :key="$route.fullPath" />
     <Footer/>
+
+    
+      <ProductComparison />
   </div>
-  <HelloWorld msg="Vite + Vue" />
 </template>
 
 <script>
-import Header from './components/Header.vue'
 import Footer from './components/Footer.vue'
+import Navbar from './components/Navbar.vue';
+import ProductComparison from './components/ProductComparison.vue';
 export default{
   components:{
-    Header,
-    Footer
-  }
+    Navbar,
+    Footer,
+    ProductComparison,
+  },
 }
 </script>
 
@@ -32,10 +36,5 @@ export default{
 .logo.vue:hover {
   filter: drop-shadow(0 0 2em #42b883aa);
 }
-.app-container{
-  padding-top: 50px;
-}
-.mij-content{
-  padding-bottom: 30px;
-}
+
 </style>

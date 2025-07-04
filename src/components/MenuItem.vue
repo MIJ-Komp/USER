@@ -1,27 +1,27 @@
 <template>
     <div v-for="menu in menus" class="menu-item-container" :class="isChild? 'menu-item-child-container':''" @mouseover="menu.open = true" @mouseleave="menu.open= false">
             <div @click.prevent="goto(menu)" :class="isChild? 'menu-child':'menu'">
-                <div class="menu-label me-3">{{menu.name}}</div>
-                <i v-if="menu.items && menu.items.length > 0" 
+                <div class="menu-label me-3 uppercase">{{menu.name}}</div>
+                <i v-if="menu.childs && menu.childs.length > 0" 
                     :class="!isChild ? (!menu.open ? 'fa fa-angle-down' : 'fa fa-angle-up'):
                 (!menu.open ? 'fa fa-angle-right' : 'fa fa-angle-left')"/>
             </div>
 
-            <div :class="!isChild ? 'menu-item' : 'menu-item-child'" v-if="menu.items && menu.items.length > 0 && menu.open">
-                <NavMenu :menus="menu.items" :isChild="true"/>
+            <div :class="!isChild ? 'menu-item' : 'menu-item-child'" v-if="menu.childs && menu.childs.length > 0 && menu.open">
+                <MenuItem :menus="menu.childs" :isChild="true"/>
             </div>
     </div>
 
     <div v-for="menu in menus" class="menu-item-mobile ps-2 pt-2">
-            <div style="display: flex; justify-content: space-between;">
-                <div class="menu-label me-3" @click.stop.prevent="goto(menu)">{{menu.name}}</div>
-                <i style="padding-left: 24px;" @click="menu.open = !menu.open" v-if="menu.items && menu.items.length > 0" 
-                :class="!menu.open ? 'fa fa-angle-right' : 'fa fa-angle-down'"/>
-            </div>
+        <div style="display: flex; justify-content: space-between;">
+            <div class="menu-label me-3 uppercase" @click.stop.prevent="goto(menu)">{{menu.name}}</div>
+            <i style="padding-left: 24px;" @click="menu.open = !menu.open" v-if="menu.childs && menu.childs.length > 0" 
+            :class="!menu.open ? 'fa fa-angle-right' : 'fa fa-angle-down'"/>
+        </div>
 
-            <div v-if="menu.items && menu.items.length > 0 && menu.open">
-                <NavMenu class="ms-3" :menus="menu.items" :isChild="true"/>
-            </div>
+        <div v-if="menu.childs && menu.childs.length > 0 && menu.open">
+            <MenuItem class="ms-3" :menus="menu.childs" :isChild="true"/>
+        </div>
     </div>
 </template>
 
@@ -39,7 +39,7 @@ export default{
          menu.open = false
          
             // this.$router.replace(`/${url}`);
-            this.$router.replace({ path: `/${menu.path}` }).then(() => {
+            this.$router.replace({ path: `${menu.path}` }).then(() => {
                window.location.reload();
             });
       },

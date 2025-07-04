@@ -1,28 +1,46 @@
 <template>
-<div class="mij-header">
-    <img class="logo" src="/favicon.webp" @click="goto('')"/>
-    <div class="menu-container">
-        <div class="menu-mobile-container" v-click-outside="closeMenu" :style="openMenu?'display: flex !important;':''">
-            <NavMenu :menus="menus"/>
+    <nav class="mij-header shadow-sm sticky-top navbar navbar-expand-lg navbar-light bg-light mb-4">
+        <div class="container">
+            <img class="logo" src="/favicon.webp" @click="goto('')"/>
+            <div class="d-flex">
+                <div class="menu-mobile-container" v-click-outside="closeMenu" :style="openMenu?'display: flex !important;':''">
+                    <MenuItem :menus="menus"/>
+                </div>
+                <div class="mx-2">
+                    <!-- <i class="fa fa-cart-shopping"/> -->
+                     <Cart />
+                </div>
+                <div class="mx-2">
+                    <i class="fa fa-search"/>
+                </div>
+                <div>
+                    <i class="fa fa-bars menu-mobile" @click.stop.prevent="toggleMenu()"/>
+                </div>
+            </div>
         </div>
-        <i class="fa fa-cart"/>
-        <i class="fa fa-search"/>
-
-        <i class="fa fa-bars menu-mobile" @click.stop.prevent="toggleMenu()"/>
-    </div>
-</div>
+    </nav>
 </template>
 
 <script>
-import constant from '../constant/constant'
+import { mapActions, mapMutations } from "vuex";
+import module from "../constant/module.js";
+import MenuItem from "./MenuItem.vue";
+import Cart from "./Cart.vue";
 export default{
+    components: {
+        MenuItem, Cart
+    },
     data(){
         return{
-            menus: constant.menus,
+            menus: [],
             openMenu: false
         }
     },
+    async created(){
+        this.menus = await this.getAll()
+    },
     methods:{
+        ...mapActions(module.menu.name, ["getAll","create", "getById", "update"]),
         toggleMenu(){
             this.openMenu = true
         },
@@ -30,22 +48,23 @@ export default{
             this.openMenu = false
         },
         goto(url, query) {
-         var content = document.getElementById("mij-content");
-         if (content) {
-            content.scrollTo({ top: 0, behavior: "smooth" });
-         }
+            var content = document.getElementById("mij-content");
+            if (content) {
+                content.scrollTo({ top: 0, behavior: "smooth" });
+            }
 
-         setTimeout(() => {
-            // this.$router.replace(`/${url}`);
+            setTimeout(() => {
             this.$router.replace({ path: `/${url}`, query: query});
-         }, 50);
-      },
+            }, 50);
+        
+        },
+        
     }
 }
 </script>
 
 <style>
-.mij-header{
+/* .mij-header{
     height: 50px;
     background: white;
     position: fixed !important;
@@ -58,7 +77,7 @@ export default{
     width: 100%;
     border-bottom: 1px solid #dedede;
     box-shadow: 0px 0px 30px 1px rgba(0,0,0,0.1);
-}
+} */
 .logo{
     width:40px;
     height: 40px;

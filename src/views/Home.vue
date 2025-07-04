@@ -110,7 +110,7 @@
                     <h3 class="color-gold">series</h3>
                 </div>
                 <div class="assembly-items">
-                    <Product style="color: white;" v-for="product in products" :product="product"/>
+                    <ProductCard style="color: white;" v-for="product in products" :product="product"/>
                 </div>
             </div>
 
@@ -149,9 +149,10 @@
 </template>
 
 <script>
+import ProductCard from '../components/ProductCard.vue';
 import SlideShow from '../components/SlideShow.vue'
 export default{
-    components:{SlideShow},
+    components:{ProductCard, SlideShow},
     data(){
         return{
             products:[
