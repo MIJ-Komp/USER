@@ -92,7 +92,7 @@ function useFallback(event) {
 }
 
 function detail(id) {
-  router.push(`/product/${id}`)
+  router.push(`/product-detail/${id}`)
 }
 
 </script>

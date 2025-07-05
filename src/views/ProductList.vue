@@ -178,7 +178,8 @@ export default {
           onSale:{
           }
       },
-      products:[]
+      products:[],
+      menuName: null
     };
   },
   mounted() {
@@ -190,6 +191,7 @@ export default {
     window.removeEventListener("resize", this.handleResize);
   },
   async created(){
+    this.menuName = this.$route.params.menu
     this.products = await this.getAll()
   },
   methods: {
