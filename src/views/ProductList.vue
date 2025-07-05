@@ -2,7 +2,7 @@
   <div class="container">
     <div class="d-flex">
       <!-- Sidebar -->
-      <aside
+      <!-- <aside
         class="sidebar"
         :class="{
           'd-none': !isLargeScreen && !isSidebarVisible,
@@ -63,7 +63,7 @@
               <div class="button-apply-filer" @click="applyFilter()">Terapkan</div>
           </div>
         </div>
-      </aside>
+      </aside> -->
 
       <!-- Main Content -->
       <div class="flex-grow-1">
@@ -83,7 +83,7 @@
               <div class="header mb-2">
                 <div class="text-center">PRODUK</div>
                 <div class="d-flex justify-content-center mt-2 mb-2">
-                  <div v-for="menu in currentMenu">{{ menu.label }}</div>
+                  <!-- <div v-for="menu in currentMenu">{{ menu.label }}</div> -->
                   <div class="bg-dark rounded-circle mx-2" style="height: 5pt; width: 5pt;"></div>
                   <div class="bg-dark rounded-circle mx-2" style="height: 5pt; width: 5pt;"></div>
                 </div>
@@ -105,7 +105,7 @@
               <!-- List Produk -->
 
               <div class="row">
-                <div class="col-md-3 col-sm-6 mb-4" v-for="product in products" >
+                <div class="col-md-3 col-sm-6 mb-4" v-for="product in products" :key="product" >
                   <ProductCard :product="product"/>
                 </div>
               </div>
@@ -178,18 +178,11 @@ export default {
           onSale:{
           }
       },
-      products:[
-          {
-              name: 'MIJ BASIC',
-              image: '',
-              id: 1,
-              priceStart: 6000000,
-              priceEnd: 7000000,
-          }
-      ]
+      products:[]
     };
   },
   mounted() {
+    console.log("sdflkjsdflkj")
     this.handleResize(); // initial state
     window.addEventListener("resize", this.handleResize);
   },

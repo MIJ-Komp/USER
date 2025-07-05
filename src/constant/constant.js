@@ -1,8 +1,9 @@
 const constant={
+    DEFAULT_PRODUCT_IMAGE : "./images/image-dummy.png",
     menus: [
         {
             name: "SPECIAL SERIES",
-            path: 'special-series',
+            path: '/special-series',
             items: [
                 {name: "ASUS TUF BTF", path: 'asus-tuf-btf'},
                 {name: "BON BON SERIES", path: 'bon-bon-series', items:[{name: "MIJ Rose", path: 'mij-rose',}]},

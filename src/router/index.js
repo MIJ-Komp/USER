@@ -7,6 +7,8 @@ import ProductDetail from '../views/ProductDetail.vue'
 import Portofolio from '../views/Portofolio.vue'
 import ContactUs from '../views/ContactUs.vue'
 import ProductList from '../views/ProductList.vue'
+import Order from '../views/Order.vue'
+import Cart from '../views/Cart.vue'
 
 
 let routes = [
@@ -15,6 +17,7 @@ let routes = [
   { path: '/portofolio', name: 'Portofolio', component: Portofolio},
   { path: '/contact-us', name: 'Contact Us', component: ContactUs },
   { path: '/product/:id', name: 'Detail Produk', component: ProductDetail },
+  { path: '/cart', name: 'Keranjang', component: Cart },
 ]
 
 var menus = extractPaths(constant.menus)

@@ -13,11 +13,4 @@
   
   const cartStore = useCartStore()
   
-  function clearCompareProductItems() {
-    cartStore.clearItems();
-  }
-  
-  function removeCompareProductItem(id) {
-    cartStore.removeItem(id);
-  }
 </script>

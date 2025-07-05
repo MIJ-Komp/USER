@@ -8,7 +8,7 @@
                 </div>
                 <div class="mx-2">
                     <!-- <i class="fa fa-cart-shopping"/> -->
-                     <Cart />
+                     <CartNav />
                 </div>
                 <div class="mx-2">
                     <i class="fa fa-search"/>
@@ -25,10 +25,11 @@
 import { mapActions, mapMutations } from "vuex";
 import module from "../constant/module.js";
 import MenuItem from "./MenuItem.vue";
-import Cart from "./Cart.vue";
+import CartNav from "./CartNav.vue";
+
 export default{
     components: {
-        MenuItem, Cart
+        MenuItem, CartNav
     },
     data(){
         return{

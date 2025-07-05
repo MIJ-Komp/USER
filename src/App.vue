@@ -2,10 +2,8 @@
 <template>
   <div>
     <Navbar/>
-    <router-view :key="$route.fullPath" />
+    <router-view :key="$route.fullPath" class="mb-4"/>
     <Footer/>
-
-    
       <ProductComparison />
   </div>
 </template>
