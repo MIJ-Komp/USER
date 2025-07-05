@@ -16,21 +16,22 @@ let routes = [
   { path: '/rakit-pc', name: 'Rakit PC', component: Assembly },
   { path: '/portofolio', name: 'Portofolio', component: Portofolio},
   { path: '/contact-us', name: 'Contact Us', component: ContactUs },
-  { path: '/product/:id', name: 'Detail Produk', component: ProductDetail },
+  { path: '/product/:menu', name: 'Produk', component: ProductList },
+  { path: '/product/:menu/:id', name: 'Detail Produk', component: ProductDetail },
   { path: '/cart', name: 'Keranjang', component: Cart },
 ]
 
-var menus = extractPaths(constant.menus)
-menus.forEach(menu => {
-  routes.push(
-    { 
-      path: menu.path.startsWith('/') ? menu.path : `/${menu.path}`, 
-      name: menu.name, 
-      component: ProductList, 
-      meta: {
-        menu: menu
-      }})
-});
+// var menus = extractPaths(constant.menus)
+// menus.forEach(menu => {
+//   routes.push(
+//     { 
+//       path: menu.path.startsWith('/') ? menu.path : `/${menu.path}`, 
+//       name: menu.name, 
+//       component: ProductList, 
+//       meta: {
+//         menu: menu
+//       }})
+// });
 
 const router = createRouter({
   history: createWebHistory(),

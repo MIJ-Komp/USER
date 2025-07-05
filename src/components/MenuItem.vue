@@ -39,8 +39,12 @@ export default{
          menu.open = false
          
             // this.$router.replace(`/${url}`);
-            this.$router.replace({ path: `${menu.path}` }).then(() => {
-               window.location.reload();
+           const cleanPath = menu.path.startsWith('/')
+            ? menu.path.slice(1) // hilangkan "/" di awal
+            : menu.path;
+
+            this.$router.replace({ path: `/product/${cleanPath}` }).then(() => {
+            window.location.reload();
             });
       },
     }
@@ -101,6 +105,10 @@ export default{
 }
 .menu-item-mobile{
         display: none;
+}
+.menu-label{
+    height: 100%;
+    align-content: center;
 }
 @media screen and (max-width: 800px) {
     .menu-item-container{

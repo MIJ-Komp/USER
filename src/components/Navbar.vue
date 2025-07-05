@@ -2,15 +2,15 @@
     <nav class="mij-header shadow-sm sticky-top navbar navbar-expand-lg navbar-light bg-light mb-4">
         <div class="container">
             <img class="logo" src="/favicon.webp" @click="goto('')"/>
-            <div class="d-flex">
+            <div class="d-flex" style="height: 40px;">
                 <div class="menu-mobile-container" v-click-outside="closeMenu" :style="openMenu?'display: flex !important;':''">
                     <MenuItem :menus="menus"/>
                 </div>
-                <div class="mx-2">
+                <div class="mx-2" style="align-content: center;">
                     <!-- <i class="fa fa-cart-shopping"/> -->
                      <CartNav />
                 </div>
-                <div class="mx-2">
+                <div class="mx-2" style="align-content: center;">
                     <i class="fa fa-search"/>
                 </div>
                 <div>
