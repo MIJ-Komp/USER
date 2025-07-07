@@ -1,5 +1,5 @@
 const constant={
-    DEFAULT_PRODUCT_IMAGE : "./images/image-dummy.png",
+    DEFAULT_PRODUCT_IMAGE : "/images/image-dummy.png",
     menus: [
         {
             name: "SPECIAL SERIES",

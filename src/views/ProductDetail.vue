@@ -157,7 +157,13 @@ function formatCurrency(number) {
 }
 
 function addToCart() {
-    cartStore.addItem(product)
+  const {id, productSkus} = product.value
+  const newCartItem = {
+    productId: id,
+    productSkuId: productSkus[0].id,
+    qty: 1
+  }
+  cartStore.addItem(newCartItem)
 }
 
 function useFallback(event) {

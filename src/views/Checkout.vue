@@ -3,26 +3,45 @@
     <div class="row">
       <div class="col">
         <div class="d-flex">
-          <h4>Keranjang ({{ cartStore.items.length }})</h4>
+          <h4>Checkout</h4>
         </div>
       </div>
     </div>
 
     <div class="row">
       <div class="col-md-8 mb-4">
-        <div v-if="!cartStore.items.length" class="card mb-3 shadow-sm">
-          <div class="card-body">Keranjang anda masih kosong</div>
-        </div>
-        <div v-else class="card mb-3 shadow-sm">
-          <div v-for="cartItem in cartItems" class="border-bottom">
-            <CartItem
-              :key="cartItem.productId"
-              :cartItem="cartItem"
-              :changeQty="changeQty"
-              :removeItem="removeItem"
-            />
+        <div class="row">
+          <div class="col">
+            <div class="card mb-3 shadow-sm">
+              <div class="card-body">
+                <p class="fw-semibold">
+                  Informasi Pembeli
+                </p>
+                <TextBox />
+              </div>
+            </div>
+            
+            <div class="card mb-3 shadow-sm">
+              <div class="card-body">
+                <p class="fw-semibold">
+                  Alamat Pengiriman
+                </p>
+              </div>
+            </div>
+            
+            <p>Daftar Belanja</p>
+            <div class="card mb-3 shadow-sm">
+              <div v-for="cartItem in cartItems" class="border-bottom">
+                <CartItem
+                  :key="cartItem.productId"
+                  :cartItem="cartItem"
+                  :changeQty="changeQty"
+                  :removeItem="removeItem"
+                />
+              </div>
+    
+            </div>
           </div>
-
         </div>
       </div>
 
@@ -48,6 +67,7 @@
   import { useCartStore } from '../store/cartStore';
   import { useStore } from 'vuex';
   import module from '../constant/module.js';
+import TextBox from '../components/input/TextBox.vue';
 
   const store = useStore();
   const cartStore = useCartStore();

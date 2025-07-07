@@ -183,7 +183,6 @@ export default {
     };
   },
   mounted() {
-    console.log("sdflkjsdflkj")
     this.handleResize(); // initial state
     window.addEventListener("resize", this.handleResize);
   },

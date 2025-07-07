@@ -9,6 +9,7 @@ import ContactUs from '../views/ContactUs.vue'
 import ProductList from '../views/ProductList.vue'
 import Order from '../views/Order.vue'
 import Cart from '../views/Cart.vue'
+import Checkout from '../views/Checkout.vue'
 
 
 let routes = [
@@ -19,6 +20,7 @@ let routes = [
   { path: '/product/:menu', name: 'Produk', component: ProductList },
   { path: '/product-detail/:id', name: 'Detail Produk', component: ProductDetail },
   { path: '/cart', name: 'Keranjang', component: Cart },
+  { path: '/cart/checkout', name: 'Checkout', component: Checkout },
 ]
 
 // var menus = extractPaths(constant.menus)
