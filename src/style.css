@@ -3,6 +3,84 @@
 :root {
     --gold: #ffce42;
     color-scheme: light;
+
+
+
+     --red-50: #feedef;
+    --red-100: #fbc6cc;
+    --red-200: #f9abb4;
+    --red-300: #f68491;
+    --red-400: #f46d7c;
+    --red-500: #f1485b;
+    --red-600: #db4253;
+    --red-700: #ab3341;
+    --red-800: #852832;
+    --red-900: #651e26;
+    
+    --blue-50: #e7eeff;
+    --blue-100: #b6cbfe;
+    --blue-200: #92b1fe;
+    --blue-300: #608efe;
+    --blue-400: #4178fd;
+    --blue-500: #1256fd;
+    --blue-600: #104ee6;
+    --blue-700: #0d3db4;
+    --blue-800: #0a2f8b;
+    --blue-900: #08246a;
+
+    --light-blue-50: #f6faff;
+    --light-blue-100: #e2eeff;
+    --light-blue-200: #d4e6ff;
+    --light-blue-300: #c0daff;
+    --light-blue-400: #b4d3ff;
+    --light-blue-500: #a1c8ff;
+    --light-blue-600: #93b6e8;
+    --light-blue-700: #728eb5;
+    --light-blue-800: #596e8c;
+    --light-blue-900: #44546b;
+
+    --yellow-50: #fffbe6;
+    --yellow-100: #fff3b0;
+    --yellow-200: #ffed8a;
+    --yellow-300: #ffe454;
+    --yellow-400: #ffdf33;
+    --yellow-500: #ffd700;
+    --yellow-600: #e8c400;
+    --yellow-700: #b59900;
+    --yellow-800: #8c7600;
+    --yellow-900: #6b5a00;
+
+    --dark-blue-50: #e7ecf5;
+    --dark-blue-100: #b3c3df;
+    --dark-blue-200: #8ea6d0;
+    --dark-blue-300: #5b7dbb;
+    --dark-blue-400: #3b64ad;
+    --dark-blue-500: #0a3d99;
+    --dark-blue-600: #09388b;
+    --dark-blue-700: #072b6d;
+    --dark-blue-800: #062254;
+    --dark-blue-900: #041a40;
+
+    --grey-50: #fefefe;
+    --grey-100: #fafafa;
+    --grey-200: #f8f8f8;
+    --grey-300: #f5f5f5;
+    --grey-400: #f3f3f3;
+    --grey-500: #f0f0f0;
+    --grey-600: #dadada;
+    --grey-700: #aaaaaa;
+    --grey-800: #848484;
+    --grey-900: #656565;
+    --grey-1000: #606060;
+
+    --font-weight-thin: 100;
+    --font-weight-extra-light: 200;
+    --font-weight-light: 300;
+    --font-weight-medium: 500;
+    --font-weight-semi-bold: 600;
+    --font-weight-bold: 700;
+    --font-weight-extra-bold: 800;
+    --font-weight-black: 900;
 }
 
 h3{
