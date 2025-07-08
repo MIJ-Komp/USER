@@ -111,6 +111,7 @@ import InputText from "primevue/inputtext";
 import FloatLabel from "primevue/floatlabel";
 import Password from "primevue/password";
 import { Field, ErrorMessage } from "vee-validate";
+import helper from "../../constant/helper"
 export default {
    methods: {
       validate(field) {
@@ -187,7 +188,7 @@ export default {
    },
    computed: {
       uniqId(){
-         return this.$helper.GenerateRandomUUID(8)
+         return helper.GenerateRandomUUID(8)
       },
       schema() {
          if (this.rules) return this.rules;

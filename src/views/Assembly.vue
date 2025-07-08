@@ -1,6 +1,29 @@
 <template>
-    <div class="assembly-container bg-gray-100 text-gray-800">
-    <div class="container mx-auto p-4 sm:p-6 lg:p-8">
+    <div class="assembly-container px-3">
+        <div class="fs-4 py-1 border-bottom border-2 fw-semibold">RAKIT PC</div>
+        <div class="fw-light my-2" style="font-size: 14px; text-align: justify;">
+            Bangun PC impianmu dengan fitur Rakit PC. Pilih sendiri komponen seperti prosesor, RAM, VGA, motherboard, dan lainnya — kami bantu pastikan semuanya kompatibel dan cocok satu sama lain.
+            Nggak perlu bingung atau takut salah beli!
+        </div>
+
+        <b-row>
+            <b-col cols="12" lg="9" md="9">
+                <AssemblyComponent componentType="Motheboard"/>
+                <AssemblyComponent componentType="CPU"/>
+                <AssemblyComponent componentType="VGA"/>
+            </b-col>
+            <b-col cols="12" lg="3" md="3">
+                <div class="border rounded shadow-sm p-2">
+                    <div>Produk terpilih:</div>
+                    <div></div>
+                    <!-- <button>Tambah ke keranjang</button> -->
+                </div>
+            </b-col>
+        </b-row>
+    </div>
+
+    <div v-if="false" class="assembly-container bg-gray-100 text-gray-800">
+    <div v-if="false" class="container mx-auto p-4 sm:p-6 lg:p-8">
         <div class="flex flex-col lg:flex-row gap-8">
             <!-- Kolom Pilihan Komponen -->
             <main class="w-full lg:w-2/3">
@@ -103,28 +126,28 @@ export default{
     computed:{
         elements(){
             return{
-                steps: {
-                    processor: document.getElementById('step-processor'),
-                    motherboard: document.getElementById('step-motherboard'),
-                    ram: document.getElementById('step-ram'),
-                },
-                lists: {
-                    processor: document.getElementById('processor-list'),
-                    motherboard: document.getElementById('motherboard-list'),
-                    ram: document.getElementById('ram-list'),
-                },
-                summary: {
-                    processor: document.getElementById('summary-processor'),
-                    motherboard: document.getElementById('summary-motherboard'),
-                    ram: document.getElementById('summary-ram'),
-                },
-                totalPrice: document.getElementById('total-price'),
-                resetButton: document.getElementById('reset-button')
+                // steps: {
+                //     processor: document.getElementById('step-processor'),
+                //     motherboard: document.getElementById('step-motherboard'),
+                //     ram: document.getElementById('step-ram'),
+                // },
+                // lists: {
+                //     processor: document.getElementById('processor-list'),
+                //     motherboard: document.getElementById('motherboard-list'),
+                //     ram: document.getElementById('ram-list'),
+                // },
+                // summary: {
+                //     processor: document.getElementById('summary-processor'),
+                //     motherboard: document.getElementById('summary-motherboard'),
+                //     ram: document.getElementById('summary-ram'),
+                // },
+                // totalPrice: document.getElementById('total-price'),
+                // resetButton: document.getElementById('reset-button')
             }
         }
     },
     async mounted() {
-        this.init()
+        // this.init()
     },
     methods:{
         formatCurrency(number) {
@@ -140,140 +163,140 @@ export default{
          * @param {object} product - Objek produk dari database.
          * @returns {string} - String HTML untuk kartu komponen.
          */
-        createComponentCard(product) {
-            return `
-                <div class="component-card border-2 border-gray-200 rounded-lg p-4 cursor-pointer bg-gray-50" data-id="${product.id}" data-category="${product.category}">
-                    <img src="${product.image}" alt="${product.name}" class="w-full h-32 object-cover rounded-md mb-3" onerror="this.onerror=null;this.src='https://placehold.co/300x300/e2e8f0/334155?text=Image+Not+Found';">
-                    <h3 class="font-semibold text-base">${product.name}</h3>
-                    <p class="font-bold text-indigo-600 text-lg mt-1">${this.formatCurrency(product.price)}</p>
-                </div>
-            `;
-        },
+        // createComponentCard(product) {
+        //     return `
+        //         <div class="component-card border-2 border-gray-200 rounded-lg p-4 cursor-pointer bg-gray-50" data-id="${product.id}" data-category="${product.category}">
+        //             <img src="${product.image}" alt="${product.name}" class="w-full h-32 object-cover rounded-md mb-3" onerror="this.onerror=null;this.src='https://placehold.co/300x300/e2e8f0/334155?text=Image+Not+Found';">
+        //             <h3 class="font-semibold text-base">${product.name}</h3>
+        //             <p class="font-bold text-indigo-600 text-lg mt-1">${this.formatCurrency(product.price)}</p>
+        //         </div>
+        //     `;
+        // },
 
         /**
          * Fungsi utama untuk merender (menampilkan) komponen ke halaman.
          * @param {string} category - Kategori komponen (processor, motherboard, ram).
          * @param {Array} productList - Array produk yang akan ditampilkan.
          */
-        renderComponents(category, productList) {
-            const listElement = this.elements.lists[category];
-            listElement.innerHTML = ''; // Kosongkan list sebelum diisi ulang
-            if (productList.length > 0) {
-                productList.forEach(product => {
-                    listElement.innerHTML += this.createComponentCard(product);
-                });
-            } else {
-                listElement.innerHTML = `<p class="text-gray-500 col-span-full">Tidak ada komponen yang kompatibel ditemukan.</p>`;
-            }
-        },
+        // renderComponents(category, productList) {
+        //     const listElement = this.elements.lists[category];
+        //     listElement.innerHTML = ''; // Kosongkan list sebelum diisi ulang
+        //     if (productList.length > 0) {
+        //         productList.forEach(product => {
+        //             listElement.innerHTML += this.createComponentCard(product);
+        //         });
+        //     } else {
+        //         listElement.innerHTML = `<p class="text-gray-500 col-span-full">Tidak ada komponen yang kompatibel ditemukan.</p>`;
+        //     }
+        // },
 
         /**
          * Meng-handle logika saat sebuah komponen dipilih.
          * @param {string} category - Kategori komponen yang dipilih.
          * @param {string} productId - ID produk yang dipilih.
          */
-        handleSelection(category, productId) {
-            // Simpan produk yang dipilih ke state
-            const selectedProduct = this.database.products.find(p => p.id === productId);
-            this.currentSelection[category] = selectedProduct;
+        // handleSelection(category, productId) {
+        //     // Simpan produk yang dipilih ke state
+        //     const selectedProduct = this.database.products.find(p => p.id === productId);
+        //     this.currentSelection[category] = selectedProduct;
 
-            // Reset pilihan di step-step berikutnya
-            if (category === 'processor') {
-                this.currentSelection.motherboard = null;
-                this.currentSelection.ram = null;
-            }
-            if (category === 'motherboard') {
-                this.currentSelection.ram = null;
-            }
+        //     // Reset pilihan di step-step berikutnya
+        //     if (category === 'processor') {
+        //         this.currentSelection.motherboard = null;
+        //         this.currentSelection.ram = null;
+        //     }
+        //     if (category === 'motherboard') {
+        //         this.currentSelection.ram = null;
+        //     }
 
-            this.updateUI();
-        },
+        //     this.updateUI();
+        // },
 
         /**
          * Fungsi utama untuk memperbarui seluruh User Interface (UI) berdasarkan state saat ini.
          */
-        updateUI() {
-            // --- LOGIKA FILTER KOMPATIBILITAS ---
+        // updateUI() {
+        //     // --- LOGIKA FILTER KOMPATIBILITAS ---
             
-            // 1. Filter Motherboard berdasarkan socket Prosesor
-            let compatibleMotherboards = [];
-            if (this.currentSelection.processor) {
-                const selectedSocket = this.currentSelection.processor.specs.socket;
-                compatibleMotherboards = this.database.products.filter(p => 
-                    p.category === 'motherboard' && p.specs.socket === selectedSocket
-                );
-            }
-            this.renderComponents('motherboard', compatibleMotherboards);
+        //     // 1. Filter Motherboard berdasarkan socket Prosesor
+        //     let compatibleMotherboards = [];
+        //     if (this.currentSelection.processor) {
+        //         const selectedSocket = this.currentSelection.processor.specs.socket;
+        //         compatibleMotherboards = this.database.products.filter(p => 
+        //             p.category === 'motherboard' && p.specs.socket === selectedSocket
+        //         );
+        //     }
+        //     this.renderComponents('motherboard', compatibleMotherboards);
 
-            // 2. Filter RAM berdasarkan tipe RAM Motherboard
-            let compatibleRams = [];
-            if (this.currentSelection.motherboard) {
-                const selectedRamType = this.currentSelection.motherboard.specs.ram_type;
-                compatibleRams = this.database.products.filter(p =>
-                    p.category === 'ram' && p.specs.ram_type === selectedRamType
-                );
-            }
-            this.renderComponents('ram', compatibleRams);
+        //     // 2. Filter RAM berdasarkan tipe RAM Motherboard
+        //     let compatibleRams = [];
+        //     if (this.currentSelection.motherboard) {
+        //         const selectedRamType = this.currentSelection.motherboard.specs.ram_type;
+        //         compatibleRams = this.database.products.filter(p =>
+        //             p.category === 'ram' && p.specs.ram_type === selectedRamType
+        //         );
+        //     }
+        //     this.renderComponents('ram', compatibleRams);
 
-            // --- UPDATE TAMPILAN ---
+        //     // --- UPDATE TAMPILAN ---
 
-            // Update status 'selected' pada kartu
-            document.querySelectorAll('.component-card').forEach(card => card.classList.remove('selected'));
-            Object.values(this.currentSelection).forEach(product => {
-                if (product) {
-                    document.querySelector(`.component-card[data-id="${product.id}"]`)?.classList.add('selected');
-                }
-            });
+        //     // Update status 'selected' pada kartu
+        //     document.querySelectorAll('.component-card').forEach(card => card.classList.remove('selected'));
+        //     Object.values(this.currentSelection).forEach(product => {
+        //         if (product) {
+        //             document.querySelector(`.component-card[data-id="${product.id}"]`)?.classList.add('selected');
+        //         }
+        //     });
 
-            // Update status 'disabled' pada setiap langkah
-            this.elements.steps.motherboard.classList.toggle('disabled', !this.currentSelection.processor);
-            this.elements.steps.ram.classList.toggle('disabled', !this.currentSelection.motherboard);
+        //     // Update status 'disabled' pada setiap langkah
+        //     this.elements.steps.motherboard.classList.toggle('disabled', !this.currentSelection.processor);
+        //     this.elements.steps.ram.classList.toggle('disabled', !this.currentSelection.motherboard);
             
-            // Update ringkasan (summary)
-            this.elements.summary.processor.textContent =this. currentSelection.processor ? this.currentSelection.processor.name : 'Belum dipilih';
-            this.elements.summary.motherboard.textContent = this.currentSelection.motherboard ? this.currentSelection.motherboard.name : 'Belum dipilih';
-            this.elements.summary.ram.textContent = this.currentSelection.ram ? this.currentSelection.ram.name : 'Belum dipilih';
+        //     // Update ringkasan (summary)
+        //     this.elements.summary.processor.textContent =this. currentSelection.processor ? this.currentSelection.processor.name : 'Belum dipilih';
+        //     this.elements.summary.motherboard.textContent = this.currentSelection.motherboard ? this.currentSelection.motherboard.name : 'Belum dipilih';
+        //     this.elements.summary.ram.textContent = this.currentSelection.ram ? this.currentSelection.ram.name : 'Belum dipilih';
             
-            // Hitung dan update total harga
-            let totalPrice = 0;
-            Object.values(this.currentSelection).forEach(product => {
-                if (product) {
-                    totalPrice += product.price;
-                }
-            });
-            this.elements.totalPrice.textContent = this.formatCurrency(totalPrice);
-        },
+        //     // Hitung dan update total harga
+        //     let totalPrice = 0;
+        //     Object.values(this.currentSelection).forEach(product => {
+        //         if (product) {
+        //             totalPrice += product.price;
+        //         }
+        //     });
+        //     this.elements.totalPrice.textContent = this.formatCurrency(totalPrice);
+        // },
 
         /**
          * Fungsi untuk mereset semua pilihan dan mengembalikan ke keadaan awal.
          */
-        resetBuilder() {
-            this.currentSelection = { processor: null, motherboard: null, ram: null };
-            this.init();
-        },
+        // resetBuilder() {
+        //     this.currentSelection = { processor: null, motherboard: null, ram: null };
+        //     this.init();
+        // },
 
         /**
          * Fungsi inisialisasi untuk memulai aplikasi.
          */
-        init() {
-            // Tampilkan semua prosesor di awal
-            const allProcessors = this.database.products.filter(p => p.category === 'processor');
-            this.renderComponents('processor', allProcessors);
+        // init() {
+        //     // Tampilkan semua prosesor di awal
+        //     const allProcessors = this.database.products.filter(p => p.category === 'processor');
+        //     this.renderComponents('processor', allProcessors);
             
-            var self = this;
-            // Tambahkan event listener ke parent container untuk efisiensi (event delegation)
-            document.getElementById('builder-steps').addEventListener('click', function(e) {
-                const card = e.target.closest('.component-card');
-                if (card) {
-                    const id = card.dataset.id;
-                    const category = card.dataset.category;
-                    self.handleSelection(category, id);
-                }
-            });
+        //     var self = this;
+        //     // Tambahkan event listener ke parent container untuk efisiensi (event delegation)
+        //     document.getElementById('builder-steps').addEventListener('click', function(e) {
+        //         const card = e.target.closest('.component-card');
+        //         if (card) {
+        //             const id = card.dataset.id;
+        //             const category = card.dataset.category;
+        //             self.handleSelection(category, id);
+        //         }
+        //     });
 
-            // Perbarui UI ke state awal
-            this.updateUI();
-        }
+        //     // Perbarui UI ke state awal
+        //     this.updateUI();
+        // }
 
     }
 }
