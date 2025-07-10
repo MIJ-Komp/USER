@@ -17,19 +17,35 @@
                 <p class="fw-semibold">
                   Informasi Pembeli
                 </p>
-                <TextBox />
+                <TextBox :required="false" class="mb-2" label="Nama Lengkap" v-model="customerInfo.name" />
+                <TextBox :required="false" class="mb-2" label="No. Whatsapp" v-model="customerInfo.phoneNumber" />
+                <TextBox :required="false" class="mb-2" label="Email" v-model="customerInfo.email"/>
               </div>
             </div>
             
-            <div class="card mb-3 shadow-sm">
+            <div class="card shadow-sm">
               <div class="card-body">
                 <p class="fw-semibold">
                   Alamat Pengiriman
                 </p>
+                
+                <TextArea :required="false" class="mb-2" :rows="3" label="Alamat" v-model="shippingInfo.address" />
+                <TextBox :required="false" class="mb-2" label="Kecamatan" v-model="shippingInfo.district" />
+                <TextBox :required="false" class="mb-2" label="Kab./Kota" v-model="shippingInfo.city" />
+                <TextBox :required="false" class="mb-2" label="Provinsi" v-model="shippingInfo.province"/>
+                <TextBox :required="false" class="mb-2" label="Kode Pos" v-model="shippingInfo.postalCode" />
+                <TextArea 
+                  :required="false" 
+                  class="mb-2" 
+                  :rows="2"
+                  label="Catatan untuk kurir"
+                  v-model="shippingInfo.notes"
+                  placeholder="Masukkan catatan untuk kurir"
+                />
               </div>
             </div>
             
-            <p>Daftar Belanja</p>
+            <!-- <p>Daftar Belanja</p>
             <div class="card mb-3 shadow-sm">
               <div v-for="cartItem in cartItems" class="border-bottom">
                 <CartItem
@@ -39,8 +55,8 @@
                   :removeItem="removeItem"
                 />
               </div>
-    
-            </div>
+            </div> -->
+
           </div>
         </div>
       </div>
@@ -53,7 +69,7 @@
               <span>Total</span>
               <span class="fw-semibold">{{ formatCurrency(totalPrice) }}</span>
             </div>
-            <button class="btn btn-warning w-100 fw-semibold">Beli</button>
+            <button @click="createOrder" class="btn btn-warning w-100 fw-semibold">Beli</button>
           </div>
         </div>
       </div>
@@ -67,13 +83,29 @@
   import { useCartStore } from '../store/cartStore';
   import { useStore } from 'vuex';
   import module from '../constant/module.js';
-import TextBox from '../components/input/TextBox.vue';
+  import TextBox from '../components/input/TextBox.vue';
+  import TextArea from '../components/input/TextArea.vue';
 
   const store = useStore();
   const cartStore = useCartStore();
 
   const cartItems = ref([]);
   const totalPrice = ref(0);
+
+  const customerInfo = ref({
+    name: "",
+    phoneNumber: "",
+    email: ""
+  })
+
+  const shippingInfo = ref({
+    address: "",
+    city: "",
+    notes: "",
+    postalCode: "",
+    province: "",
+    recipientName: ""
+  });
 
   async function getAllProducts() {
     if (!cartStore.items.length) {
@@ -117,12 +149,42 @@ import TextBox from '../components/input/TextBox.vue';
     }).format(number);
   }
 
-  function changeQty(productId, productSkuId, qty) {
-    cartStore.changeQty(productId, productSkuId, qty);
-  }
+  async function createOrder() {
+    const payload = {
+      customerInfo: {
+        name: customerInfo.value.name,
+        email: customerInfo.value.email,
+        phoneNumber: customerInfo.value.phoneNumber
+      },
+      notes: "string",
+      orderItems: [],
+      shippingInfo: {
+        address: shippingInfo.value.address,
+        district: shippingInfo.value.district,
+        city: shippingInfo.value.city,
+        province: shippingInfo.value.province,
+        postalCode: shippingInfo.value.postalCode,
+        notes: shippingInfo.value.notes,
+      }
+    }
 
-  function removeItem(productId, productSkuId) {
-    cartStore.removeItem(productId, productSkuId);
+    cartItems.value.forEach(item => {
+      payload.orderItems.push(
+        {
+          productId: item.productId,
+          productSkuId: item.productSkuId,
+          quantity: item.qty
+        })
+    });
+
+    try {
+      console.log(module.order.name)
+      const orderRes = await store.dispatch(`${module.order.name}/create`, payload);
+      console.log(orderRes)
+
+    } catch (err) {
+      console.error("Failed to create order:", err);
+    }
   }
 
   watch(() => 

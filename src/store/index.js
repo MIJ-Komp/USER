@@ -10,6 +10,7 @@ import menu from "./modules/menu";
 import user from "./modules/user";
 import componentType from "./modules/componentType";
 import compatibleRule from "./modules/compatibleRule";
+import order from "./modules/order";
 
 export default createStore({
    modules: {
@@ -22,6 +23,7 @@ export default createStore({
       menu,
       user,
       componentType,
-      compatibleRule
+      compatibleRule,
+      order
    },
 });

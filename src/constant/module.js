@@ -8,8 +8,12 @@ const module = {
       name: "productCategory",
    },
    product: {
-      id: 5,
+      id: 4,
       name: "product",
+   },
+   order: {
+      id: 5,
+      name: "order",
    },
    menu: {
       id: 7,

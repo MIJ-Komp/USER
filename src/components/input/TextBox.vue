@@ -363,7 +363,7 @@ export default {
 }
 .border-focus,
 .p-filled {
-   border: 1px solid var(--primary-color) !important;
+   border: 1px solid var(--yellow-600) !important;
 }
 label.text-danger {
    color: var(--red-500) !important;
