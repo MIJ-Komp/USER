@@ -69,6 +69,81 @@ const constant={
             name: "CONTACT US",
             path:'contact-us',
         }
-    ]
+    ],
+    componentTypeCode:{
+       processor: 'CPU',
+       motherboard: 'motherboard'
+    },
+    specKeys: [
+  // 🔹 PROCESSOR
+  { label: 'CPU Brand', value: 'processor_brand', groupId: 'CPU' },
+  { label: 'CPU Model', value: 'processor_model', groupId: 'CPU' },
+  { label: 'CPU Socket', value: 'processor_socket', groupId: 'CPU' },
+  { label: 'CPU Generation', value: 'processor_generation', groupId: 'CPU' },
+  { label: 'CPU Cores', value: 'processor_cores', groupId: 'CPU' },
+  { label: 'CPU Threads', value: 'processor_threads', groupId: 'CPU' },
+  { label: 'Base Clock Speed (GHz)', value: 'processor_base_clock', groupId: 'CPU' },
+  { label: 'Boost Clock Speed (GHz)', value: 'processor_boost_clock', groupId: 'CPU' },
+  { label: 'TDP (Watt)', value: 'processor_tdp_watt', groupId: 'CPU' },
+  { label: 'Supported RAM Type', value: 'processor_supported_ram_type', groupId: 'CPU' },
+  { label: 'Max Memory Supported (GB)', value: 'processor_max_memory', groupId: 'CPU' },
+  { label: 'PCIe Version Supported', value: 'processor_pcie_version', groupId: 'CPU' },
+  { label: 'Integrated Graphics', value: 'processor_integrated_graphics', groupId: 'CPU' },
+  { label: 'Supported Chipsets', value: 'processor_supported_chipsets', groupId: 'CPU' },
+
+  // 🔹 MOTHERBOARD
+  { label: 'Motherboard Socket', value: 'motherboard_socket', groupId: 'MOTHERBOARD' },
+  { label: 'Motherboard Chipset', value: 'motherboard_chipset', groupId: 'MOTHERBOARD' },
+  { label: 'Form Factor', value: 'motherboard_form_factor', groupId: 'MOTHERBOARD' },
+  { label: 'RAM Type Supported', value: 'motherboard_supported_ram_type', groupId: 'MOTHERBOARD' },
+  { label: 'Number of RAM Slots', value: 'motherboard_ram_slots', groupId: 'MOTHERBOARD' },
+  { label: 'Max RAM per Slot (GB)', value: 'motherboard_max_ram_per_slot', groupId: 'MOTHERBOARD' },
+  { label: 'Total Max RAM (GB)', value: 'motherboard_total_max_ram', groupId: 'MOTHERBOARD' },
+  { label: 'Max RAM Speed (MHz)', value: 'motherboard_max_ram_speed', groupId: 'MOTHERBOARD' },
+  { label: 'PCIe Version', value: 'motherboard_pci_version', groupId: 'MOTHERBOARD' },
+  { label: 'Storage Interfaces', value: 'motherboard_storage_interfaces', groupId: 'MOTHERBOARD' },
+  { label: 'Supported CPU Generations', value: 'motherboard_supported_generations', groupId: 'MOTHERBOARD' },
+  { label: 'Motherboard Ram Voltage', value: 'motherboard_ram_voltage', groupId: 'MOTHERBOARD' },
+
+  // 🔹 RAM
+  { label: 'RAM Type', value: 'ram_ram_type', groupId: 'RAM' },
+  { label: 'RAM Capacity (GB)', value: 'ram_capacity', groupId: 'RAM' },
+  { label: 'RAM Speed (MHz)', value: 'ram_ram_speed', groupId: 'RAM' },
+  { label: 'RAM Voltage (V)', value: 'ram_ram_voltage', groupId: 'RAM' },
+  { label: 'RAM Module Count', value: 'ram_module_count', groupId: 'RAM' },
+  { label: 'RAM Module Type', value: 'ram_module_type', groupId: 'RAM' },
+
+  // 🔹 GPU
+  { label: 'GPU PCIe Version', value: 'gpu_pci_version', groupId: 'GPU' },
+  { label: 'GPU Length (mm)', value: 'gpu_length_mm', groupId: 'GPU' },
+  { label: 'Recommended PSU Wattage', value: 'gpu_recommended_psu_watt', groupId: 'GPU' },
+  { label: 'VRAM (GB)', value: 'gpu_vram', groupId: 'GPU' },
+
+  // 🔹 PSU
+  { label: 'PSU Wattage', value: 'psu_wattage', groupId: 'PSU' },
+  { label: 'PSU Form Factor', value: 'psu_form_factor', groupId: 'PSU' },
+  { label: 'PSU Efficiency Rating', value: 'psu_efficiency', groupId: 'PSU' },
+
+  // 🔹 STORAGE
+  { label: 'Storage Interface', value: 'storage_interface', groupId: 'STORAGE' },
+  { label: 'Storage Form Factor', value: 'storage_form_factor', groupId: 'STORAGE' },
+  { label: 'Storage Capacity (GB)', value: 'storage_capacity', groupId: 'STORAGE' },
+  { label: 'NVMe Version', value: 'storage_nvme_version', groupId: 'STORAGE' },
+
+  // 🔹 COOLER
+  { label: 'Supported Sockets', value: 'cooler_supported_sockets', groupId: 'COOLER' },
+  { label: 'Cooler Height (mm)', value: 'cooler_height_mm', groupId: 'COOLER' },
+  { label: 'Max TDP Supported (W)', value: 'cooler_max_tdp_supported', groupId: 'COOLER' },
+
+  // 🔹 CASE
+  { label: 'Supported Mobo Sizes', value: 'case_supported_form_factors', groupId: 'CASE' },
+  { label: 'Max GPU Length (mm)', value: 'case_max_gpu_length', groupId: 'CASE' },
+  { label: 'Max Cooler Height (mm)', value: 'case_max_cooler_height', groupId: 'CASE' },
+  { label: 'PSU Form Factor', value: 'case_psu_form_factor', groupId: 'CASE' },
+  { label: 'Drive Bay Sizes Supported', value: 'case_drive_bay_support', groupId: 'CASE' },
+
+  // 🔹 SYSTEM (Virtual)
+  { label: 'Total Power Requirement (W)', value: 'system_total_power_requirement', groupId: 'SYSTEM' }
+   ],
 }
 export default constant

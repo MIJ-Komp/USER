@@ -6,18 +6,62 @@
             Nggak perlu bingung atau takut salah beli!
         </div>
 
-        <b-row>
-            <b-col cols="12" lg="9" md="9">
-                <AssemblyComponent componentType="Motheboard"/>
-                <AssemblyComponent componentType="CPU"/>
-                <AssemblyComponent componentType="VGA"/>
+        <b-row  class="gx-3 gy-3 align-start">
+            <b-col cols="12" lg="8" md="8" style="flex: 2;">
+                <AssemblyComponent :componentCode="constant.componentTypeCode.processor" :selectedProduct="form" @toggleShow="toggleShow(1)" :show="menu==1" v-model="form.cpu" label="Processor (CPU)"/>
+                <AssemblyComponent :componentCode="constant.componentTypeCode.processor" :selectedProduct="form" @toggleShow="toggleShow(2)" :show="menu==2" v-model="form.motherboard" label="Motherboard"/>
+                <AssemblyComponent :componentCode="constant.componentTypeCode.processor" :selectedProduct="form" @toggleShow="toggleShow(3)" :show="menu==3" v-model="form.ram" label="RAM (Memory)"/>
+                <AssemblyComponent :componentCode="constant.componentTypeCode.processor" :selectedProduct="form" @toggleShow="toggleShow(4)" :show="menu==4" v-model="form.gpu" label="VGA/GPU"/>
+                <AssemblyComponent :componentCode="constant.componentTypeCode.processor" :selectedProduct="form" @toggleShow="toggleShow(5)" :show="menu==5" v-model="form.storage" label="Penyimpanan (SSD/HDD)"/>
+                <AssemblyComponent :componentCode="constant.componentTypeCode.processor" :selectedProduct="form" @toggleShow="toggleShow(6)" :show="menu==6" v-model="form.psu" label="Power Supply (PSU)"/>
+                <AssemblyComponent :componentCode="constant.componentTypeCode.processor" :selectedProduct="form" @toggleShow="toggleShow(7)" :show="menu==7" v-model="form.case" label="Casing (case)"/>
+                <AssemblyComponent :componentCode="constant.componentTypeCode.processor" :selectedProduct="form" @toggleShow="toggleShow(8)" :show="menu==8" v-model="form.cooler" label="Pendingin (Cooler, Fan)"/>
+                <AssemblyComponent :componentCode="constant.componentTypeCode.processor" :selectedProduct="form" @toggleShow="toggleShow(9)" :show="menu==9" v-model="form.monitor" label="Monitor (Optional)"/>
+                <!-- <AssemblyComponent :componentCode="constant.componentTypeCode.processor" :selectedProduct="form" @toggleShow="toggleShow()" :show="menu==1" v-model="form.others" :multiple="false" label="Lainnya"/> -->
             </b-col>
-            <b-col cols="12" lg="3" md="3">
-                <div class="border rounded shadow-sm p-2">
-                    <div>Produk terpilih:</div>
-                    <div></div>
-                    <!-- <button>Tambah ke keranjang</button> -->
-                </div>
+            <b-col cols="12" lg="4" md="4" class="cart-container">
+                <div class="border rounded shadow-sm p-2" style="font-size: 14px;">
+                    <div style="background: var(--gold);" class="header-component fw-bold">Produk terpilih:</div>
+                    <b-row>
+                        <b-col cols="12" lg="6" class="fw-semibold">Processor</b-col>
+                        <b-col cols="12" lg="6">{{ getProduct(form.cpu) }}</b-col>
+                    </b-row>
+                    <b-row>
+                        <b-col cols="12" lg="6" class="fw-semibold">Motherboard</b-col>
+                        <b-col cols="12" lg="6">{{ getProduct(form.motherboard) }}</b-col>
+                    </b-row>
+                    <b-row>
+                        <b-col cols="12" lg="6" class="fw-semibold">RAM</b-col>
+                        <b-col cols="12" lg="6">{{ getProduct(form.ram) }}</b-col>
+                    </b-row>
+                    <b-row>
+                        <b-col cols="12" lg="6" class="fw-semibold">VGA/GPU</b-col>
+                        <b-col cols="12" lg="6">{{ getProduct(form.gpu) }}</b-col>
+                    </b-row>
+                    <b-row>
+                        <b-col cols="12" lg="6" class="fw-semibold">Power Supply</b-col>
+                        <b-col cols="12" lg="6">{{ getProduct(form.psu) }}</b-col>
+                    </b-row>
+                    <b-row>
+                        <b-col cols="12" lg="6" class="fw-semibold">Casing</b-col>
+                        <b-col cols="12" lg="6">{{ getProduct(form.case) }}</b-col>
+                    </b-row>
+                    <b-row>
+                        <b-col cols="12" lg="6" class="fw-semibold">Cooler/Fan</b-col>
+                        <b-col cols="12" lg="6">{{ getProduct(form.cooler) }}</b-col>
+                    </b-row>
+                    <b-row>
+                        <b-col cols="12" lg="6" class="fw-semibold">Monitor</b-col>
+                        <b-col cols="12" lg="6">{{ getProduct(form.monitor) }}</b-col>
+                    </b-row>
+                     <!-- <b-row>
+                        <b-col cols="12" lg="6" class="fw-semibold">Lainnya</b-col>
+                        <b-col cols="12" lg="6">{{ getProduct(form.others) }}</b-col>
+                    </b-row> -->
+
+                    <TextBox class="p-1 mt-2" labelType="in" label="Jumlah Unit Rakitan" v-model="form.totalUnit" type="number"/>
+                    <button>Tambah ke keranjang</button>
+                    </div>
             </b-col>
         </b-row>
     </div>
@@ -92,9 +136,27 @@
 </template>
 
 <script>
+import constant from '../constant/constant';
+import module from '../constant/module';
+import { mapActions } from 'vuex';
+
 export default{
     data(){
-        return{
+      return{
+        constant,
+        menu: 1,
+        form:{
+            cpu:null,
+            motherboard:null,
+            ram:null,
+            gpu:null,
+            storage:null,
+            psu:null,
+            case:null,
+            monitor:null,
+            others:[],
+            totalUnit: 1
+        },
         database :{
             products: [
                 // Prosesor
@@ -121,188 +183,52 @@ export default{
             motherboard: null,
             ram: null,
         },
-        }
+
+        products:[]
+      }
     },
     computed:{
         elements(){
             return{
-                // steps: {
-                //     processor: document.getElementById('step-processor'),
-                //     motherboard: document.getElementById('step-motherboard'),
-                //     ram: document.getElementById('step-ram'),
-                // },
-                // lists: {
-                //     processor: document.getElementById('processor-list'),
-                //     motherboard: document.getElementById('motherboard-list'),
-                //     ram: document.getElementById('ram-list'),
-                // },
-                // summary: {
-                //     processor: document.getElementById('summary-processor'),
-                //     motherboard: document.getElementById('summary-motherboard'),
-                //     ram: document.getElementById('summary-ram'),
-                // },
-                // totalPrice: document.getElementById('total-price'),
-                // resetButton: document.getElementById('reset-button')
+               
             }
         }
     },
     async mounted() {
         // this.init()
+        this.products = await this.getAll()
+        console.log(this.products)
     },
     methods:{
+        toggleShow(menu){
+            if(this.menu == menu) {
+                this.menu = null
+                return
+            }
+            this.menu = menu
+        },
+        getProduct(id){
+            return this.products.find(data=> data.id == id)?.name || '-' 
+        },
         formatCurrency(number) {
             return new Intl.NumberFormat('id-ID', {
-                    style: 'currency',
-                    currency: 'IDR',
-                    minimumFractionDigits: 0
-                }).format(number);
-            },
-        
-        /**
-         * Membuat kartu komponen HTML dari data produk.
-         * @param {object} product - Objek produk dari database.
-         * @returns {string} - String HTML untuk kartu komponen.
-         */
-        // createComponentCard(product) {
-        //     return `
-        //         <div class="component-card border-2 border-gray-200 rounded-lg p-4 cursor-pointer bg-gray-50" data-id="${product.id}" data-category="${product.category}">
-        //             <img src="${product.image}" alt="${product.name}" class="w-full h-32 object-cover rounded-md mb-3" onerror="this.onerror=null;this.src='https://placehold.co/300x300/e2e8f0/334155?text=Image+Not+Found';">
-        //             <h3 class="font-semibold text-base">${product.name}</h3>
-        //             <p class="font-bold text-indigo-600 text-lg mt-1">${this.formatCurrency(product.price)}</p>
-        //         </div>
-        //     `;
-        // },
-
-        /**
-         * Fungsi utama untuk merender (menampilkan) komponen ke halaman.
-         * @param {string} category - Kategori komponen (processor, motherboard, ram).
-         * @param {Array} productList - Array produk yang akan ditampilkan.
-         */
-        // renderComponents(category, productList) {
-        //     const listElement = this.elements.lists[category];
-        //     listElement.innerHTML = ''; // Kosongkan list sebelum diisi ulang
-        //     if (productList.length > 0) {
-        //         productList.forEach(product => {
-        //             listElement.innerHTML += this.createComponentCard(product);
-        //         });
-        //     } else {
-        //         listElement.innerHTML = `<p class="text-gray-500 col-span-full">Tidak ada komponen yang kompatibel ditemukan.</p>`;
-        //     }
-        // },
-
-        /**
-         * Meng-handle logika saat sebuah komponen dipilih.
-         * @param {string} category - Kategori komponen yang dipilih.
-         * @param {string} productId - ID produk yang dipilih.
-         */
-        // handleSelection(category, productId) {
-        //     // Simpan produk yang dipilih ke state
-        //     const selectedProduct = this.database.products.find(p => p.id === productId);
-        //     this.currentSelection[category] = selectedProduct;
-
-        //     // Reset pilihan di step-step berikutnya
-        //     if (category === 'processor') {
-        //         this.currentSelection.motherboard = null;
-        //         this.currentSelection.ram = null;
-        //     }
-        //     if (category === 'motherboard') {
-        //         this.currentSelection.ram = null;
-        //     }
-
-        //     this.updateUI();
-        // },
-
-        /**
-         * Fungsi utama untuk memperbarui seluruh User Interface (UI) berdasarkan state saat ini.
-         */
-        // updateUI() {
-        //     // --- LOGIKA FILTER KOMPATIBILITAS ---
-            
-        //     // 1. Filter Motherboard berdasarkan socket Prosesor
-        //     let compatibleMotherboards = [];
-        //     if (this.currentSelection.processor) {
-        //         const selectedSocket = this.currentSelection.processor.specs.socket;
-        //         compatibleMotherboards = this.database.products.filter(p => 
-        //             p.category === 'motherboard' && p.specs.socket === selectedSocket
-        //         );
-        //     }
-        //     this.renderComponents('motherboard', compatibleMotherboards);
-
-        //     // 2. Filter RAM berdasarkan tipe RAM Motherboard
-        //     let compatibleRams = [];
-        //     if (this.currentSelection.motherboard) {
-        //         const selectedRamType = this.currentSelection.motherboard.specs.ram_type;
-        //         compatibleRams = this.database.products.filter(p =>
-        //             p.category === 'ram' && p.specs.ram_type === selectedRamType
-        //         );
-        //     }
-        //     this.renderComponents('ram', compatibleRams);
-
-        //     // --- UPDATE TAMPILAN ---
-
-        //     // Update status 'selected' pada kartu
-        //     document.querySelectorAll('.component-card').forEach(card => card.classList.remove('selected'));
-        //     Object.values(this.currentSelection).forEach(product => {
-        //         if (product) {
-        //             document.querySelector(`.component-card[data-id="${product.id}"]`)?.classList.add('selected');
-        //         }
-        //     });
-
-        //     // Update status 'disabled' pada setiap langkah
-        //     this.elements.steps.motherboard.classList.toggle('disabled', !this.currentSelection.processor);
-        //     this.elements.steps.ram.classList.toggle('disabled', !this.currentSelection.motherboard);
-            
-        //     // Update ringkasan (summary)
-        //     this.elements.summary.processor.textContent =this. currentSelection.processor ? this.currentSelection.processor.name : 'Belum dipilih';
-        //     this.elements.summary.motherboard.textContent = this.currentSelection.motherboard ? this.currentSelection.motherboard.name : 'Belum dipilih';
-        //     this.elements.summary.ram.textContent = this.currentSelection.ram ? this.currentSelection.ram.name : 'Belum dipilih';
-            
-        //     // Hitung dan update total harga
-        //     let totalPrice = 0;
-        //     Object.values(this.currentSelection).forEach(product => {
-        //         if (product) {
-        //             totalPrice += product.price;
-        //         }
-        //     });
-        //     this.elements.totalPrice.textContent = this.formatCurrency(totalPrice);
-        // },
-
-        /**
-         * Fungsi untuk mereset semua pilihan dan mengembalikan ke keadaan awal.
-         */
-        // resetBuilder() {
-        //     this.currentSelection = { processor: null, motherboard: null, ram: null };
-        //     this.init();
-        // },
-
-        /**
-         * Fungsi inisialisasi untuk memulai aplikasi.
-         */
-        // init() {
-        //     // Tampilkan semua prosesor di awal
-        //     const allProcessors = this.database.products.filter(p => p.category === 'processor');
-        //     this.renderComponents('processor', allProcessors);
-            
-        //     var self = this;
-        //     // Tambahkan event listener ke parent container untuk efisiensi (event delegation)
-        //     document.getElementById('builder-steps').addEventListener('click', function(e) {
-        //         const card = e.target.closest('.component-card');
-        //         if (card) {
-        //             const id = card.dataset.id;
-        //             const category = card.dataset.category;
-        //             self.handleSelection(category, id);
-        //         }
-        //     });
-
-        //     // Perbarui UI ke state awal
-        //     this.updateUI();
-        // }
-
+                style: 'currency',
+                currency: 'IDR',
+                minimumFractionDigits: 0
+            }).format(number);
+        },
+        ...mapActions(module.product.name, ["getAll"]),
     }
 }
 </script>
 
 <style>
+    .cart-container {
+        position: sticky;
+        top: 64px;
+        height: fit-content;
+        z-index: 10;
+    }
         .assembly-container {
             font-family: 'Inter', sans-serif;
         }
@@ -326,4 +252,10 @@ export default{
         .assembly-container h3{
             font-size: 18px !important;
         }
-    </style>
+    @media (max-width: 991px) {
+  .cart-container {
+    position: static !important; /* biar gak sticky di mobile */
+    margin-top: 20px;
+  }
+}
+</style>
