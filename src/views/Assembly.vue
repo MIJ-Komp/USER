@@ -8,16 +8,16 @@
 
         <b-row  class="gx-3 gy-3 align-start">
             <b-col cols="12" lg="8" md="8" style="flex: 2;">
-                <AssemblyComponent @toggleShow="toggleShow(1)" :show="menu==1" v-model="form.cpu" label="Processor (CPU)"/>
-                <AssemblyComponent @toggleShow="toggleShow(2)" :show="menu==2" v-model="form.motherboard" label="Motherboard"/>
-                <AssemblyComponent @toggleShow="toggleShow(3)" :show="menu==3" v-model="form.ram" label="RAM (Memory)"/>
-                <AssemblyComponent @toggleShow="toggleShow(4)" :show="menu==4" v-model="form.gpu" label="VGA/GPU"/>
-                <AssemblyComponent @toggleShow="toggleShow(5)" :show="menu==5" v-model="form.storage" label="Penyimpanan (SSD/HDD)"/>
-                <AssemblyComponent @toggleShow="toggleShow(6)" :show="menu==6" v-model="form.psu" label="Power Supply (PSU)"/>
-                <AssemblyComponent @toggleShow="toggleShow(7)" :show="menu==7" v-model="form.case" label="Casing (case)"/>
-                <AssemblyComponent @toggleShow="toggleShow(8)" :show="menu==8" v-model="form.cooler" label="Pendingin (Cooler, Fan)"/>
-                <AssemblyComponent @toggleShow="toggleShow(9)" :show="menu==9" v-model="form.monitor" label="Monitor (Optional)"/>
-                <!-- <AssemblyComponent @toggleShow="toggleShow()" :show="menu==1" v-model="form.others" :multiple="false" label="Lainnya"/> -->
+                <AssemblyComponent :componentCode="constant.componentTypeCode.processor" :selectedProduct="form" @toggleShow="toggleShow(1)" :show="menu==1" v-model="form.cpu" label="Processor (CPU)"/>
+                <AssemblyComponent :componentCode="constant.componentTypeCode.processor" :selectedProduct="form" @toggleShow="toggleShow(2)" :show="menu==2" v-model="form.motherboard" label="Motherboard"/>
+                <AssemblyComponent :componentCode="constant.componentTypeCode.processor" :selectedProduct="form" @toggleShow="toggleShow(3)" :show="menu==3" v-model="form.ram" label="RAM (Memory)"/>
+                <AssemblyComponent :componentCode="constant.componentTypeCode.processor" :selectedProduct="form" @toggleShow="toggleShow(4)" :show="menu==4" v-model="form.gpu" label="VGA/GPU"/>
+                <AssemblyComponent :componentCode="constant.componentTypeCode.processor" :selectedProduct="form" @toggleShow="toggleShow(5)" :show="menu==5" v-model="form.storage" label="Penyimpanan (SSD/HDD)"/>
+                <AssemblyComponent :componentCode="constant.componentTypeCode.processor" :selectedProduct="form" @toggleShow="toggleShow(6)" :show="menu==6" v-model="form.psu" label="Power Supply (PSU)"/>
+                <AssemblyComponent :componentCode="constant.componentTypeCode.processor" :selectedProduct="form" @toggleShow="toggleShow(7)" :show="menu==7" v-model="form.case" label="Casing (case)"/>
+                <AssemblyComponent :componentCode="constant.componentTypeCode.processor" :selectedProduct="form" @toggleShow="toggleShow(8)" :show="menu==8" v-model="form.cooler" label="Pendingin (Cooler, Fan)"/>
+                <AssemblyComponent :componentCode="constant.componentTypeCode.processor" :selectedProduct="form" @toggleShow="toggleShow(9)" :show="menu==9" v-model="form.monitor" label="Monitor (Optional)"/>
+                <!-- <AssemblyComponent :componentCode="constant.componentTypeCode.processor" :selectedProduct="form" @toggleShow="toggleShow()" :show="menu==1" v-model="form.others" :multiple="false" label="Lainnya"/> -->
             </b-col>
             <b-col cols="12" lg="4" md="4" class="cart-container">
                 <div class="border rounded shadow-sm p-2" style="font-size: 14px;">
@@ -58,7 +58,10 @@
                         <b-col cols="12" lg="6" class="fw-semibold">Lainnya</b-col>
                         <b-col cols="12" lg="6">{{ getProduct(form.others) }}</b-col>
                     </b-row> -->
-                </div>
+
+                    <TextBox class="p-1 mt-2" labelType="in" label="Jumlah Unit Rakitan" v-model="form.totalUnit" type="number"/>
+                    <button>Tambah ke keranjang</button>
+                    </div>
             </b-col>
         </b-row>
     </div>
@@ -133,12 +136,14 @@
 </template>
 
 <script>
+import constant from '../constant/constant';
 import module from '../constant/module';
 import { mapActions } from 'vuex';
 
 export default{
     data(){
       return{
+        constant,
         menu: 1,
         form:{
             cpu:null,
@@ -150,6 +155,7 @@ export default{
             case:null,
             monitor:null,
             others:[],
+            totalUnit: 1
         },
         database :{
             products: [

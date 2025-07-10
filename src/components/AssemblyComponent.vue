@@ -33,7 +33,8 @@ import module from '../constant/module';
 import constant from '../constant/constant';
 export default{
     props:{
-        selectedComponent:{default: ()=>[]},
+        selectedProduct:{default: ()=>[]},
+        componentCode:{default: ''},
         label:{default: ()=>[]},
         show:{default: false},
         modelValue: {
@@ -56,7 +57,8 @@ export default{
     computed:{
         compatibleComponent(){
             return this.products.filter(data=>
-                this.selectedComponent.length <=0
+                data.componentType && data.componentType.code.toLowerCase() == this.componentCode.toLowerCase()
+                // && !this.selectedProduct[this.componentCode]
             )
         },
         
