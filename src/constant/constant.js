@@ -145,5 +145,19 @@ const constant={
   // 🔹 SYSTEM (Virtual)
   { label: 'Total Power Requirement (W)', value: 'system_total_power_requirement', groupId: 'SYSTEM' }
    ],
+   label:{
+    error:{
+        required: "Tidak boleh kosong",
+        email: "Email tidak valid",
+        minLength: "Harus minimal {value} karakter",
+        maxLength: "Maksimal hanya {value} karakter",
+        min: "Harus lebih besar dari {value}",
+        max: "Harus lebih kecil dari {value}",
+    }
+   },
+   productType:{
+    group: 'group',
+    single: 'single'
+   }
 }
 export default constant

@@ -36,6 +36,7 @@ export default{
         selectedProduct:{default: ()=>[]},
         componentCode:{default: ''},
         label:{default: ()=>[]},
+        allProducts:{default: ()=>[]},
         show:{default: false},
         modelValue: {
          type: [String, Number, Array],
@@ -52,11 +53,11 @@ export default{
     watch:{
     },
     async mounted(){
-        this.products = await this.getAll()
+        // this.products = await this.getAll()
     },
     computed:{
         compatibleComponent(){
-            return this.products.filter(data=>
+            return this.allProducts.filter(data=>
                 data.componentType && data.componentType.code.toLowerCase() == this.componentCode.toLowerCase()
                 // && !this.selectedProduct[this.componentCode]
             )
@@ -64,6 +65,45 @@ export default{
         
     },
     methods:{
+        evaluateRule(rule, compA, compB) {
+            const aVal = compA?.specs?.[rule.specKey];
+            const bVal = compB?.specs?.[rule.specKey];
+            const customVal = rule.value;
+            let fulfilled = false;
+
+            const actual = bVal ?? customVal; // nilai B jika ada, atau gunakan default value
+            const expected = aVal ?? customVal;
+
+            switch (rule.condition) {
+                case 'equals':
+                fulfilled = aVal === actual;
+                break;
+                case 'min':
+                fulfilled = actual >= expected;
+                break;
+                case 'max':
+                fulfilled = actual <= expected;
+                break;
+                case 'includes':
+                fulfilled = Array.isArray(expected) && expected.includes(actual);
+                break;
+                case 'one_of':
+                fulfilled = Array.isArray(actual) && actual.includes(expected);
+                break;
+                default:
+                fulfilled = false;
+                break;
+            }
+
+            return {
+                rule_id: rule.id || null,
+                description: `${rule.componentType} → ${rule.componentTypeCode} : ${rule.specKey} ${rule.condition}`,
+                fulfilled,
+                expected,
+                actual
+            };
+        },
+
         selectComponent(id){
             this.$emit("update:modelValue", id == this.modelValue? null: id);
         },

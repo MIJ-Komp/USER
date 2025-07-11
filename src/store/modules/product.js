@@ -8,13 +8,13 @@ const mutations = {
 import axios from '../axios'
 const actions = {
     async getAll({ commit }, params) {
-        let query = "?"
-        if(params){
-            if(params.productIds) {
-                query += `ids=${params.productIds}`
-            }
+        if(params && params.productIds){
+            params = Object.assign(...params, {ids: params.productIds})
+            // if(params.productIds) {
+            //     query += `ids=${params.productIds}`
+            // }
         }
-        return (await axios.get(`/products${query}`))?.items
+        return (await axios.get(`/products`, {params: params}))?.items
     },
     async getById({commit}, id){
         return await axios.get(`/products/${id}`)

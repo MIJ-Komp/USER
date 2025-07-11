@@ -15,6 +15,7 @@ import store from "./store/index";
 import axios from "./store/axios";
 import vClickOutside from "click-outside-vue3";
 import * as components from './components/component';
+import "./plugins/vee-validate";
 
 const app = createApp(App)
 app.use(BootstrapVue3)
