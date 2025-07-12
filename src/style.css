@@ -111,3 +111,8 @@ body{
 .fs-xm {
     font-size: 0.700em;
 }
+
+.required::after {
+  content: " *";
+  color: red;
+}

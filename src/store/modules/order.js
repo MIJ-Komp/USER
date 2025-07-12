@@ -11,7 +11,7 @@ const actions = {
         return await axios.post(`/orders`, payload)
     },
     async getByCode({commit}, code){
-        return await axios.get(`/products?code=${code}`)
+        return await axios.get(`/orders/${code}`)
     }
 };
 

@@ -119,45 +119,9 @@ apiClient.interceptors.response.use(
             window.location.href = "/login";
             localStorage.removeItem("authorization");
             localStorage.removeItem("user");
-      } else {
-         console.log("Network error:", error);
       }
-      // console.log(error);
-      console.log(error.response.data)
-      if (
-         error.response &&
-         error.response.data &&
-         error.response.data.code != 200
-      ) {
-         if (error.response.data.message && Array.isArray(error.response.data.message) && error.response.data.message.length > 0) {
-            // const firstError = Object.keys(
-               // error.response.data.message[0]
-            // )[0];
-            const msg = error.response.data.message[0];
-            return Promise.reject(msg);
-         } else if (error.response.message) {
-            return Promise.reject(error.response.message)
-         }
-         else
-            return Promise.reject(error.response.data);
-      }
-      else{
-         return Promise.reject(error);
-      }
-
-      // const requestIndex = processing.findIndex((data) =>
-      //    data.url === error.config?.url &&
-      //    data.headers === JSON.stringify(error.config?.headers) &&
-      //    data.data === JSON.stringify(error.config?.data) &&
-      //    data.params === JSON.stringify(error.config?.params) &&
-      //    data.method === error.config?.method
-      // );
-
-      // if (requestIndex !== -1) {
-      //    cache.set(getKey(processing[requestIndex]), returnData)
-      //    processing[requestIndex].resolve(returnData);
-      //    // processing.splice(requestIndex, 1); // Hapus dari processing
-      // }
+      
+      return Promise.reject(error.response.data);
    }
 );
 

@@ -27,14 +27,14 @@
       </div>
 
       <div class="col-md-4">
-        <div class="card shadow-sm">
+        <div class="card shadow-sm" v-if="cartItems.length">
           <div class="card-body">
             <h5>Ringkasan Belanja</h5>
             <div class="d-flex justify-content-between mb-4">
               <span>Total</span>
               <span class="fw-semibold">{{ formatCurrency(totalPrice) }}</span>
             </div>
-            <button class="btn btn-warning w-100 fw-semibold">Beli</button>
+            <button @click="checkout" class="btn btn-warning w-100 fw-semibold">Beli</button>
           </div>
         </div>
       </div>
@@ -48,9 +48,11 @@
   import { useCartStore } from '../store/cartStore';
   import { useStore } from 'vuex';
   import module from '../constant/module.js';
+import { useRouter } from 'vue-router';
 
   const store = useStore();
   const cartStore = useCartStore();
+  const router = useRouter();
 
   const cartItems = ref([]);
   const totalPrice = ref(0);
@@ -63,7 +65,7 @@
     }
 
     const params = {
-      productIds: cartStore.items.map(x => x.productId).join(",")
+      ids: cartStore.items.map(x => x.productId).join(",")
     };
 
     try {
@@ -105,6 +107,9 @@
     cartStore.removeItem(productId, productSkuId);
   }
 
+  function checkout() {
+    router.push("/cart/checkout")
+  }
   watch(() => 
     cartStore.items, 
     getAllProducts, 
