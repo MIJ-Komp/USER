@@ -16,14 +16,21 @@ import axios from "./store/axios";
 import vClickOutside from "click-outside-vue3";
 import * as components from './components/component';
 import "./plugins/vee-validate";
+import ToastService from "primevue/toastservice";
 
 const app = createApp(App)
+
+app.use(ToastService);
+import showToast from "./components/toast";
+app.config.globalProperties.$showToast = showToast;
+
 app.use(BootstrapVue3)
 app.use(vClickOutside);
 
 for (const key of Object.keys(components.default)) {
    app.component(key, components.default[key]);
 }
+
 // Pinia
 const pinia = createPinia()
 app.use(pinia)
@@ -37,6 +44,13 @@ app.use(PrimeVue, {
       preset: Aura,
    },
 })
+
+
+function registerGlobal(name, value) {
+   app.config.globalProperties[`\$${name}`] = {};
+   app.config.globalProperties[`\$${name}`] = value;
+}
+app.config.globalProperties.$registerGlobal = registerGlobal;
 
 // use store
 app.use(store);

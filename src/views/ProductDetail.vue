@@ -49,7 +49,7 @@
               Stock : {{ product?.productSkus?.[0]?.stock ?? 'N/A' }}
             </div>
             <button class="btn btn-warning" @click="addToCart">
-              <span class="fw-semibold">ADD TO CART</span>
+              <span class="fw-semibold">Tambah ke keranjang</span>
               <i class="fa fa-shopping-cart" />
             </button>
           </div>
