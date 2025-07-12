@@ -49,19 +49,19 @@ function GenerateRandomUUID(length = 36) {
 
    return uuidArray.join("");
 }
-function ConvertNumberFormat(value) {
-   if (!value) return '0';
- 
-   const numericValue = parseFloat(value);
- 
-   const fixedValue = numericValue.toFixed(2);
- 
-   const [integerPart, decimalPart] = fixedValue.split('.');
- 
-   const formattedInteger = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
- 
-   return formattedInteger + ',' + decimalPart;
- }
+function ConvertNumberFormat(value, decimal = 2) {
+  if (value === undefined || value === null || value === '') return null;
+
+  const numericValue = parseFloat(value);
+  if (isNaN(numericValue)) return null;
+
+  const fixedValue = numericValue.toFixed(decimal);
+  const [integerPart, decimalPart] = fixedValue.split('.');
+
+  const formattedInteger = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+
+  return decimal > 0 ? `${formattedInteger},${decimalPart}` : formattedInteger;
+}
 
 export default {
    GetLabel,
