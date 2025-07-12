@@ -13,18 +13,22 @@
         <h5 class="card-title">{{ cartItem?.product?.name}}</h5>
         <p class="card-text">{{formatCurrency(productSku?.price || 0)}}</p>
         
-        <div class="d-flex justify-content-end content-items-center">          
-          <button @click="removeItem(cartItem.productId, cartItem.productSkuId)" type="button" class="btn btn-sm btn-outline-secondary me-2">
-            <i class="fa fa-trash"></i>
-          </button>
-
-          <div class="btn-group" role="group" aria-label="Basic outlined example">
-            <button @click="changeQty(cartItem.productId, cartItem.productSkuId, -1)" :disabled="cartItem?.qty == 1" type="button" class="btn btn-sm btn-outline-secondary"><i class="fa fa-minus"></i></button>
-            <button type="button" class="btn btn-sm btn-outline-secondary disabled text-dark" style="color: black !important; border-color: #2e3235 !important;">
-              {{cartItem?.qty}}
+        <div class="d-flex flex-column align-items-end">     
+          <span class="fs-sm" :class="productSku?.stock && cartItem?.qty > productSku?.stock? 'text-warning' : ''" v-if="productSku?.stock && productSku?.stock > 0">Stok: {{productSku?.stock}}</span>
+          <span class="fs-sm text-danger" v-else>Stok Habis</span>
+          <div>
+            <button @click="removeItem(cartItem.productId, cartItem.productSkuId)" type="button" class="btn btn-sm btn-outline-secondary me-2">
+              <i class="fa fa-trash"></i>
             </button>
-            <button @click="changeQty(cartItem.productId, cartItem.productSkuId, 1)" type="button" class="btn btn-sm btn-outline-secondary"><i class="fa fa-plus"></i></button>
-          </div>
+
+            <div class="btn-group" role="group" aria-label="Basic outlined example">
+              <button @click="changeQty(cartItem.productId, cartItem.productSkuId, -1)" :disabled="cartItem?.qty == 1" type="button" class="btn btn-sm btn-outline-secondary"><i class="fa fa-minus"></i></button>
+              <button type="button" class="btn btn-sm btn-outline-secondary disabled text-dark" style="color: black !important; border-color: #2e3235 !important;">
+                {{cartItem?.qty}}
+              </button>
+              <button @click="changeQty(cartItem.productId, cartItem.productSkuId, 1)" :disabled="cartItem?.qty >= productSku?.stock" type="button" class="btn btn-sm btn-outline-secondary"><i class="fa fa-plus"></i></button>
+            </div>
+          </div>     
         </div>
       </div>
     </div>

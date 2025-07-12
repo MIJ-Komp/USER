@@ -27,7 +27,9 @@ export const useCartStore = defineStore('store', {
     changeQty(productId, productSkuId, qty) {
       const existItemIdx = this.items.findIndex(i => i.productId === productId && i.productSkuId === productSkuId)
       if(existItemIdx != -1) {
-        this.items[existItemIdx].qty += qty;
+        if(!(this.items[existItemIdx].qty == 1 && qty == -1)){
+          this.items[existItemIdx].qty += qty;
+        }
       }
       this.saveToLocalStorage()
     },
