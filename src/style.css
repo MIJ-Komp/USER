@@ -107,6 +107,9 @@ body{
 .fs-sm {
     font-size: 0.875em;
 }
+.stroke-green{
+ text-shadow: -1px -1px 0 green, 1px -1px 0 green, -1px 1px 0 green, 1px 1px 0 green;
+}
 
 .fs-xm {
     font-size: 0.700em;

@@ -8,55 +8,107 @@
 
         <b-row  class="gx-3 gy-3 align-start">
             <b-col cols="12" lg="8" md="8" style="flex: 2;">
-                <AssemblyComponent :allProducts="products" :componentCode="constant.componentTypeCode.processor" :selectedProduct="form" @toggleShow="toggleShow(1)" :show="menu==1" v-model="form.cpu" label="Processor (CPU)"/>
-                <AssemblyComponent :allProducts="products" :componentCode="constant.componentTypeCode.processor" :selectedProduct="form" @toggleShow="toggleShow(2)" :show="menu==2" v-model="form.motherboard" label="Motherboard"/>
-                <AssemblyComponent :allProducts="products" :componentCode="constant.componentTypeCode.processor" :selectedProduct="form" @toggleShow="toggleShow(3)" :show="menu==3" v-model="form.ram" label="RAM (Memory)"/>
-                <AssemblyComponent :allProducts="products" :componentCode="constant.componentTypeCode.processor" :selectedProduct="form" @toggleShow="toggleShow(4)" :show="menu==4" v-model="form.gpu" label="VGA/GPU"/>
-                <AssemblyComponent :allProducts="products" :componentCode="constant.componentTypeCode.processor" :selectedProduct="form" @toggleShow="toggleShow(5)" :show="menu==5" v-model="form.storage" label="Penyimpanan (SSD/HDD)"/>
-                <AssemblyComponent :allProducts="products" :componentCode="constant.componentTypeCode.processor" :selectedProduct="form" @toggleShow="toggleShow(6)" :show="menu==6" v-model="form.psu" label="Power Supply (PSU)"/>
-                <AssemblyComponent :allProducts="products" :componentCode="constant.componentTypeCode.processor" :selectedProduct="form" @toggleShow="toggleShow(7)" :show="menu==7" v-model="form.case" label="Casing (case)"/>
-                <AssemblyComponent :allProducts="products" :componentCode="constant.componentTypeCode.processor" :selectedProduct="form" @toggleShow="toggleShow(8)" :show="menu==8" v-model="form.cooler" label="Pendingin (Cooler, Fan)"/>
-                <AssemblyComponent :allProducts="products" :componentCode="constant.componentTypeCode.processor" :selectedProduct="form" @toggleShow="toggleShow(9)" :show="menu==9" v-model="form.monitor" label="Monitor (Optional)"/>
+                <AssemblyComponent  :allProducts="products" :componentCode="constant.componentTypeCode.processor" :selectedProduct="form" @toggleShow="toggleShow(1)" :show="menu==1" v-model="form.cpu" label="Processor (CPU)"/>
+                <AssemblyComponent :allProducts="products" :componentCode="constant.componentTypeCode.motherboard" :selectedProduct="form" @toggleShow="toggleShow(2)" :show="menu==2" v-model="form.motherboard" label="Motherboard"/>
+                <AssemblyComponent :allProducts="products" :componentCode="constant.componentTypeCode.ram" :selectedProduct="form" @toggleShow="toggleShow(3)" :show="menu==3" v-model="form.ram" label="RAM (Memory)"/>
+                <AssemblyComponent :allProducts="products" :componentCode="constant.componentTypeCode.gpu" :selectedProduct="form" @toggleShow="toggleShow(4)" :show="menu==4" v-model="form.gpu" label="VGA/GPU"/>
+                <AssemblyComponent :allProducts="products" :componentCode="constant.componentTypeCode.storage" :selectedProduct="form" @toggleShow="toggleShow(5)" :show="menu==5" v-model="form.storage" label="Penyimpanan (SSD/HDD)"/>
+                <AssemblyComponent :allProducts="products" :componentCode="constant.componentTypeCode.psu" :selectedProduct="form" @toggleShow="toggleShow(6)" :show="menu==6" v-model="form.psu" label="Power Supply (PSU)"/>
+                <AssemblyComponent :allProducts="products" :componentCode="constant.componentTypeCode.case" :selectedProduct="form" @toggleShow="toggleShow(7)" :show="menu==7" v-model="form.case" label="Casing (case)"/>
+                <AssemblyComponent :allProducts="products" :componentCode="constant.componentTypeCode.cooler" :selectedProduct="form" @toggleShow="toggleShow(8)" :show="menu==8" v-model="form.cooler" label="Pendingin (Cooler, Fan)"/>
+                <AssemblyComponent :allProducts="products" :componentCode="constant.componentTypeCode.monitor" :selectedProduct="form" @toggleShow="toggleShow(9)" :show="menu==9" v-model="form.monitor" label="Monitor (Optional)"/>
                 <!-- <AssemblyComponent :allProducts="products" :componentCode="constant.componentTypeCode.processor" :selectedProduct="form" @toggleShow="toggleShow()" :show="menu==1" v-model="form.others" :multiple="false" label="Lainnya"/> -->
             </b-col>
             <b-col cols="12" lg="4" md="4" class="cart-container">
-                <div class="border rounded shadow-sm p-2" style="font-size: 14px;">
-                    <div style="background: var(--gold);" class="header-component fw-bold">Produk terpilih:</div>
-                    <b-row>
-                        <b-col cols="12" lg="6" class="fw-semibold">Processor</b-col>
-                        <b-col cols="12" lg="6">{{ getProduct(form.cpu) }}</b-col>
-                    </b-row>
-                    <b-row>
-                        <b-col cols="12" lg="6" class="fw-semibold">Motherboard</b-col>
-                        <b-col cols="12" lg="6">{{ getProduct(form.motherboard) }}</b-col>
-                    </b-row>
-                    <b-row>
-                        <b-col cols="12" lg="6" class="fw-semibold">RAM</b-col>
-                        <b-col cols="12" lg="6">{{ getProduct(form.ram) }}</b-col>
-                    </b-row>
-                    <b-row>
-                        <b-col cols="12" lg="6" class="fw-semibold">VGA/GPU</b-col>
-                        <b-col cols="12" lg="6">{{ getProduct(form.gpu) }}</b-col>
-                    </b-row>
-                    <b-row>
-                        <b-col cols="12" lg="6" class="fw-semibold">Power Supply</b-col>
-                        <b-col cols="12" lg="6">{{ getProduct(form.psu) }}</b-col>
-                    </b-row>
-                    <b-row>
-                        <b-col cols="12" lg="6" class="fw-semibold">Casing</b-col>
-                        <b-col cols="12" lg="6">{{ getProduct(form.case) }}</b-col>
-                    </b-row>
-                    <b-row>
-                        <b-col cols="12" lg="6" class="fw-semibold">Cooler/Fan</b-col>
-                        <b-col cols="12" lg="6">{{ getProduct(form.cooler) }}</b-col>
-                    </b-row>
-                    <b-row>
-                        <b-col cols="12" lg="6" class="fw-semibold">Monitor</b-col>
-                        <b-col cols="12" lg="6">{{ getProduct(form.monitor) }}</b-col>
-                    </b-row>
+                <div class="border rounded shadow-sm p-1" style="font-size: 14px;">
+                    <!-- <div style="background: var(--gold);" class="header-component fw-bold">Produk terpilih:</div> -->
+                    <table style="width: 100%;" class="selected-product">
+                        <thead>
+                            <tr style="background-color: var(--gold);">
+                                <td style="min-width: 30%; max-width: 30%;">Jenis</td>
+                                <td style="min-width: 55%; max-width: 55%;">Dipilih</td>
+                                <td style="min-width: 15%; max-width: 15%;">Qty</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Processor</td>
+                                <td>{{ getProduct(form.cpu) }}</td>
+                                <td>{{ !form.cpu? '-': form.totalUnit}}</td>
+                            </tr>
+                             <tr>
+                                <td>Motherboard</td>
+                                <td>{{ getProduct(form.motherboard) }}</td>
+                                <td>{{ !form.motherboard? '-': form.totalUnit }}</td>
+                            </tr>
+                             <tr>
+                                <td>RAM</td>
+                                <td>
+                                    <div v-if="form.ram.length<=0">-</div>
+                                    <div v-for="ram in form.ram">{{ getProduct(ram.id) }}</div>
+                                </td>
+                                <td>
+                                    <div v-if="form.ram.length<=0">-</div>
+                                    <div v-for="ram in form.ram">
+                                        <select v-model="ram.quantity" style="width: 100%;" :disabled="!ram">
+                                            <option :value="index" v-for="index in 4">{{ index}}</option>
+                                        </select></div>
+                                </td>
+                            </tr>
+                             <tr>
+                                <td>VGA/GPU</td>
+                                <td>{{ getProduct(form.gpu) }}</td>
+                                <td>{{ !form.gpu? '-': form.totalUnit }}</td>
+                            </tr>
+                            <tr>
+                                <td>SSD/HDD</td>
+                                <td>
+                                    <div v-if="form.storage.length<=0">-</div>
+                                    <div v-for="storage in form.storage">{{ getProduct(storage.id) }}</div>
+                                </td>
+                                <td>
+                                    <div v-if="form.storage.length<=0">-</div>
+                                    <div v-for="storage in form.storage">
+                                        <select v-model="storage.quantity" style="width: 100%;">
+                                            <option :value="index" v-for="index in 8">{{ index}}</option>
+                                        </select></div>
+                                </td>
+                            </tr>
+                             <tr>
+                                <td>Power Supply</td>
+                                <td>{{ getProduct(form.psu) }}</td>
+                                <td>{{ !form.psu? '-': form.totalUnit }}</td>
+                            </tr>
+                             <tr>
+                                <td>Casing</td>
+                                <td>{{ getProduct(form.case) }}</td>
+                                <td>{{ !form.case? '-': form.totalUnit }}</td>
+                            </tr>
+                             <tr>
+                                <td>Cooler/Fan</td>
+                                <td>{{ getProduct(form.cooler) }}</td>
+                                <td>{{ !form.cooler? '-': form.totalUnit }}</td>
+                            </tr>
+                            <tr>
+                                <td>Monitor</td>
+                                <td>
+                                    <div v-if="form.monitor.length<=0">-</div>
+                                    <div v-for="monitor in form.monitor">{{ getProduct(monitor.id) }}</div>
+                                </td>
+                                <td>
+                                    <div v-if="form.monitor.length<=0">-</div>
+                                    <div v-for="monitor in form.monitor">
+                                        <select v-model="monitor.quantity" style="width: 100%;">
+                                            <option :value="index" v-for="index in 4">{{ index}}</option>
+                                        </select></div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
                      <!-- <b-row>
-                        <b-col cols="12" lg="6" class="fw-semibold">Lainnya</b-col>
-                        <b-col cols="12" lg="6">{{ getProduct(form.others) }}</b-col>
+                        <b-col cols="12" lg="5" class="fw-semibold">Lainnya</b-col>
+                        <b-col cols="12" lg="7">{{ getProduct(form.others) }}</b-col>
                     </b-row> -->
 
                     <TextBox class="p-1 mt-2" labelType="in" label="Jumlah Unit Rakitan" v-model="form.totalUnit" type="number"/>
@@ -65,74 +117,6 @@
             </b-col>
         </b-row>
     </div>
-
-    <div v-if="false" class="assembly-container bg-gray-100 text-gray-800">
-    <div v-if="false" class="container mx-auto p-4 sm:p-6 lg:p-8">
-        <div class="flex flex-col lg:flex-row gap-8">
-            <!-- Kolom Pilihan Komponen -->
-            <main class="w-full lg:w-2/3">
-                <div id="builder-steps">
-                    <!-- Langkah 1: Prosesor -->
-                    <div id="step-processor" class="component-section bg-white p-6 rounded-xl shadow-md mb-6">
-                        <h2 class="font-semibold mb-4 border-b pb-3">Langkah 1: Pilih Prosesor</h2>
-                        <div id="processor-list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                            <!-- Kartu prosesor akan dimuat oleh JavaScript -->
-                        </div>
-                    </div>
-
-                    <!-- Langkah 2: Motherboard -->
-                    <div id="step-motherboard" class="component-section bg-white p-6 rounded-xl shadow-md mb-6 disabled">
-                        <h2 class="font-semibold mb-4 border-b pb-3">Langkah 2: Pilih Motherboard</h2>
-                        <div id="motherboard-list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                            <p class="text-gray-500 col-span-full">Pilih prosesor terlebih dahulu untuk melihat motherboard yang kompatibel.</p>
-                        </div>
-                    </div>
-
-                    <!-- Langkah 3: RAM -->
-                    <div id="step-ram" class="component-section bg-white p-6 rounded-xl shadow-md disabled">
-                        <h2 class="font-semibold mb-4 border-b pb-3">Langkah 3: Pilih RAM</h2>
-                        <div id="ram-list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                             <p class="text-gray-500 col-span-full">Pilih motherboard terlebih dahulu untuk melihat RAM yang kompatibel.</p>
-                        </div>
-                    </div>
-                </div>
-            </main>
-
-            <!-- Kolom Ringkasan & Harga -->
-            <aside class="w-full lg:w-1/3">
-                <div class="bg-white p-6 rounded-xl shadow-md sticky top-8">
-                    <h2 class="font-semibold mb-4 border-b pb-3">Ringkasan Rakitan Anda</h2>
-                    <div id="summary-list" class="space-y-4 mb-6">
-                        <div class="flex justify-between items-center">
-                            <span class="font-small">Prosesor:</span>
-                            <span id="summary-processor" class="text-gray-600">Belum dipilih</span>
-                        </div>
-                        <div class="flex justify-between items-center">
-                            <span class="font-small">Motherboard:</span>
-                            <span id="summary-motherboard" class="text-gray-600">Belum dipilih</span>
-                        </div>
-                         <div class="flex justify-between items-center">
-                            <span class="font-small">RAM:</span>
-                            <span id="summary-ram" class="text-gray-600">Belum dipilih</span>
-                        </div>
-                    </div>
-
-                    <div class="border-t pt-4">
-                        <div class="flex justify-between items-center font-bold text-gray-900">
-                            <span>Total Harga:</span>
-                            <span id="total-price">Rp 0</span>
-                        </div>
-                    </div>
-
-                    <button @click="resetBuilder" id="reset-button" class="mt-6 w-full bg-red-600 text-white py-3 rounded-lg font-semibold hover:bg-red-700 transition-colors">
-                        Reset Pilihan
-                    </button>
-                </div>
-            </aside>
-        </div>
-
-    </div>
-</div>
 </template>
 
 <script>
@@ -145,16 +129,16 @@ export default{
       return{
         constant,
         menu: 1,
-        form:{
-            cpu:null,
-            motherboard:null,
-            ram:null,
-            gpu:null,
-            storage:null,
-            psu:null,
-            case:null,
-            monitor:null,
-            others:[],
+        form: {
+            cpu: null,
+            motherboard: null,
+            ram: [],        // multiple sticks
+            gpu: null,        // optional multiple
+            storage: [],    // multiple drive types
+            psu: null,
+            case: null,
+            monitor: [],    // kalau mau support multi-monitor
+            others: [],
             totalUnit: 1
         },
         database :{
@@ -200,6 +184,8 @@ export default{
             productTypes: constant.productType.single
         }
         this.products = await this.getAll(params)
+        console.log(this.products)
+        localStorage.getItem("assemblyProducts")
     },
     methods:{
         toggleShow(menu){
@@ -225,6 +211,14 @@ export default{
 </script>
 
 <style>
+table.selected-product{
+    border-radius: 8px !important;
+}
+  table.selected-product th,
+  table.selected-product td {
+    padding: 4px;
+    border: 1px solid #ddd;
+  }
     .cart-container {
         position: sticky;
         top: 64px;
@@ -233,6 +227,17 @@ export default{
     }
         .assembly-container {
             font-family: 'Inter', sans-serif;
+        }
+        .assembly-container button{
+            background: var(--gold);
+            width: 100%;
+            padding: 8px;
+            border-radius: 8px;
+            margin-top: 12px;
+            font-weight: bold;
+        }
+        .assembly-container button:hover{
+            background: var(--yellow-400);
         }
         .component-card {
             transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;

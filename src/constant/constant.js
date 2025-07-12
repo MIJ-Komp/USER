@@ -72,7 +72,14 @@ const constant={
     ],
     componentTypeCode:{
        processor: 'CPU',
-       motherboard: 'motherboard'
+       motherboard: 'motherboard',
+       ram: 'ram',
+       gpu: 'gpu',
+       storage: 'storage',
+       psu: 'psu',
+       case: 'case',
+       cooler: 'cooler',
+       monitor: 'monitor',
     },
     specKeys: [
   // 🔹 PROCESSOR
