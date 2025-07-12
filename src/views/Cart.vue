@@ -34,7 +34,7 @@
               <span>Total</span>
               <span class="fw-semibold">{{ formatCurrency(totalPrice) }}</span>
             </div>
-            <button @click="checkout" class="btn btn-warning w-100 fw-semibold">Beli</button>
+            <button @click="checkout" :disabled="!allowCheckout" class="btn btn-warning w-100 fw-semibold">Beli</button>
           </div>
         </div>
       </div>
@@ -57,6 +57,8 @@ import { useRouter } from 'vue-router';
   const cartItems = ref([]);
   const totalPrice = ref(0);
 
+  const allowCheckout = ref(true);
+
   async function getAllProducts() {
     if (!cartStore.items.length) {
       cartItems.value = [];
@@ -71,13 +73,20 @@ import { useRouter } from 'vue-router';
     try {
       const productRes = await store.dispatch(`${module.product.name}/getAll`, params);
 
-      totalPrice.value = 0; // Reset sebelum akumulasi ulang
+      // Reset sebelum akumulasi ulang
+      allowCheckout.value = true;
+      totalPrice.value = 0;
+      
       cartItems.value = cartStore.items.map(item => {
         const product = productRes.find(x => x.id == item.productId);
         const productSku = product?.productSkus.find(x => x.id == item.productSkuId);
 
         if (productSku) {
           totalPrice.value += productSku.price * item.qty;
+        }
+
+        if(productSku.stock < item.qty) {
+          allowCheckout.value = false;
         }
 
         return {
