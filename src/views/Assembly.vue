@@ -26,9 +26,9 @@
                     <table style="width: 100%;" class="selected-product">
                         <thead>
                             <tr style="background-color: var(--gold);">
-                                <td style="min-width: 30%; max-width: 30%;">Jenis</td>
-                                <td style="min-width: 55%; max-width: 55%;">Dipilih</td>
-                                <td style="min-width: 15%; max-width: 15%;">Qty</td>
+                                <td style="min-width: 30%; max-width: 30%; width: 30%;">Jenis</td>
+                                <td style="min-width: 55%; max-width: 55%; width: 55%;">Dipilih</td>
+                                <td style="min-width: 15%; max-width: 15%; width: 15%;">Qty</td>
                             </tr>
                         </thead>
                         <tbody>
@@ -39,7 +39,7 @@
                             </tr>
                              <tr>
                                 <td>Motherboard</td>
-                                <td>{{ getProduct(form.motherboard) }}</td>
+                                <td>{{ getProduct(form.motherboard?.productId) }}</td>
                                 <td>{{ !form.motherboard? '-': 1 }}</td>
                             </tr>
                              <tr>
@@ -201,6 +201,16 @@ export default{
             }
         }
     },
+    watch:{
+        form: {
+         immediate: true,
+         deep: true,
+         handler(newVal) {
+            if(this.hasLoaded)
+            localStorage.setItem('assembly_items', JSON.stringify(this.form))
+         }
+        }
+    },
     async mounted() {
         // this.init()
         var params= {
@@ -208,36 +218,71 @@ export default{
         }
         this.products = await this.getAll(params)
         this.compatibleRules = await this.getCompatibleRule()
-        console.log(this.compatibleRules)
-        localStorage.getItem("assemblyProducts")
+
+        var savedItems = localStorage.getItem('assembly_items')
+        if(savedItems){
+            this.form = Object.assign(this.form, JSON.parse(savedItems))
+        }
 
         this.hasLoaded = true
     },
     methods:{
-        addToCart() {
+        async addToCart() {
             //cpu
-            if(!this.form.cpu){this.$showToast.error("Anda belum memilih Processor"); return}
-            if(!this.form.motherboard){this.$showToast.error("Anda belum memilih Motherboard"); return}
-            if(this.form.ram.length <= 0){this.$showToast.error("Anda belum memilih RAM"); return}
-            if(!this.form.gpu){this.$showToast.error("Anda belum memilih VGA/GPU"); return}
-            if(this.form.storage.length <= 0){this.$showToast.error("Anda belum memilih SSD/HDD"); return}
-            if(!this.form.psu){this.$showToast.error("Anda belum memilih Power Supply"); return}
-            if(!this.form.case){this.$showToast.error("Anda belum memilih Casing"); return}
+            console.log(this.form)
+            if(!this.form.cpu && !this.form.motherboard && this.form.ram.length <= 0 && !this.form.gpu && this.form.storage.length <= 0
+                && !this.form.psu && !this.form.case && !this.form.cpuCooler && !this.form.caseFan){
+                    this.$showToast.error("Anda belum memilih salah satu item") 
+                    return;
+            }
+            if(!this.form.cpu || !this.form.motherboard || this.form.ram.length <= 0 || !this.form.gpu || this.form.storage.length <= 0
+                || !this.form.psu || !this.form.case || !this.form.cpuCooler || !this.form.caseFan
+            ){
+                const confirm = await this.$dialog.Confirmation.confirm({ title: 'Konfirmasi', message: `Item belum lengkap apakah Anda ingin menambahkannya ke dalam keranjang? tindakan ini akan menghapus item terpilih dan akan ditambahkan ke keranjang` })
 
-            Object.keys(form).forEach(code => {
+                if (confirm) {
+                    this.generateCartItem()
+                    return
+                }
+                else{ return }
+            }
+
+            const confirm = await this.$dialog.Confirmation.confirm({ title: 'Konfirmasi', message: `Pastikan seluruh item sudah sesuai. tindakan ini akan menghapus item terpilih dan akan ditambahkan ke keranjang` })
+
+            if (confirm) {
+                this.generateCartItem()
+            }
+        },
+        generateCartItem(){
+             Object.keys(this.form).forEach(code => {
                 if(code != 'totalUnit'){
-                    if(Array.isArray(form[code])){
-                        form[code].forEach(data => {
+                    if(Array.isArray(this.form[code])){
+                        this.form[code].forEach(data => {
                             this.cartStore.addItem(data)
                         });
                     }
-                    else if(form[code]){
-                       this.cartStore.addItem(Object.assign(form[code], {qty : this.form.totalUnit}))
+                    else if(this.form[code]){
+                       this.cartStore.addItem(Object.assign(this.form[code], {qty : this.form.totalUnit}))
                     }
                 }
             });
+            this.form= {
+                cpu: null,
+                motherboard: null,
+                ram: [],        // multiple sticks
+                gpu: null, 
+                storage: [],    // multiple drive types
+                psu: null,
+                case: null,
+                cpuCooler: null,
+                caseFan: [],
+                monitor: [],    // kalau mau support multi-monitor
+                others: [],
+                totalUnit: 1
+            },
+            localStorage.removeItem('assembly_items')
+            this.$router.replace({ path: `/cart`});
         },
-
         toggleShow(menu){
             if(this.menu == menu) {
                 this.menu = null

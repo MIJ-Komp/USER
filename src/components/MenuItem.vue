@@ -89,6 +89,7 @@ export default{
     padding: 12px;
     border-radius: 4px;
     position: absolute;
+    border: 1px solid #dedede;
     border-top: 2px solid #ffce42;
     top: 40px;
     left: 0px;
@@ -100,6 +101,7 @@ export default{
     padding: 12px;
     border-radius: 4px;
     position: absolute;
+    border: 1px solid #dedede;
     border-top: 2px solid #ffce42;
     top: 0px;
     left: 220px;

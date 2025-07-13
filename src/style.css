@@ -99,6 +99,9 @@ body{
 .color-gold{
     color: #ffce42;
 }
+.color-black{
+    color: black;
+}
 
 .font-title{
     font-family: 'Barlow Condensed', Helvetica, Arial, Lucida, sans-serif;

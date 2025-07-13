@@ -37,6 +37,12 @@ app.use(pinia)
 
 //set global axios
 app.config.globalProperties.$axios = axios;
+import constant from './constant/constant'
+
+function getSpecName(specKey){
+   return constant.specKeys.find(data=> data.value == specKey)?.label
+}
+app.config.globalProperties.$getSpecName = getSpecName
 
 app.use(router)
 app.use(PrimeVue, {

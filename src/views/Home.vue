@@ -117,7 +117,7 @@
             <div style="margin-top: 64px;">
                 <div class="image-right-container">
                     <div class="content">
-                        <h3>PC RAKITAN KHAS DARI KAMU</h3>
+                        <h3>PC RAKITAN KHAS DARI KAMI</h3>
                         <div>Pilih dari koleksi PC rakitan siap pakai racikan MIJ KOMP! Setiap unit telah dirakit dengan teliti, diuji secara menyeluruh, dan siap dikirim. Tingkatkan pengalaman komputasi Anda dengan performa terbaik dari konfigurasi PC unggulan kami, dirancang untuk memenuhi berbagai kebutuhan Anda.</div>
                         <button class="shop-now-button">SHOP NOW <i class="ms-2 fas fa-long-arrow-alt-right"/></button>
                     </div>

@@ -5,12 +5,13 @@
             <i class="fa" :class="show? 'fa-angle-up': 'fa-angle-down'"/>
         </div>
         <div class="body-component" :class="show? 'show': ''">
+            <TextBox v-model="keyword" class="border rounded" placeholder="Cari komponen..." :required="false"/>
             <div v-if="compatibleComponent.length <=0" class="text-center w-100 my-3">Tidak ada produk yang tersedia</div>
-            <TextBox v-else class="border rounded" placeholder="Cari komponen..." :required="false"/>
+
             <div class="component-container my-3">
                  <div style="position: relative; height: fit-content;" v-for="component in compatibleComponent">
                  <div v-show="selectedComponent(component.id)" class="flag-selected">Dipilih</div>
-                    <div class="see-detail">Detail</div>
+                 <div @click="viewDetail(component.id)" class="see-detail">Detail</div>
                 <div @click="selectComponent(component)" :class="selectedComponent(component.id)? 'selected': ''" class="component-item border shadow-sm rounded">
                    
                     <div>
@@ -24,18 +25,19 @@
                         <div class="fw-bold fs-6">{{ component.name }}</div>
                         <div class="fw-bold color-gold fs-5 stroke-green">{{ component.priceLabel }}</div>
                         <div class="">{{ component.brand?.name }}</div>
+                        <div class="" v-html="component.description"></div>
                         <div class="" v-for="(spec, index) in component.productSkus[0]?.componentSpecs">
-                                                            {{(getSpecs(spec.specKey))}} : <span class="fw-bold">{{ component.productSkus
+                                                            {{($getSpecName(spec.specKey))}} : <span class="fw-bold">{{ component.productSkus
                                                                 .map(sku => sku.componentSpecs[index].specValue)
                                                                 .filter(v => v !== undefined)
                                                                 .join(', ') }}</span></div>
-                        <div class="" v-html="component.description"></div>
                                             
                     </div>
                 </div>
             </div>
             </div>
         </div>
+        <ProductDetailModal :productId="selectedProductId" ref="productDetailModal"/>
     </div>
 </template>
 
@@ -44,6 +46,7 @@ import { mapActions } from 'vuex';
 import module from '../constant/module';
 import constant from '../constant/constant';
 import helper from '../constant/helper'
+import ProductDetailModal from './modal/ProductDetailModal.vue';
 export default{
     props:{
         selectedProduct:{default: ()=>[]},
@@ -62,7 +65,9 @@ export default{
         return{
             constant,
             currentRules: null,
-            hasLoaded: false
+            hasLoaded: false,
+            keyword: null,
+            selectedProductId: null
         }
     },
     watch:{
@@ -99,7 +104,7 @@ export default{
 
             var products = this.allProducts.filter(data=>
                 data.componentType && data.componentType.code.toLowerCase() == this.componentCode.toLowerCase()
-                // && !this.selectedProduct[this.componentCode]
+                && (!this.keyword || this.keyword.trim().length <= 0 || data.name.toLowerCase().includes(this.keyword.toLowerCase()))// && !this.selectedProduct[this.componentCode]
             )
             .map(data=> {
                 if(!data.productSkus || data.productSkus.length <=0) return data
@@ -120,8 +125,10 @@ export default{
         
     },
     methods:{
-        getSpecs(specKey){
-            return constant.specKeys.find(data=> data.value == specKey)?.label
+        viewDetail(id){
+            this.selectedProductId = id
+
+            this.$refs['productDetailModal'].show();
         },
         selectedComponent(id){
             if(Array.isArray(this.modelValue)){
@@ -213,6 +220,7 @@ export default{
                 default:
                 fulfilled = false;
             }
+            console.log(`hasil = ${fulfilled}, aVal = ${aVal}, bVal = ${bVal}, condition = ${rule.condition} , rule = ${JSON.stringify(rule)}\------------------`)
 
             return fulfilled;
         },
@@ -293,6 +301,8 @@ export default{
     max-height: 240px;
     min-height: 240px;
     overflow: hidden;
+    
+    box-shadow: inset 0 -6px 7px -6px rgba(0, 0, 0, 0.5) !important
 }
 .component-item:hover{
     border-color: var(--gold) !important;
@@ -325,11 +335,16 @@ export default{
     width: 80px;
     z-index: 1;
     font-weight: bold;
+    cursor: pointer;
+}
+.see-detail:hover{
+    background: var(--yellow-300);
 }
 .component-container .selected{
     border-color: var(--gold) !important;
     border-width: 2px !important;
-    box-shadow: 0px 0px 30px 1px rgba(0,0,0,0.1) !important;
+    /* box-shadow: 0px 0px 30px 1px rgba(0,0,0,0.1) !important; */
+    /* box-shadow: inset 0 -6px 7px -6px rgba(0, 0, 0, 0.5) !important */
 }
 .component-item img{
     height: 140px;

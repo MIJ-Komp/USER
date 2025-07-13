@@ -52,6 +52,24 @@
               <span class="fw-semibold">Tambah ke keranjang</span>
               <i class="fa fa-shopping-cart" />
             </button>
+
+            <div v-if="selectedSku" class="mt-2">
+              <div class="fs-5 fw-bold py-2" v-if="selectedSku.name">Variasi : {{ selectedSku.name }}</div>
+              <table border="1" cellpadding="8" cellspacing="0" class="productSpec">
+                <thead>
+                  <tr>
+                    <th>Spec</th>
+                    <th>Spec Value</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="spec in selectedSku.componentSpecs" :key="spec.id">
+                    <td>{{ $getSpecName(spec.specKey) }}</td>
+                    <td>{{ spec.specValue }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
           <div class="flex fs-sm mb-1">
             <span class="text-secondary">Tags : </span>
@@ -65,7 +83,7 @@
           </div>
         </div>
       </div>
-      <div class="col-md-2">
+      <div class="col-md-2" v-if="!productId">
         <div class="card mb-4">
           <div class="card-body text-center">
             <img src="../assets/products/free-ongkir.png" width="50px" />
@@ -74,7 +92,7 @@
             <img src="../assets/products/fast-delivery.png" style="width: 50px;" />
           </div>
         </div>
-        <div class="card">
+        <div class="card" v-if="!productId">
           <div class="card-body text-center">
             <img src="../assets/products/xendit_logo.svg" width="100px" />
             <div class="fs-6 fw-semibold">Secure Online Payment and Bank Transfer</div>
@@ -96,7 +114,24 @@
           <div v-html="product?.description"></div>
         </TabPanel>
         <TabPanel header="Spesifikasi">
-          <div v-html="product?.productSpec"></div>
+          <!-- <div v-html="product?.productSpec"></div> -->
+          <div v-for="(sku, i) in product?.productSkus">
+            <div class="fs-5 fw-bold py-2">Variasi : {{ sku.name??i+1 }}</div>
+            <table border="1" cellpadding="8" cellspacing="0" class="productSpec">
+              <thead>
+                <tr>
+                  <th>Spec</th>
+                  <th>Spec Value</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="spec in sku.componentSpecs" :key="spec.id">
+                  <td>{{ $getSpecName(spec.specKey) }}</td>
+                  <td>{{ spec.specValue }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </TabPanel>
         <TabPanel header="Penting! Baca Info Shipping">
           <p>Disini adalah informasi penting tentang Pengantaran Barang</p>
@@ -105,7 +140,7 @@
     </div>
 
     <!-- Related Product -->
-    <div class="row">
+    <div class="row" v-if="!productId">
       <p class="fw-semibold mb-2 fs-4">Related Products</p>
       <div v-for="product in relatedProducts.value" :key="product.id" class="col-md-3 col-lg-2">
         <ProductCard :product="product" />
@@ -115,7 +150,7 @@
 </template>
 
 <script setup>
-import { ref, watch, computed, onMounted } from 'vue'
+import { ref, watch, computed, onMounted, toRef } from 'vue'
 import { useRoute } from 'vue-router'
 import TabView from 'primevue/tabview'
 import TabPanel from 'primevue/tabpanel'
@@ -128,6 +163,7 @@ const route = useRoute()
 const store = useStore()
 
 const product = ref(null)
+const selectedSku = ref(null)
 const minPrice = ref(0)
 const maxPrice = ref(0)
 const stock = ref(0)
@@ -137,6 +173,13 @@ const fallbackUsed = ref(false)
 const defaultImage = '/images/image-dummy.png'
 
 const cartStore = useCartStore()
+
+
+const props = defineProps({
+  productId: { default: null }
+})
+const productId = toRef(props, 'productId')
+
 
 const imageUrl = computed(() => {
   const ids = product.value?.imageIds
@@ -182,12 +225,40 @@ watch(product, (newVal) => {
   }
 }, { immediate: true })
 
+watch(
+  () => productId.value ?? Number(route.params.id), // pastikan number jika route.params.id string
+  async (id, oldId) => {
+    console.log('productId berubah:', oldId, '=>', id)
+
+    if (!id) return
+
+    const result = await store.dispatch(`${module.product.name}/getById`, id)
+    if (result) product.value = result
+  },
+  { immediate: true }
+)
+
 onMounted(async () => {
   try {
-    const result = await store.dispatch(`${module.product.name}/getById`, route.params.id)
-    if (result) product.value = result
+    const id = props.productId ?? route.params.id
+    const result = await store.dispatch(`${module.product.name}/getById`, id)
+    if (result) {
+      product.value = result
+      selectedSku.value = product.value.productSkus[0]
+    }
   } catch (err) {
     console.error('Gagal memuat produk:', err)
   }
 })
 </script>
+
+<style>
+table.productSpec{
+    border-radius: 8px !important;
+}
+  table.productSpec th,
+  table.productSpec td {
+    padding: 2px 4px;
+    border: 1px solid #ddd;
+  }
+</style>

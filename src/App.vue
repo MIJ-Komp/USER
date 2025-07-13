@@ -2,6 +2,9 @@
 <template>
   <div>
     <Toast/>
+    <Alert ref="alert" />
+    <Confirmation ref="confirmation" />
+
     <Navbar/>
     <router-view :key="$route.fullPath" class="mb-4"/>
     <Footer/>
@@ -25,26 +28,38 @@ export default{
     Toast
   },
   setup(){
+    const alert = ref(null);
+    const confirmation = ref(null);
     const { appContext } = getCurrentInstance();
 
     const toast = appContext.config.globalProperties.$toast;
     const showToast = createToast(toast);
 
     onMounted(()=>{
-        //  provide("dialog", {
-        //     Alert: alert.value,
-        //     Confirmation: confirmation.value,
-        //  })
+         provide("dialog", {
+            Alert: alert.value,
+            Confirmation: confirmation.value,
+         })
 
          provide("showToast", showToast)
       })
 
-      return{showToast}
+      return{showToast, alert, confirmation}
   },
   mounted(){
     nextTick(()=>{
       // this.$registerGlobal("dialog", dialog);
       const showToast = createToast(this.$toast);
+
+      var dialog = {};
+      if (this.$refs.alert) {
+        dialog.Alert = this.$refs.alert;
+        
+      }
+      if (this.$refs.confirmation) {
+        dialog.Confirmation = this.$refs.confirmation;
+      }
+      this.$registerGlobal("dialog", dialog);
       this.$registerGlobal("showToast", showToast);
 
     })
