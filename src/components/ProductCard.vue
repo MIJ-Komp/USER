@@ -1,26 +1,27 @@
 <template>
   <div
     class="product-container card border-0 shadow-sm position-relative" 
-    @click.prevent="detail(product.id)"
+    @click.prevent="detail(product)"
     @mouseover="product.hover = true"
     @mouseleave.prevent="product.hover = false"
   >
-    <img
-      :class="product.hover ? 'blur' : ''"
-      class="card-img-top"
-      :src="imageUrl || constant.DEFAULT_PRODUCT_IMAGE"
-      @error="useFallback"
-    />
-
-    <div class="card-body">
-      <div class="fs-5 fw-semibold font-title">{{ product.name }}</div>
-      <div v-if="minPrice.value === maxPrice.value">
-        {{ formatCurrency(minPrice) }}
+    <div class="card-body product-card p-1">
+      <div>
+        <img
+          :class="product.hover ? 'blur' : ''"
+          class="card-img-top"
+          :src="imageUrl || constant.DEFAULT_PRODUCT_IMAGE"
+          @error="useFallback"
+        />
+        <div class="fs-5 fw-semibold font-title">{{ product.name }}</div>
+        <div class="fw-semibold" v-if="minPrice.value === maxPrice.value">
+          {{ formatCurrency(minPrice) }}
+        </div>
+        <div v-else class="fw-semibold">
+          {{ formatCurrency(minPrice.value) }} - {{ formatCurrency(maxPrice.value) }}
+        </div>
       </div>
-      <div v-else>
-        {{ formatCurrency(minPrice.value) }} - {{ formatCurrency(maxPrice.value) }}
-      </div>
-      <div class="text-center">
+      <div class="text-center mt-2">
           <button :class="isAlreadyCompared ? '' : 'btn-warning'" class="btn btn-sm px-4" @click.stop.prevent="compare" :disabled="isAlreadyCompared">
               <i class="fas fa-exchange-alt" />
               <span class="ms-2">{{ isAlreadyCompared ? 'Dibandingkan' : 'Bandingkan' }}</span>
@@ -91,8 +92,20 @@ function useFallback(event) {
   }
 }
 
-function detail(id) {
-  router.push(`/product-detail/${id}`)
+function detail(product) {
+  router.push(`/product-detail/${product.name.trim()}?id=${product.id}`)
 }
 
 </script>
+<style>
+.product-card{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border: 1px solid #dedede;
+  border-radius: 8px;
+}
+.product-container{
+  cursor: pointer;
+}
+</style>

@@ -48,12 +48,12 @@
             <div class="mb-4">
               Stock : {{ product?.productSkus?.[0]?.stock ?? 'N/A' }}
             </div>
-            <button class="btn btn-warning" @click="addToCart">
+            <button class="btn btn-warning" @click="addToCart" v-if="!productId">
               <span class="fw-semibold">Tambah ke keranjang</span>
               <i class="fa fa-shopping-cart" />
             </button>
 
-            <div v-if="selectedSku" class="mt-2">
+            <div v-if="selectedSku && selectedSku.componentSpecs.length > 0" class="mt-2">
               <div class="fs-5 fw-bold py-2" v-if="selectedSku.name">Variasi : {{ selectedSku.name }}</div>
               <table border="1" cellpadding="8" cellspacing="0" class="productSpec">
                 <thead>
@@ -116,8 +116,8 @@
         <TabPanel header="Spesifikasi">
           <!-- <div v-html="product?.productSpec"></div> -->
           <div v-for="(sku, i) in product?.productSkus">
-            <div class="fs-5 fw-bold py-2">Variasi : {{ sku.name??i+1 }}</div>
-            <table border="1" cellpadding="8" cellspacing="0" class="productSpec">
+            <div v-if="sku.componentSpecs.length > 0" class="fs-5 fw-bold py-2">Variasi : {{ sku.name??i+1 }}</div>
+            <table v-if="sku.componentSpecs.length > 0" border="1" cellpadding="8" cellspacing="0" class="productSpec">
               <thead>
                 <tr>
                   <th>Spec</th>
@@ -240,7 +240,7 @@ watch(
 
 onMounted(async () => {
   try {
-    const id = props.productId ?? route.params.id
+    const id = props.productId ?? route.query.id
     const result = await store.dispatch(`${module.product.name}/getById`, id)
     if (result) {
       product.value = result

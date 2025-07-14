@@ -2,14 +2,14 @@
   <div class="container">
     <div class="d-flex">
       <!-- Sidebar -->
-      <!-- <aside
+      <aside
         class="sidebar"
         :class="{
           'd-none': !isLargeScreen && !isSidebarVisible,
           'd-block': isLargeScreen || isSidebarVisible
         }"
       >
-        <div class="card">
+        <div class="card filter-container">
           <div class="card-header d-flex justify-content-between align-items-center">
               <div class="d-flex" style="align-items: center;">
                   <i class="fa fa-filter me-2"/>
@@ -60,10 +60,10 @@
                       <label for="filterDiscount" style="font-size: 12px;"> Sedang Diskon! </label>
                   </div>
               </div>
-              <div class="button-apply-filer" @click="applyFilter()">Terapkan</div>
+              <Button class="mt-2" @click="applyFilter()" label="Apply Filter"/>
           </div>
         </div>
-      </aside> -->
+      </aside>
 
       <!-- Main Content -->
       <div class="flex-grow-1">
@@ -82,18 +82,18 @@
             <div class="col">
               <div class="header mb-2">
                 <div class="text-center">PRODUK</div>
-                <div class="d-flex justify-content-center mt-2 mb-2">
-                  <!-- <div v-for="menu in currentMenu">{{ menu.label }}</div> -->
+                <!-- <div class="d-flex justify-content-center mt-2 mb-2">
+                  <div>{{ route.params?.menu }}</div>
                   <div class="bg-dark rounded-circle mx-2" style="height: 5pt; width: 5pt;"></div>
                   <div class="bg-dark rounded-circle mx-2" style="height: 5pt; width: 5pt;"></div>
-                </div>
+                </div> -->
                 <div class="d-flex">
                   <div class="d-flex flex-grow-1 align-items-center">
                     <div class="flex-grow-1 border border-dark"></div>
                     <div class="bg-dark rounded-circle" style="height: 7pt; width: 7pt;"></div>
                   </div>
                   <div class="product-name fs-3 mx-5 fw-bold font-title">
-                    {{ $route.meta.menu?.name }}
+                    {{ menu }}
                   </div>
                   <div class="d-flex flex-grow-1 align-items-center">
                     <div class="bg-dark rounded-circle" style="height: 7pt; width: 7pt;"></div>
@@ -104,10 +104,8 @@
 
               <!-- List Produk -->
 
-              <div class="row">
-                <div class="col-md-3 col-sm-6 mb-4" v-for="product in products" :key="product" >
-                  <ProductCard :product="product"/>
-                </div>
+              <div class="product-list-container">
+                  <ProductCard :product="product" v-for="product in products" :key="product"/>
               </div>
             </div>
           </div>
@@ -122,13 +120,14 @@ import { mapActions } from "vuex";
 import module from "../constant/module.js";
 import ProductCard from "../components/ProductCard.vue";
 import { Checkbox, MultiSelect, Select } from "primevue";
-
+import { useRoute } from "vue-router";
 export default {
   components: {
     ProductCard, Select, MultiSelect, Checkbox
   },
   data() {
     return {
+      route: useRoute(),
       isSidebarVisible: false,
       isLargeScreen: window.innerWidth >= 992, // 'lg' breakpoint
       cpuList:[
@@ -179,17 +178,27 @@ export default {
           }
       },
       products:[],
-      menuName: null
+      menuName: null,
+      menu: null
     };
   },
   mounted() {
     this.handleResize(); // initial state
     window.addEventListener("resize", this.handleResize);
+
   },
   beforeUnmount() {
     window.removeEventListener("resize", this.handleResize);
   },
   async created(){
+    this.menu = this.route.params?.menu?.toUpperCase()
+    if(this.menu){
+      while(this.menu.includes('-')){
+        this.menu = this.menu.replace('-', ' ')
+      }
+      this.menu = this.menu.trim()
+    }
+
     this.menuName = this.$route.params.menu
     this.products = await this.getAll()
   },
@@ -212,13 +221,31 @@ export default {
 </script>
 
 <style scoped>
+  .product-list-container{
+    display: grid;
+    gap: 12px;
+    grid-template-columns: repeat(auto-fit, 230px);
+    justify-content: center;
+  }
   .sidebar {
     min-width: 300px;
     max-width: 300px;
-    }
-  @media (max-width: 991.98px) {
+    position: sticky;
+    top: 64px;
+    height: fit-content;
+    /* z-index: 10; */
+  }
+  @media (max-width: 800px) {
     .sidebar {
-      z-index: 1050;
+      z-index: 10;
+      position: fixed !important; /* biar gak sticky di mobile */
+      max-width: 94vw;
+    }
+    .product-list-container{
+    grid-template-columns: repeat(auto-fit, 100%);
+    }
+    .filter-container{
+      height: 92vh;
     }
   }
 </style>

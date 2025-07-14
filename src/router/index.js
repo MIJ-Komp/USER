@@ -18,7 +18,7 @@ let routes = [
   { path: '/portofolio', name: 'Portofolio', component: Portofolio},
   { path: '/contact-us', name: 'Contact Us', component: ContactUs },
   { path: '/product/:menu', name: 'Produk', component: ProductList },
-  { path: '/product-detail/:id', name: 'Detail Produk', component: ProductDetail },
+  { path: '/product-detail/:name', name: 'Detail Produk', component: ProductDetail },
   { path: '/cart', name: 'Keranjang', component: Cart },
   { path: '/cart/checkout', name: 'Checkout', component: Checkout },
   { path: '/order', name: 'Order', component: Order },
