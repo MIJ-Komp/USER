@@ -1,19 +1,26 @@
 const state = {
-    user: null,
+    menus: null,
 };
 
 const mutations = {
+    setMenus(state, menus){
+        state.menus = menus
+    }
 };
 
 import axios from '../axios'
 const actions = {
     async getAll({ commit }) {
-        return (await axios.get('/menus'))
+        const menus =  (await axios.get('/menus'))
+        commit("setMenus", menus);
+        return menus
     },
 };
 
+
+
 const getters = {
-    user: (state) => state.user,
+    menus: (state) => state.menus,
 };
 
 export default {

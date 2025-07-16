@@ -20,6 +20,7 @@
         <div v-else class="fw-semibold">
           {{ formatCurrency(minPrice.value) }} - {{ formatCurrency(maxPrice.value) }}
         </div>
+        <div class="text-danger" v-if="product && product.productSkus && !product.productSkus.find(sku=> sku.stock > 0)">Out of Stock</div>
       </div>
       <div class="text-center mt-2">
           <button :class="isAlreadyCompared ? '' : 'btn-warning'" class="btn btn-sm px-4" @click.stop.prevent="compare" :disabled="isAlreadyCompared">

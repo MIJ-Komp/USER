@@ -57,49 +57,49 @@
                     <div class="assembly-item-container">
                         <div class="title">MIJ BASIC</div>
                         <img class="assembly-icon" src="../assets/home-icon/mij-basic.webp"/>
-                        <div @click="goto('mij-basic')" class="assembly-shop-button">SHOP NOW <i class="fas fa-long-arrow-alt-right"/></div>
+                        <div @click="goto('product/mij-basic')" class="assembly-shop-button">SHOP NOW <i class="fas fa-long-arrow-alt-right"/></div>
                         <div class="find-more">What this?</div>
                     </div>
                     <div class="assembly-item-container">
                         <div class="title">MIJ PRIME</div>
                         <img class="assembly-icon" src="../assets/home-icon/mij-prime.webp"/>
-                        <div @click="goto('mij-prime')" class="assembly-shop-button">SHOP NOW <i class="fas fa-long-arrow-alt-right"/></div>
+                        <div @click="goto('product/mij-prime')" class="assembly-shop-button">SHOP NOW <i class="fas fa-long-arrow-alt-right"/></div>
                         <div class="find-more">What this?</div>
                     </div>
                     <div class="assembly-item-container">
                         <div class="title">MIJ CORE</div>
                         <img class="assembly-icon" src="../assets/home-icon/mij-core.webp"/>
-                        <div @click="goto('mij-core')" class="assembly-shop-button">SHOP NOW <i class="fas fa-long-arrow-alt-right"/></div>
+                        <div @click="goto('product/mij-core')" class="assembly-shop-button">SHOP NOW <i class="fas fa-long-arrow-alt-right"/></div>
                         <div class="find-more">What this?</div>
                     </div>
                     <div class="assembly-item-container">
                         <div class="title">MIJ VEIL</div>
                         <img class="assembly-icon" src="../assets/home-icon/mij-veil.webp"/>
-                        <div @click="goto('mij-veil')" class="assembly-shop-button">SHOP NOW <i class="fas fa-long-arrow-alt-right"/></div>
+                        <div @click="goto('product/mij-veil')" class="assembly-shop-button">SHOP NOW <i class="fas fa-long-arrow-alt-right"/></div>
                         <div class="find-more">What this?</div>
                     </div>
                     <div class="assembly-item-container">
                         <div class="title">MIJ ESSENCE</div>
                         <img class="assembly-icon" src="../assets/home-icon/mij-essence.webp"/>
-                        <div @click="goto('mij-essence')" class="assembly-shop-button">SHOP NOW <i class="fas fa-long-arrow-alt-right"/></div>
+                        <div @click="goto('product/mij-essence')" class="assembly-shop-button">SHOP NOW <i class="fas fa-long-arrow-alt-right"/></div>
                         <div class="find-more">What this?</div>
                     </div>
                     <div class="assembly-item-container">
                         <div class="title">MIJ CRUX</div>
                         <img class="assembly-icon" src="../assets/home-icon/mij-crux.webp"/>
-                        <div @click="goto('mij-crux')" class="assembly-shop-button">SHOP NOW <i class="fas fa-long-arrow-alt-right"/></div>
+                        <div @click="goto('product/mij-crux')" class="assembly-shop-button">SHOP NOW <i class="fas fa-long-arrow-alt-right"/></div>
                         <div class="find-more">What this?</div>
                     </div>
                     <div class="assembly-item-container">
                         <div class="title">MIJ MIST</div>
                         <img class="assembly-icon" src="../assets/home-icon/mij-mist.webp"/>
-                        <div @click="goto('mij-mist')" class="assembly-shop-button">SHOP NOW <i class="fas fa-long-arrow-alt-right"/></div>
+                        <div @click="goto('product/mij-mist')" class="assembly-shop-button">SHOP NOW <i class="fas fa-long-arrow-alt-right"/></div>
                         <div class="find-more">What this?</div>
                     </div>
                     <div class="assembly-item-container">
                         <div class="title">MIJ SLEEK</div>
                         <img class="assembly-icon" src="../assets/home-icon/mij-sleek.webp"/>
-                        <div @click="goto('mij-sleek')" class="assembly-shop-button">SHOP NOW <i class="fas fa-long-arrow-alt-right"/></div>
+                        <div @click="goto('product/mij-sleek')" class="assembly-shop-button">SHOP NOW <i class="fas fa-long-arrow-alt-right"/></div>
                         <div class="find-more">What this?</div>
                     </div>
                 </div>

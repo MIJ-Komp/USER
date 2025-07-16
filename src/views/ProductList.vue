@@ -103,9 +103,9 @@
               </div>
 
               <!-- List Produk -->
-
+              <div class="fs-2 text-center mt-4 mb-4" v-if="getProductFiltered.length <=0" style="width: 100%;">Produk tidak ditemukan</div>
               <div class="product-list-container">
-                  <ProductCard :product="product" v-for="product in products" :key="product"/>
+                  <ProductCard :product="product" v-for="product in getProductFiltered" :key="product"/>
               </div>
             </div>
           </div>
@@ -116,14 +116,91 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { nextTick } from "vue";
+import { mapActions, mapGetters } from "vuex";
 import module from "../constant/module.js";
 import ProductCard from "../components/ProductCard.vue";
 import { Checkbox, MultiSelect, Select } from "primevue";
 import { useRoute } from "vue-router";
+
+function findMenuAndCollectCategoryIds(menus, targetName) {
+  let result = {
+    menu: null,
+    categoryIds: []
+  };
+
+  function recursiveSearch(menu) {
+    if (menu.path.toLowerCase() === `/${targetName.toLowerCase()}` || result.menu) {
+      if(!result.menu)
+        result.menu = menu;
+
+      if (menu.menuItems && Array.isArray(menu.menuItems)) {
+        for (const item of menu.menuItems) {
+          if (!result.categoryIds.includes(item.productCategoryId)) {
+            result.categoryIds.push(item.productCategoryId);
+          }
+        }
+      }
+      if (menu.childs && menu.childs.length > 0) {
+        for (const child of menu.childs) {
+          // lanjut cari child menu
+          recursiveSearch(child);
+        }
+      }
+    }
+    else{
+      if (menu.childs && menu.childs.length > 0) {
+        for (const child of menu.childs) {
+          // lanjut cari child menu
+          if (!result.menu) recursiveSearch(child);
+        }
+      }
+    }
+  }
+
+  for (const menu of menus) {
+    recursiveSearch(menu);
+    if (result.menu) break; // stop kalau sudah ketemu
+  }
+
+  return result;
+}
+
 export default {
   components: {
     ProductCard, Select, MultiSelect, Checkbox
+  },
+  computed:{
+      ...mapGetters(module.menu.name, ["menus"]),
+      getProductFiltered(){
+        return this.products
+      }
+  },
+  watch:{
+    menu:{
+      immediate: true,
+      async handler(){
+        if(this.menus){
+          const { menu, categoryIds } = findMenuAndCollectCategoryIds(this.menus, this.route.params?.menu);
+          this.menu = menu?.name.toUpperCase()
+          this.products = await this.getAll({
+            productCategoryIds: categoryIds.length <= 0 ? '-1' : categoryIds.join(',')
+          })
+        }
+      }
+    },
+    menus:{
+      immediate: true,
+      async handler(){
+        if(this.menus){
+          const { menu, categoryIds } = findMenuAndCollectCategoryIds(this.menus, this.route.params?.menu);
+          this.menu = menu?.name.toUpperCase()
+           this.products = await this.getAll({
+            productCategoryIds: categoryIds.length <= 0 ? '-1' : categoryIds.join(',')
+          })
+        }
+      }
+    }
   },
   data() {
     return {
@@ -178,7 +255,6 @@ export default {
           }
       },
       products:[],
-      menuName: null,
       menu: null
     };
   },
@@ -186,21 +262,15 @@ export default {
     this.handleResize(); // initial state
     window.addEventListener("resize", this.handleResize);
 
+    nextTick(async ()=>{
+      
+    })
+
   },
   beforeUnmount() {
     window.removeEventListener("resize", this.handleResize);
   },
   async created(){
-    this.menu = this.route.params?.menu?.toUpperCase()
-    if(this.menu){
-      while(this.menu.includes('-')){
-        this.menu = this.menu.replace('-', ' ')
-      }
-      this.menu = this.menu.trim()
-    }
-
-    this.menuName = this.$route.params.menu
-    this.products = await this.getAll()
   },
   methods: {
     toggleSidebar() {

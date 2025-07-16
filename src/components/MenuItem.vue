@@ -1,7 +1,7 @@
 <template>
     <div v-for="menu in menus" class="menu-item-container" :class="isChild? 'menu-item-child-container':''" @mouseover="menu.open = true" @mouseleave="menu.open= false">
             <div @click.prevent="goto(menu)" :class="isChild? 'menu-child':'menu'">
-                <div class="menu-label me-3 uppercase">{{menu.name}}</div>
+                <div class="menu-label me-3 uppercase">{{menu.name.toUpperCase()}}</div>
                 <i v-if="menu.childs && menu.childs.length > 0" 
                     :class="!isChild ? (!menu.open ? 'fa fa-angle-down' : 'fa fa-angle-up'):
                 (!menu.open ? 'fa fa-angle-right' : 'fa fa-angle-left')"/>

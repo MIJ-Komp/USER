@@ -83,10 +83,13 @@ import { useRouter } from 'vue-router';
 
         if (productSku) {
           totalPrice.value += productSku.price * item.qty;
-        }
 
-        if(productSku.stock < item.qty) {
-          allowCheckout.value = false;
+          if(productSku.stock < item.qty) {
+            allowCheckout.value = false;
+          }
+        }
+        else{
+            allowCheckout.value = false;
         }
 
         return {

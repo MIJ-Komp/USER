@@ -3,7 +3,7 @@
         <div class="container">
             <img class="logo" src="/favicon.webp" @click="goto('')"/>
             <div class="d-flex" style="height: 40px;">
-                <div class="mx-2 menu-label uppercase" style="align-content: center;" @click="goto('')">Home</div>
+                <div class="mx-2 menu-label uppercase" style="align-content: center;" @click="goto('')">HOME</div>
                 <div class="menu-mobile-container" v-click-outside="closeMenu" :style="openMenu?'display: flex !important;':''">
                     <MenuItem :menus="menus"/>
                 </div>

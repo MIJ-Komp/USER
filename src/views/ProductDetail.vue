@@ -4,10 +4,10 @@
     <div class="row mb-4">
       <div class="col-12">
         <div class="text-center fw-semibold">PRODUK</div>
-        <div class="d-flex justify-content-center my-2">
+        <!-- <div class="d-flex justify-content-center my-2">
           <div class="bg-dark rounded-circle m-2" style="height: 7pt; width: 7pt;"></div>
           <div class="bg-dark rounded-circle m-2" style="height: 7pt; width: 7pt;"></div>
-        </div>
+        </div> -->
         <div class="d-flex">
           <div class="d-flex flex-grow-1 align-items-center">
             <div class="flex-grow-1 border border-dark"></div>
@@ -28,16 +28,28 @@
     <div class="row mb-4">
       <div class="col-md-4">
         <img
-          :class="product?.hover ? 'blur' : ''"
+          v-if="selectedImage"
           class="card-img-top shadow-sm"
-          :src="imageUrl.value || defaultImage"
+          :src="selectedImage"
           @error="useFallback"
         />
+        <b-row v-if="product?.imageIds.length > 1">
+          <b-col cols="auto" class="mt-3" v-for="image in product?.imageIds">
+            <img
+              @click.stop.prevent="selectedImage = image"
+              style="width: 100px; height: 100px; object-fit: contain; cursor: pointer;"
+              :class="selectedImage != image ? 'blur' : ''"
+              class="card-img-bottom shadow-sm"
+              :src="image"
+              @error="useFallback"
+            />
+          </b-col>
+        </b-row>
       </div>
       <div class="col-md-6">
         <div class="mb-4">
           <div class="mb-4">
-            <div class="mb-2 fs-3">
+            <div class="mb-2 fs-2 fw-bold">
               <div v-if="minPrice === maxPrice">
                 {{ formatCurrency(minPrice) }}
               </div>
@@ -45,16 +57,46 @@
                 {{ formatCurrency(minPrice) }} - {{ formatCurrency(maxPrice) }}
               </div>
             </div>
-            <div class="mb-4">
-              Stock : {{ product?.productSkus?.[0]?.stock ?? 'N/A' }}
+            <!-- <div>
+              Stock : {{ selectedSku?.stock ?? 'N/A' }}
+            </div> -->
+            <div class="mt-2 mb-2 fw-bold">{{product?.productSkus.length > 1 ? 'Pilih' :''}} Variasi :</div>
+            <b-row class="ms-2">
+              <b-col v-for="sku in product?.productSkus" :key="sku.id" cols="auto">
+                <div @click.stop.prevent="selectedSku = sku" 
+                :class="sku.id == selectedSku.id ? 'primary-sku': 'secondary-sku'"
+                >
+                  <div class="fw-bold">{{ sku.name }}</div>
+                  <div>stock : <span class="fw-bold">{{ sku.stock }}</span></div>
+                </div>
+              </b-col>
+            </b-row>
+            
+
+            <Button :disabled="selectedSku?.stock <= 0" class="p-2 mt-4" label="Tambah ke keranjang" iconFa="fa fa-shopping-cart" @click.stop.prevent="addToCart" v-if="!productId"/>
+
+            <div class="border-bottom mt-4 mb-4 border-3"></div>
+            <div v-if="selectedSku && selectedSku.productGroupItems.length > 0" class="mt-2">
+              <div class="fs-5 fw-bold py-2" v-if="selectedSku.name"> {{ selectedSku.name }}</div>
+              <table border="1" cellpadding="8" cellspacing="0" class="productSpec">
+                <thead>
+                  <tr>
+                    <th>Qty</th>
+                    <th>Produk</th>
+                    <!-- <th>Garansi</th> -->
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="product in selectedSku.productGroupItems" :key="product.id">
+                    <td>{{ product.qty }}</td>
+                    <td>{{ product.product?.name }}</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-            <button class="btn btn-warning" @click="addToCart" v-if="!productId">
-              <span class="fw-semibold">Tambah ke keranjang</span>
-              <i class="fa fa-shopping-cart" />
-            </button>
 
             <div v-if="selectedSku && selectedSku.componentSpecs.length > 0" class="mt-2">
-              <div class="fs-5 fw-bold py-2" v-if="selectedSku.name">Variasi : {{ selectedSku.name }}</div>
+              <div class="fs-5 fw-bold py-2" v-if="selectedSku.name">Spec : {{ selectedSku.name }}</div>
               <table border="1" cellpadding="8" cellspacing="0" class="productSpec">
                 <thead>
                   <tr>
@@ -111,12 +153,30 @@
     <div class="row mb-4">
       <TabView class="TabView">
         <TabPanel header="Deskripsi">
+          <div v-for="(sku, i) in product?.productSkus">
+          <div v-if="sku.productGroupItems.length > 0" class="fs-5 fw-bold py-2">{{ sku.name??i+1 }}</div>
+            <table v-if="sku.productGroupItems.length > 0" border="1" cellpadding="8" cellspacing="0" class="productSpec">
+              <thead>
+                  <tr>
+                    <th>Qty</th>
+                    <th>Produk</th>
+                    <!-- <th>Garansi</th> -->
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="product in sku.productGroupItems" :key="product.id">
+                    <td>{{ product.qty }}</td>
+                    <td>{{ product.product?.name }}</td>
+                  </tr>
+                </tbody>
+            </table>
+            </div>
           <div v-html="product?.description"></div>
         </TabPanel>
         <TabPanel header="Spesifikasi">
           <!-- <div v-html="product?.productSpec"></div> -->
           <div v-for="(sku, i) in product?.productSkus">
-            <div v-if="sku.componentSpecs.length > 0" class="fs-5 fw-bold py-2">Variasi : {{ sku.name??i+1 }}</div>
+            <div v-if="sku.componentSpecs.length > 0" class="fs-5 fw-bold py-2">{{ sku.name }}</div>
             <table v-if="sku.componentSpecs.length > 0" border="1" cellpadding="8" cellspacing="0" class="productSpec">
               <thead>
                 <tr>
@@ -169,6 +229,9 @@ const maxPrice = ref(0)
 const stock = ref(0)
 const relatedProducts = ref([])
 const fallbackUsed = ref(false)
+const backendURL = import.meta.env.VITE_API_URL
+
+const selectedImage = ref(null)
 
 const defaultImage = '/images/image-dummy.png'
 
@@ -181,10 +244,10 @@ const props = defineProps({
 const productId = toRef(props, 'productId')
 
 
-const imageUrl = computed(() => {
-  const ids = product.value?.imageIds
-  return ids && ids.length ? `http://localhost:5000/api/files?id=${ids[0]}` : ''
-})
+// const imageUrl = computed(() => {
+//   const ids = product.value?.imageIds
+//   return ids && ids.length ? `http://localhost:5000/api/files?id=${ids[0]}` : ''
+// })
 
 const tags = computed(() => {
   const tag = product.value?.tags
@@ -203,7 +266,7 @@ function addToCart() {
   const {id, productSkus} = product.value
   const newCartItem = {
     productId: id,
-    productSkuId: productSkus[0].id,
+    productSkuId: selectedSku.value?.id,
     qty: 1
   }
   cartStore.addItem(newCartItem)
@@ -217,6 +280,19 @@ function useFallback(event) {
 }
 
 watch(product, (newVal) => {
+  if(newVal){
+    if(!product.value?.imageIds || product.value?.imageIds.length <=0){
+      product.value.imageIds = [null]
+    }
+    if (product.value?.imageIds) {
+      product.value.imageIds = product.value.imageIds.map(id =>
+        id ? `${backendURL}/files?id=${id}` : defaultImage
+      )
+    }
+
+    selectedImage.value = product.value?.imageIds[0]
+    console.log(product.value)
+  }
   if (newVal && Array.isArray(newVal.productSkus) && newVal.productSkus.length > 0) {
     const prices = newVal.productSkus.map(item => item.price)
     minPrice.value = Math.min(...prices)
@@ -253,12 +329,62 @@ onMounted(async () => {
 </script>
 
 <style>
-table.productSpec{
-    border-radius: 8px !important;
+.primary-sku{
+  cursor: pointer;
+  border-radius: 8px;
+  padding: 4px 24px;
+  background: var(--yellow-100);
+  border: 4px solid var(--gold) !important;
 }
-  table.productSpec th,
-  table.productSpec td {
-    padding: 2px 4px;
-    border: 1px solid #ddd;
-  }
+.secondary-sku{
+  cursor: pointer;
+  border-radius: 8px;
+  padding: 4px 24px;
+  border: 2px solid var(--grey-700) !important;
+}
+.secondary-sku:hover{
+  border: 4px solid var(--yellow-300) !important;
+}
+
+.skuOption{
+  cursor: pointer;
+}
+.skuOption:hover{
+  border-color: var(--gold);
+}
+
+table.productSpec {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  font-size: 14px;
+  background-color: white;
+}
+
+table.productSpec thead {
+  background-color: var(--gold); /* Gold */
+  color: #333;
+}
+
+table.productSpec th,
+table.productSpec td {
+  padding: 6px 12px;
+  border: 1px solid #e0e0e0;
+  text-align: left;
+}
+
+table.productSpec th {
+  font-weight: 600;
+}
+
+table.productSpec tbody tr:nth-child(odd) {
+  background-color: #fffaf0; /* Light gold-ish striping */
+}
+
+table.productSpec tbody tr:hover {
+  background-color: #fff2cc; /* soft highlight on hover */
+}
+
 </style>
