@@ -65,11 +65,11 @@
                 <h5>Tentang Kami</h5>
 
                 <div class="mt-3 nav-footer">
-                    <a href="/about-us">Tentang Kami</a>
-                    <a href="/about-us">Portofolio</a>
-                    <a href="/about-us">Blog</a>
-                    <a href="/about-us">Hubungi Kami</a>
-                    <a href="/about-us">FAQ</a>
+                    <a href="/about">Tentang Kami</a>
+                    <a href="/portofolio">Portofolio</a>
+                    <a href="/blog">Blog</a>
+                    <a href="/contact-us">Hubungi Kami</a>
+                    <a href="/faq">FAQ</a>
                 </div>
             </b-col>
             <b-col lg="2" cols="6" class="mt-3">
@@ -85,20 +85,17 @@
             <b-col lg="2" cols="6" class="mt-3">
                 <h5>Bantuan Pelanggan</h5>
                 <div class="mt-3 nav-footer">
-                    <a href="/about-us">Cek Resi</a>
-                    <a href="/about-us">Lacak Pesanan</a>
-                    <a href="/about-us">Konfirmasi Pembayaran</a>
-                    <a href="/about-us">Syarat dan Ketentuan</a>
-                    <a href="/about-us">Kebijakan dan Privasi</a>
+                    <a href="/terms-and-conditions">Syarat dan Ketentuan</a>
+                    <a href="/policy-and-privacy">Kebijakan dan Privasi</a>
                 </div>
             </b-col>
             <b-col lg="2" cols="6" class="mt-3">
                 <h5>Info Pelanggan</h5>
                 <div class="mt-3 nav-footer">
                     <!-- <a href="/about-us">Akun Saya</a> -->
-                    <a href="/about-us">Pesanan Saya</a>
-                    <a href="/about-us">Keranjang Belanja</a>
-                    <a href="/about-us">Checkout</a>
+                    <a href="/order">Pesanan Saya</a>
+                    <a href="/cart">Keranjang Belanja</a>
+                    <a href="/cart/checkout">Checkout</a>
                 </div>
             </b-col>
         </b-row>
