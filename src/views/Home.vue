@@ -264,6 +264,7 @@ h3{
 .diff-item-container{
     justify-items: center;
     width: 50%;
+    text-align: center;
     align-self: center;
 }
 

@@ -8,6 +8,7 @@
                     <MenuItem :menus="menus"/>
                 </div>
                 <div class="mx-2 menu-label uppercase" style="align-content: center;" @click="goto('rakit-pc')">RAKIT PC</div>
+                <div class="mx-2 menu-label uppercase" style="align-content: center;" @click="goto('order')">CEK PESANAN</div>
 
                 <div class="mx-2" style="align-content: center;">
                     <!-- <i class="fa fa-cart-shopping"/> -->

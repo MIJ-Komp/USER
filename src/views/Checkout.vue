@@ -20,7 +20,7 @@
                     <b-form-input autocomplete="off" id="txtCustomerName" v-model="customerInfo.name" type="text" placeholder="Masukkan nama lengkap" required />
                   </b-form-group>
                   <b-form-group label="No. Whatsapp" label-for="txtWhatsapp" label-class="required">
-                    <b-form-input autocomplete="off" id="txtWhatsapp" v-model="customerInfo.phoneNumber" type="text" placeholder="Masukkan no. whatsapp" required />
+                    <b-form-input autocomplete="off" id="txtWhatsapp" v-model="customerInfo.phoneNumber" type="text" placeholder="Masukkan no. whatsapp untuk notifikasi pembayaran" required />
                   </b-form-group>
                   <b-form-group label="Email" label-for="txtEmail" label-class="required">
                     <b-form-input autocomplete="off" id="txtEmail" v-model="customerInfo.email" type="email" placeholder="Masukkan email  " required />
@@ -56,17 +56,23 @@
           </div>
         </div>
 
-        <div class="col-md-4">
+        <div class="col-md-4" 
+            style="position: sticky;
+            top: 64px;
+            height: fit-content;
+            z-index: 10;">
           <div class="card shadow-sm">
             <div class="card-body">
               <h5>Ringkasan Belanja</h5>
-              <div class="d-flex justify-content-between mb-4">
-                <span>Total</span>
+              <div v-for="item in cartItems" class="d-flex justify-content-between mb-2">
+                <span>{{item.product?.name}}</span>
+                <span class="fw-semibold">{{ formatCurrency(item?.totalPrice) }}</span>
+              </div>
+              <div class="border-top pt-4 d-flex justify-content-between mt-4 mb-4">
+                <span>TOTAL</span>
                 <span class="fw-semibold">{{ formatCurrency(totalPrice) }}</span>
               </div>
-              <b-button variant="warning" class="w-100" type="button" @click="validateAndSubmit">
-                Submit
-              </b-button>
+              <Button variant="warning" class="w-100" label="Payment" @click="validateAndSubmit"/>
             </div>
           </div>
         </div>
@@ -77,11 +83,19 @@
 </template>
 
 <script setup>
-  import { ref, watch } from 'vue';
+  import { ref, watch, getCurrentInstance } from 'vue';
   import { useCartStore } from '../store/cartStore';
   import { useStore } from 'vuex';
   import module from '../constant/module.js';
-import { useRouter } from 'vue-router';
+  import { useRouter } from 'vue-router';
+  import Toast from "primevue/toast";
+  import createToast from "../components/toast.js";
+
+  const { appContext } = getCurrentInstance();
+
+  const toast = appContext.config.globalProperties.$toast;
+  const showToast = createToast(toast);
+
 
   const store = useStore();
   const cartStore = useCartStore();
@@ -127,6 +141,7 @@ import { useRouter } from 'vue-router';
 
         if (productSku) {
           totalPrice.value += productSku.price * item.qty;
+          item.totalPrice = productSku.price * item.qty
         }
 
         return {
@@ -134,6 +149,8 @@ import { useRouter } from 'vue-router';
           product
         };
       });
+
+      console.log(cartItems)
 
     } catch (err) {
       console.error("Failed to fetch products:", err);
@@ -164,7 +181,8 @@ import { useRouter } from 'vue-router';
       // shipping.postalCode.trim() !== ""
 
     if (!isValid) {
-      alert("Mohon lengkapi semua field yang wajib diisi (bertanda *).")
+      console.log(showToast)
+      showToast.error("Mohon melengkapi data yang dibutuhkan (bertanda *)") 
       return
     }
 

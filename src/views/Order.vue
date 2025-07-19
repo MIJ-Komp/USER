@@ -4,15 +4,15 @@
       <div class="col-12 mb-4">
         <div class="">
         <h5 class="">Cari Pesanan</h5>
-        <div class="row">
-
-          <div class="col-md-5 col-sm-12">
-            
-            <b-form @submit="searchOrder" class="d-flex align-items-center">
-              <b-form-input class="me-2" required v-model="searchQuery" placeholder="Masukkan nomor pesanan" />
-              <b-button pill variant="warning" class="shadow-sm" @click="searchOrder">Cari</b-button>
+        <div>
+            <b-form @submit="searchOrder" class="row align-items-center">
+              <div class="col-md-9 col-sm-12">
+                <b-form-input class="me-2" required v-model="searchQuery" placeholder="Masukkan nomor pesanan" />
+              </div>
+              <div class="col-md-3 col-sm-12">
+                <Button pill variant="warning" class="shadow-sm p-2" @click="searchOrder" label="Cari"/>
+              </div>
             </b-form>
-          </div>
         </div>
         
         </div>
