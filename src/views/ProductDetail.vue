@@ -36,6 +36,14 @@
             <img :src="image" @error="useFallback" />
           </div>
         </div>
+        <!-- <button 
+          v-if="product?.videoUrl" 
+          class="play-button"
+          @click="showVideoModal = true"
+        >
+          <i class="fas fa-play"></i>
+        </button> -->
+        <iframe style="max-width: 500px;" class="mt-3" width="100%" height="auto" v-if="product?.videoUrl" :src="`https://www.youtube.com/embed/${product?.videoUrl}`" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
       </div>
 
       <!-- Product Info -->
@@ -71,7 +79,7 @@
 
         <!-- Add to Cart Button -->
         <button 
-          class="add-to-cart-btn" 
+          class="add-to-cart-btn text-black" 
           :disabled="selectedSku?.stock <= 0"
           @click="addToCart"
           v-if="!productId"
@@ -102,7 +110,7 @@
         </div>
 
         <!-- Component Specifications -->
-        <div  v-if="false && selectedSku?.componentSpecs.length > 0" class="specs-section">
+        <div  v-if="selectedSku?.componentSpecs.length > 0" class="specs-section">
           <h4 class="section-title">Spesifikasi {{ selectedSku.name }}</h4>
           <div class="specs-table-container">
             <table class="specs-table">
@@ -130,14 +138,14 @@
               <a 
                 v-for="(tag, i) in tags" 
                 :key="i"
-                :href="`/products?tag=${tag}`"
+                :href="`/product/all/?tag=${tag}`"
                 class="tag"
               >{{ tag }}</a>
             </div>
           </div>
           <div class="brand">
             <span class="label">Brand:</span>
-            <a :href="`/products?brandId=${product?.brand?.id}`" class="brand-link">
+            <a :href="`/product/all?brandIds=${product?.brand?.id}`" class="brand-link">
               {{ product?.brand?.name }}
             </a>
           </div>
@@ -171,8 +179,9 @@
       <TabView>
         <TabPanel header="Deskripsi">
           <div class="tab-content description-content">
-            <div v-for="(sku, i) in product?.productSkus" :key="i">
-              <div v-if="sku.productGroupItems.length > 0">
+            <b-row>
+              <b-col cols="12" md="6" v-for="(sku, i) in product?.productSkus" :key="i">
+                <div v-if="sku.productGroupItems.length > 0">
                 <h4>{{ sku.name || `Paket ${i + 1}` }}</h4>
                 <table class="specs-table">
                   <thead>
@@ -188,53 +197,56 @@
                     </tr>
                   </tbody>
                 </table>
-              </div>
-            </div>
+                </div>
+              </b-col>
+            </b-row>
             <div class="product-description" v-html="product?.description"></div>
           </div>
         </TabPanel>
 
         <TabPanel header="Spesifikasi">
           <div class="tab-content specs-content">
-            <div v-for="(sku, i) in product?.productSkus" :key="i">
-              <div v-if="sku.componentSpecs.length > 0">
-                <h3>{{ sku.name }}</h3>
-                <table class="specs-table">
-                  <thead>
-                    <tr>
-                      <th>Spesifikasi</th>
-                      <th>Nilai</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr v-for="spec in sku.componentSpecs" :key="spec.id">
-                      <td>{{ $getSpecName(spec.specKey) }}</td>
-                      <td>{{ spec.specValue }}</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+            <b-row>
+              <b-col cols="12" md="6" v-for="(sku, i) in product?.productSkus" :key="i">
+                <div v-if="sku.componentSpecs.length > 0">
+                  <h5>{{ sku.name }}</h5>
+                  <table class="specs-table">
+                    <thead>
+                      <tr>
+                        <th>Spesifikasi</th>
+                        <th>Nilai</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr v-for="spec in sku.componentSpecs" :key="spec.id">
+                        <td>{{ $getSpecName(spec.specKey) }}</td>
+                        <td>{{ spec.specValue }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </b-col>
+            </b-row>
           </div>
         </TabPanel>
 
         <TabPanel header="Info Pengiriman">
           <div class="tab-content shipping-content">
-            <h3>Informasi Penting Pengiriman</h3>
+            <h4>Informasi Penting Pengiriman</h4>
             <div class="shipping-details">
               <div class="shipping-item">
                 <i class="fas fa-truck"></i>
-                <h4>Gratis Ongkir</h4>
+                <h5>Gratis Ongkir</h5>
                 <p>Untuk area Medan, Binjai, Deli Serdang dan sekitarnya</p>
               </div>
               <div class="shipping-item">
                 <i class="fas fa-box"></i>
-                <h4>Packaging Aman</h4>
+                <h5>Packaging Aman</h5>
                 <p>Dikemas dengan aman menggunakan bubble wrap dan box yang kokoh</p>
               </div>
               <div class="shipping-item">
                 <i class="fas fa-clock"></i>
-                <h4>Estimasi Pengiriman</h4>
+                <h5>Estimasi Pengiriman</h5>
                 <p>1-3 hari kerja untuk area Medan dan sekitarnya</p>
               </div>
             </div>
@@ -252,10 +264,28 @@
         </div>
       </div>
     </div>
+<!-- 
+     <Dialog
+      v-model:visible="showVideoModal"
+      modal
+      :style="{ width: '80vw' }"
+      :closable="true"
+      @hide="showVideoModal = false"
+    >
+      <iframe
+        :src="product?.videoUrl"
+        width="100%"
+        height="450"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen
+      ></iframe>
+    </Dialog> -->
   </div>
 </template>
 
 <script setup>
+import Dialog from 'primevue/dialog'
 import { ref, watch, computed, onMounted, toRef } from 'vue'
 import { useRoute } from 'vue-router'
 import TabView from 'primevue/tabview'
@@ -264,6 +294,10 @@ import ProductCard from '../components/ProductCard.vue'
 import { useStore } from 'vuex'
 import module from '../constant/module.js'
 import { useCartStore } from '../store/cartStore'
+import { getCurrentInstance } from 'vue'
+
+const { proxy } = getCurrentInstance();
+const $showToast = proxy.$showToast;
 
 const route = useRoute()
 const store = useStore()
@@ -316,6 +350,7 @@ function addToCart() {
     qty: 1
   }
   cartStore.addItem(newCartItem)
+  $showToast.success(`Berhasil menambah ke keranjang`);
 }
 
 function useFallback(event) {
@@ -391,11 +426,45 @@ const getStockClass = (stock) => {
   if (stock <= 5) return 'low-stock'
   return 'in-stock'
 }
+
 </script>
 
 <style scoped>
+
+.main-image-container {
+  position: relative;
+  aspect-ratio: 1;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.play-button {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.7);
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.play-button i {
+  color: white;
+  font-size: 24px;
+}
+
+.play-button:hover {
+  background: var(--gold);
+  transform: translate(-50%, -50%) scale(1.1);
+}
+
 .product-detail-container {
-  padding: 2rem 0;
+  padding: 2rem 12px;
 }
 
 /* Product Header */

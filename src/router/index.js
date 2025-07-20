@@ -20,6 +20,7 @@ let routes = [
   { path: '/', name: 'Home', component: Home },
   { path: '/about', name: 'About', component: About},
   { path: '/rakit-pc', name: 'Rakit PC', component: Assembly },
+  { path: '/product/all', name: 'Produk', component: ProductList },
   { path: '/product/:menu', name: 'Produk', component: ProductList },
   { path: '/product-detail/:name', name: 'Detail Produk', component: ProductDetail },
   { path: '/cart', name: 'Keranjang', component: Cart },

@@ -41,19 +41,33 @@
                             <tbody>
                                 <tr>
                                     <td>Processor (CPU)</td>
-                                    <td>{{ getProduct(form.cpu?.productId) }}</td>
+                                    <td>
+                                        <div>
+                                            <div>{{ getProduct(form.cpu?.productId)?.name ?? '-' }}</div>
+                                            <small class="ps-1" v-if="getProduct(form.cpu?.productId)?.productSkus?.length > 1">{{ getProduct(form.cpu?.productId)?.productSkus.find(data=> data.id == form.cpu?.productSkuId)?.name}}</small>
+                                        </div>
+                                    </td>
                                     <td>{{ !form.cpu? '-': 1}}</td>
                                 </tr>
                                  <tr>
                                     <td>Motherboard</td>
-                                    <td>{{ getProduct(form.motherboard?.productId) }}</td>
+                                    <td>
+                                        <div>
+                                            <div>{{ getProduct(form.motherboard?.productId)?.name ?? '-' }}</div>
+                                            <small class="ps-1" v-if="getProduct(form.motherboard?.productId)?.productSkus?.length > 1">{{ getProduct(form.motherboard?.productId)?.productSkus.find(data=> data.id == form.cpu?.productSkuId)?.name}}</small>
+
+                                        </div>
+                                    </td>
                                     <td>{{ !form.motherboard? '-': 1 }}</td>
                                 </tr>
                                  <tr>
                                     <td>RAM</td>
                                     <td>
                                         <div v-if="form.ram.length<=0">-</div>
-                                        <div v-for="ram in form.ram">{{ getProduct(ram?.productId) }}</div>
+                                        <div v-for="ram in form.ram">
+                                            <div>{{ getProduct(ram?.productId)?.name ?? '-' }}</div>
+                                            <small class="ps-1" v-if="getProduct(ram?.productId)?.productSkus?.length > 1">{{ getProduct(ram?.productId)?.productSkus.find(data=> data.id == form.cpu?.productSkuId)?.name}}</small>
+                                        </div>
                                     </td>
                                     <td>
                                         <div v-if="form.ram.length<=0">-</div>
@@ -65,14 +79,24 @@
                                 </tr>
                                  <tr>
                                     <td>VGA/GPU</td>
-                                    <td>{{ getProduct(form.gpu?.productId) }}</td>
+                                    <td>
+                                     <div>
+                                            <div>{{ getProduct(form.gpu?.productId)?.name ?? '-' }}</div>
+                                            <small class="ps-1" v-if="getProduct(form.gpu?.productId)?.productSkus?.length > 1">{{ getProduct(form.gpu?.productId)?.productSkus.find(data=> data.id == form.cpu?.productSkuId)?.name}}</small>
+
+                                        </div>
+                                    </td>
                                     <td>{{ !form.gpu? '-': 1 }}</td>
                                 </tr>
                                 <tr>
                                     <td>SSD/HDD</td>
                                     <td>
                                         <div v-if="form.storage.length<=0">-</div>
-                                        <div v-for="storage in form.storage">{{ getProduct(storage?.productId) }}</div>
+                                        <div v-for="storage in form.storage">
+                                            <div>{{ getProduct(storage?.productId)?.name ?? '-' }}</div>
+                                            <small class="ps-1" v-if="getProduct(storage?.productId)?.productSkus?.length > 1">{{ getProduct(storage?.productId)?.productSkus.find(data=> data.id == form.cpu?.productSkuId)?.name}}</small>
+
+                                        </div>
                                     </td>
                                     <td>
                                         <div v-if="form.storage.length<=0">-</div>
@@ -84,24 +108,45 @@
                                 </tr>
                                  <tr>
                                     <td>Power Supply</td>
-                                    <td>{{ getProduct(form.psu?.productId) }}</td>
+                                    <td>
+                                        <div>
+                                            <div>{{ getProduct(form.psu?.productId)?.name ?? '-' }}</div>
+                                            <small class="ps-1" v-if="getProduct(form.psu?.productId)?.productSkus?.length > 1">{{ getProduct(form.psu?.productId)?.productSkus.find(data=> data.id == form.cpu?.productSkuId)?.name}}</small>
+
+                                        </div>
+                                    </td>
                                     <td>{{ !form.psu? '-': 1 }}</td>
                                 </tr>
-                                 <tr>
+                                <tr>
                                     <td>Casing</td>
-                                    <td>{{ getProduct(form.case?.productId) }}</td>
+                                    <td>
+                                        <div>
+                                            <div>{{ getProduct(form.case?.productId)?.name ?? '-' }}</div>
+                                            <small class="ps-1" v-if="getProduct(form.case?.productId)?.productSkus?.length > 1">{{ getProduct(form.case?.productId)?.productSkus.find(data=> data.id == form.cpu?.productSkuId)?.name}}</small>
+
+                                        </div>
+                                    </td>
                                     <td>{{ !form.case? '-': 1 }}</td>
                                 </tr>
                                  <tr>
                                     <td>Cpu Cooler</td>
-                                    <td>{{ getProduct(form.cpuCooler?.productId) }}</td>
+                                    <td>
+                                     <div>
+                                            <div>{{ getProduct(form.cpuCooler?.productId)?.name ?? '-' }}</div>
+                                            <small class="ps-1" v-if="getProduct(form.cpuCooler?.productId)?.productSkus?.length > 1">{{ getProduct(form.cpuCooler?.productId)?.productSkus.find(data=> data.id == form.cpu?.productSkuId)?.name}}</small>
+
+                                        </div>
+                                    </td>
                                     <td>{{ !form.cpuCooler? '-': 1 }}</td>
                                 </tr>
                                 <tr>
                                     <td>Case Fan</td>
                                     <td>
                                         <div v-if="form.caseFan.length<=0">-</div>
-                                        <div v-for="caseFan in form.caseFan">{{ getProduct(caseFan?.productId) }}</div>
+                                        <div v-for="caseFan in form.caseFan">
+                                            <div>{{ getProduct(caseFan?.productId)?.name ?? '-' }}</div>
+                                            <small class="ps-1" v-if="getProduct(caseFan?.productId)?.productSkus?.length > 1">{{ getProduct(caseFan?.productId)?.productSkus.find(data=> data.id == form.cpu?.productSkuId)?.name}}</small>
+                                        </div>
                                     </td>
                                     <td>
                                         <div v-if="form.caseFan.length<=0">-</div>
@@ -115,7 +160,11 @@
                                     <td>Monitor</td>
                                     <td>
                                         <div v-if="form.monitor.length<=0">-</div>
-                                        <div v-for="monitor in form.monitor">{{ getProduct(monitor?.productId) }}</div>
+                                        <div v-for="monitor in form.monitor">
+                                            <div>{{ getProduct(monitor?.productId)?.name ?? '-' }}</div>
+                                            <small class="ps-1" v-if="getProduct(monitor?.productId)?.productSkus?.length > 1">{{ getProduct(monitor?.productId)?.productSkus.find(data=> data.id == form.cpu?.productSkuId)?.name}}</small>
+
+                                        </div>
                                     </td>
                                     <td>
                                         <div v-if="form.monitor.length<=0">-</div>
@@ -254,11 +303,23 @@ export default{
     },
     methods:{
         async addToCart() {
-            //cpu
-            console.log(this.form)
+            // Validasi slot RAM
+            if (this.form.motherboard && this.form.ram.length > 0) {
+                const motherboardSpecs = this.products.find(p => p.id === this.form.motherboard.productId)?.componentSpecs;
+                const ramSlots = motherboardSpecs?.find(spec => spec.specKey === 'motherboard_ram_slots')?.value;
+                
+                let totalRamSticks = this.form.ram.reduce((total, ram) => total + (ram.qty || 1), 0);
+                
+                if (ramSlots && totalRamSticks > parseInt(ramSlots)) {
+                    this.$showToast.error(`Motherboard hanya mendukung ${ramSlots} slot RAM. Anda memilih ${totalRamSticks} RAM.`);
+                    return;
+                }
+            }
+
+            // Validasi komponen lainnya
             if(!this.form.cpu && !this.form.motherboard && this.form.ram.length <= 0 && !this.form.gpu && this.form.storage.length <= 0
                 && !this.form.psu && !this.form.case && !this.form.cpuCooler && !this.form.caseFan){
-                    this.$showToast.error("Anda belum memilih salah satu item") 
+                    this.$showToast.error("Anda belum memilih salah satu item"); 
                     return;
             }
             if(!this.form.cpu || !this.form.motherboard || this.form.ram.length <= 0 || !this.form.gpu || this.form.storage.length <= 0
@@ -317,7 +378,7 @@ export default{
             this.menu = menu
         },
         getProduct(id){
-            return this.products.find(data=> data.id == id)?.name || '-' 
+            return this.products.find(data=> data.id == id) 
         },
         formatCurrency(number) {
             return new Intl.NumberFormat('id-ID', {

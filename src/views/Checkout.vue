@@ -163,7 +163,8 @@
                          class="rounded">
                   </div>
                   <div class="flex-grow-1">
-                    <h6 class="mb-1">{{ item.product?.name }}</h6>
+                    <h6 class="mb-0">{{ item.product?.name }}</h6>
+                    <small class="mb-1 text-muted ps-2">{{ item.productSku.name }}</small>
                     <div class="text-muted small">{{ item.qty }} x {{ formatCurrency(item.totalPrice / item.qty) }}</div>
                   </div>
                   <div class="item-total fw-semibold">{{ formatCurrency(item.totalPrice) }}</div>
@@ -352,6 +353,7 @@
 
         return {
           ...item,
+          productSku,
           product
         };
       });

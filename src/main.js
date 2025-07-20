@@ -19,6 +19,8 @@ import "./plugins/vee-validate";
 import ToastService from "primevue/toastservice";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+import '@fortawesome/fontawesome-free/css/all.min.css';
+
 
 // Initialize AOS
 AOS.init({

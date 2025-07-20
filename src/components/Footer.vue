@@ -80,11 +80,11 @@
         <b-col lg="2" cols="6">
           <h5 class="footer-title">Katalog Produk</h5>
           <div class="nav-footer">
-            <a href="/products" class="nav-link">Semua Produk</a>
-            <a href="/products/special-series" class="nav-link">Special Series</a>
-            <a href="/products/desktop-pc" class="nav-link">Desktop PC</a>
-            <a href="/products/components" class="nav-link">Komponen PC</a>
-            <a href="/products/laptop" class="nav-link">Laptop</a>
+            <a href="/product/all" class="nav-link">Semua Produk</a>
+            <a href="/product/special-series" class="nav-link">Special Series</a>
+            <a href="/product/desktop-pc" class="nav-link">Desktop PC</a>
+            <a href="/product/komponent-pc" class="nav-link">Komponen PC</a>
+            <a href="/product/laptop?keyword=laptop" class="nav-link">Laptop</a>
           </div>
         </b-col>
 

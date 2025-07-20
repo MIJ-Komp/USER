@@ -43,7 +43,10 @@
                             <div class="title h5 text-center mb-3">{{ pc.title }}</div>
                             <div class="position-relative assembly-image-container mb-3">
                                 <img :src="pc.image" class="assembly-icon" :alt="pc.title"/>
-                                <div class="find-more-overlay">
+                                <div 
+                                    class="find-more-overlay"
+                                    @click="showProductInfo(pc.title)"
+                                >
                                     <span>What's this?</span>
                                 </div>
                             </div>
@@ -51,6 +54,19 @@
                                 SHOP NOW <i class="fas fa-long-arrow-alt-right ms-2"/>
                             </button>
                         </div>
+                    </div>
+                </div>
+                <div 
+                    class="product-info-modal" 
+                    v-if="selectedProduct"
+                    @click="closeProductInfo"
+                >
+                    <div class="product-info-content" @click.stop>
+                        <h3>{{ selectedProduct.name }}</h3>
+                        <p>{{ selectedProduct.description }}</p>
+                        <button class="btn-close" @click="closeProductInfo">
+                            <i class="fas fa-times"></i>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -139,6 +155,17 @@ export default {
     components: { ProductCard, SlideShow },
     data() {
         return {
+            selectedProduct: null,
+            productInfo: [
+                { name: 'MIJ BASIC', description: 'Rakitan PC Gaming dan Desain dengan komponen modern harga kompetitif' },
+                { name: 'MIJ PRIME', description: 'PC Rakitan untuk kebutuhan gaming dan desain dengan performa optimal' },
+                { name: 'MIJ CORE', description: 'PC Rakitan Gaming Desain dengan thermal dan estetika optimal' },
+                { name: 'MIJ VEIL', description: 'PC Gaming Desain dengan komponen premium dan desain elegan' },
+                { name: 'MIJ ESSENCE', description: 'PC Gaming Desain dengan performa tinggi dan desain minimalis' },
+                { name: 'MIJ CRUX', description: 'PC Gaming Desain dengan komponen high-end untuk performa maksimal' },
+                { name: 'MIJ MIST', description: 'PC Gaming Desain dengan fokus pada pendinginan dan performa' },
+                { name: 'MIJ SLEEK', description: 'PC Gaming Desain dengan desain ramping dan performa handal' }
+            ],
             differentPoints: [
                 {
                     icon: '/images/home-icon/guarantee.png',
@@ -235,6 +262,12 @@ export default {
         goto(url) {
             this.$router.replace({ path: `/${url}` });
         },
+        showProductInfo(title) {
+            this.selectedProduct = this.productInfo.find(p => p.name === title);
+        },
+        closeProductInfo() {
+            this.selectedProduct = null;
+        },
         findMenuAndCollectCategoryIds(menus, targetName) {
             let result = {
                 menu: null,
@@ -317,6 +350,53 @@ export default {
 </script>
 
 <style scoped>
+
+.product-info-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.product-info-content {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    position: relative;
+    max-width: 500px;
+    width: 90%;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.product-info-content h3 {
+    color: #14263f;
+    margin-bottom: 1rem;
+    font-family: 'Barlow Condensed', sans-serif;
+}
+
+.btn-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    font-size: 1.25rem;
+    color: #14263f;
+    cursor: pointer;
+    padding: 0.5rem;
+    transition: transform 0.3s ease;
+}
+
+.btn-close:hover {
+    transform: rotate(90deg);
+}
+
 .home-container {
     overflow-x: hidden;
 }

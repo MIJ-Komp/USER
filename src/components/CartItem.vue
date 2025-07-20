@@ -11,6 +11,7 @@
     <div class="col-9 col-md-10">
       <div class="card-body">
         <h5 class="card-title">{{ cartItem?.product?.name}}</h5>
+        <h6 class="card-subtitle ps-2">{{ cartItem?.product?.productSkus.find(data=> data.id == cartItem.productSkuId)?.name}}</h6>
         <p class="card-text">{{formatCurrency(productSku?.price || 0)}}</p>
         
         <div class="d-flex flex-column align-items-end p-2">     

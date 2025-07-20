@@ -19,7 +19,7 @@
         <!-- Cart Items -->
         <div v-else class="cart-items-container">
           <TransitionGroup name="list" tag="div">
-            <div v-for="cartItem in cartItems" :key="cartItem.productId" class="cart-item-wrapper">
+            <div v-for="cartItem in cartItems" :key="cartItem.productId" class="cart-item-wrapper mb-3">
               <CartItem
                 :cartItem="cartItem"
                 :changeQty="changeQty"
@@ -45,13 +45,13 @@
                 <span class="fw-semibold color-gold">{{ formatCurrency(totalPrice) }}</span>
               </div>
             </div>
-            <button 
+            <Button 
               @click="checkout" 
               :disabled="!allowCheckout" 
-              class="checkout-btn btn btn-warning w-100 mt-4">
-              <i class="fas fa-shopping-cart me-2"></i>
-              Checkout
-            </button>
+              class="checkout-btn btn btn-warning w-100 mt-4"
+              faIcon="fas fa-shopping-cart"
+              label="Checkout"
+              />
             <div v-if="!allowCheckout" class="alert alert-warning mt-3 mb-0 py-2 small">
               <i class="fas fa-exclamation-triangle me-2"></i>
               Beberapa item tidak tersedia atau stoknya tidak mencukupi

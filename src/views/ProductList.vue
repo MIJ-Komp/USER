@@ -621,12 +621,7 @@ export default {
       immediate: true,
       async handler(){
         if(this.menus){
-          const { menu, categoryIds } = findMenuAndCollectCategoryIds(this.menus, this.route.params?.menu);
-          this.menu = menu?.name.toUpperCase()
-          this.products = await this.getAll({
-            productCategoryIds: categoryIds.length <= 0 ? '-1' : categoryIds.join(',')
-          })
-          this.setFilterData()
+          await this.setFilterData()
         }
       }
     },
@@ -635,12 +630,7 @@ export default {
       deep: true,
       async handler(){
         if(this.menus){
-          const { menu, categoryIds } = findMenuAndCollectCategoryIds(this.menus, this.route.params?.menu);
-          this.menu = menu?.name.toUpperCase()
-           this.products = await this.getAll({
-            productCategoryIds: categoryIds.length <= 0 ? '-1' : categoryIds.join(',')
-          })
-          this.setFilterData()
+          await this.setFilterData()
         }
       }
     }
@@ -701,7 +691,17 @@ export default {
   async created(){
   },
   methods: {
-    setFilterData(){
+    async setFilterData(){
+      const { menu, categoryIds } = findMenuAndCollectCategoryIds(this.menus, this.route.params?.menu);
+      this.menu = menu?.name.toUpperCase()
+
+      this.products = await this.getAll({
+        brandIds: this.route.query?.brandIds,
+        tag: this.route.query?.tag,
+        query: this.route.query?.keyword,
+        productCategoryIds: categoryIds.length <= 0 ? this.route.params?.menu.toLowerCase() == 'all' ? null : '-1' : categoryIds.join(',')
+      })
+
       const cpuSet = new Set();
       const vgaSet = new Set();
       const ramSet = new Set();
@@ -730,6 +730,8 @@ export default {
       this.cpuList = Array.from(cpuSet).sort().map(label => ({ label }));
       this.vgaList = Array.from(vgaSet).sort().map(label => ({ label }));
       this.ramList = Array.from(ramSet).sort().map(label => ({ label }));
+
+      return;
     },
     toggleSidebar() {
       this.isSidebarVisible = !this.isSidebarVisible;
