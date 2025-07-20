@@ -137,3 +137,7 @@ body{
   content: " *";
   color: red;
 }
+
+.cursor-pointer {
+    cursor: pointer;
+}

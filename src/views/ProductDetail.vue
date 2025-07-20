@@ -337,7 +337,6 @@ watch(product, (newVal) => {
     }
 
     selectedImage.value = product.value?.imageIds[0]
-    console.log(product.value)
   }
   if (newVal && Array.isArray(newVal.productSkus) && newVal.productSkus.length > 0) {
     const prices = newVal.productSkus.map(item => item.price)
