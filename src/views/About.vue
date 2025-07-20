@@ -1,115 +1,453 @@
 <template>
-    <div class="container">
-        <div class="row">
-            <div class="col">
-                <div class="header mb-2">
-                    <div class="d-flex">
-                    <div class="d-flex flex-grow-1 align-items-center">
-                        <div class="flex-grow-1 border border-dark"></div>
-                        <div class="bg-dark rounded-circle" style="height: 7pt; width: 7pt;"></div>
-                    </div>
-                    <div class="product-name fs-2 mx-5 fw-bold font-title">
-                        ABOUT
-                    </div>
-                    <div class="d-flex flex-grow-1 align-items-center">
-                        <div class="bg-dark rounded-circle" style="height: 7pt; width: 7pt;"></div>
-                        <div class="flex-grow-1 border border-dark"></div>
-                    </div>
-                    </div>
-                </div>
-            
-        <p>Sebagai spesialis <strong>PC Rakitan</strong> (untuk kebutuhan Gaming, Desain, atau Perkantoran), MIJ Komp punya banyak keunggulan yang membuatnya berbeda dengan PC Builder lainnya, yakni:</p>
-        <ul>
-            <li>Semua Part/Komponen 100% Original, dan Bergaransi Resmi Indonesia</li>
-            <li>Bios, Firmware, &amp; Driver Terbaru</li>
-            <li>Free Jasa Rakit</li>
-            <li>Manajemen Kabel Rapi &amp; Profesional</li>
-            <li>Pengujian Intensif (System Stress Test) Sebelum Pengiriman Barang</li>
-            <li>Free Pengantaran Untuk Daerah Medan Sekitarnya (Medan, Binjai, Deli Serdang)</li>
-            <li>Siap Kirim ke Seluruh Indonesia</li>
-        </ul>
-
-        <h2>Cocok Untuk Siapa Sajakah PC Rakitan MIJ Komp Ini?</h2>
-        <p>Produk PC Rakitan yang dikeluarkan sangat cocok untuk segmen personal ataupun instansi (perusahaan, sekolah, lembaga, dan semacamnya) untuk kebutuhan sebagai berikut:</p>
-        
-        <ul>
-            <li><strong>PC Gaming </strong>(Mulai dari game ringan hingga game <a href="https://www.gimbot.com/apa-artinya-game-aaa-atau-triple-a/" target="_blank" rel="noopener">berklasifikasi AAA</a>)</li>
-            <li><strong>PC Desain</strong> (Multimedia: Video &amp; Photo Editing)</li>
-            <li><strong>PC Coding</strong> (Kebutuhan sederhana hingga kebutuhan Virtualisasi untuk pengembangan aplikasi Android dan IOS)</li>
-            <li><strong>PC Simulasi</strong> (3D Modeling, Arsitektur, Animasi)</li>
-            <li><strong>PC Office</strong> (Kantor/Kampus/Sekolah)</li>
-        </ul>
-
-            <h2>Variasi Produk PC Rakitan dari MIJ Komp</h2>
-            <p><strong>MIJ Komp</strong> memiliki variasi produk yang berkualitas:</p>
-            <ol>
-                <li><strong>MIJ REDUC<br /></strong>Rakitan PC Gaming Murah dengan menggunakan CPU dan Chipset lawas yang masih cukup mumpuni untuk disandingkan dengan VGA &#8220;Entry Level&#8221; jaman sekarang</li>
-                <li><strong>MIJ ECO</strong><br />Rakitan PC untuk Kantor dan Sekolah yang kami sarankan hanya untuk kebutuhan dasar seperti Web Browsing, Nonton Youtube, pekerjaan Microsoft Office, Coding, ataupun gaming ringan seperti Esports.</li>
-                <li><strong>MIJ BASIC</strong><br />Rakitan PC untuk Gaming dan juga Desain yang menggunakan komponen PC modern dengan harga cukup kompetitif dan cukup baik digunakan untuk game-game ESPORTS dan AAA maupun Video Editing / Photo Editing dan Multimedia.</li>
-                <li><strong>MIJ CORE</strong><br />Memaksimalkan kemampuan dari sebuah PC Rakitan Gaming Desain baik dari sisi thermal/suhu maupun estetika yang menggunakan komponen PC modern namun tetap dengan harga yang cukup kompetitif.</li>
-                <li><strong>MIJ ELITE</strong><br />Rakitan PC GAMING DESAIN yang menggunakan komponen-komponen terbaik di kelasnya dan sangat baik untuk memainkan game Esports maupun AAA masa kini sekalipun di resolusi tertinggi.</li>
-                <li><strong>MIJ ULTIMATE</strong><br />Best of the best, When money is no object. <strong>PC RAKITAN GAMING DESAIN SULTAN</strong>.</li>
-                <li><strong>MIJ WEE</strong><br />Rakitan PC GAMING DESAIN dengan CASING MINI namun cukup maksimal untuk digunakan pada game-game ESPORTS dan AAA maupun Video Editing / Photo Editing dan Multimedia.</li>
-                <li><strong>MIJ PYGMY</strong><br />Rakitan PC GAMING DESAIN MINI yang menggunakan komponen-komponen terbaik di kelasnya dan sangat baik untuk memainkan game Esports maupun AAA masa kini sekalipun di resolusi tertinggi.</li>
-            </ol>
-            <h2>Seri Keluaran PC Rakitan Khusus di MIJ Komp</h2>
-            <p>Kreasi MIJ Komp mengeluarkan variasi produk tidak berhenti dari daftar yang disebutkan sebelumnya diatas. Dalam beberapa kesempatan yang berkesinambungan MIJ Komp (MIJ Komputer) akan merelease produk-produk yang unik dan selalu berkualitas yang bisa kita pantau dari halaman berikut ini, klik: <a href="https://mijkomp.id/product-category/special-series/">The Special Series</a>!</p>
-            <h2>Jasa Pengiriman Yang Digunakan MIJ Komp</h2>
-            <p>MIJ Komp akan mengiirim PC Anda ke rumah Anda dimanapun berada di seluruh Indonesia melalui layanan pengiriman top sebagai berikut:</p>
-            <p><img decoding="async" class="alignnone wp-image-31128 size-full" src="https://mijkomp.id/wp-content/uploads/2023/06/logo-shipping-sicepat.png" alt="" width="300" height="82" /><a href="https://mijkomp.id/wp-content/uploads/2023/06/logo-shipping-jne.png"><img decoding="async" class="alignnone wp-image-31127 size-full" src="https://mijkomp.id/wp-content/uploads/2023/06/logo-shipping-jne.png" alt="" width="207" height="82" /> <img decoding="async" class="alignnone wp-image-31126 size-full" src="https://mijkomp.id/wp-content/uploads/2023/06/logo-shipping-anteraja.png" alt="" width="205" height="82" /></a></p>
-            <ol>
-            <li>JNE
-            <ul>
-            <li>JNE REGULAR</li>
-            <li>JNE OKE</li>
-            <li>JNE YES</li>
-            <li>JNE TRUCKING</li>
-            </ul>
-            </li>
-            <li>SiCepat
-            <ul>
-            <li>SiCepat REGULAR</li>
-            <li>SiCepat BEST</li>
-            <li>SiCepat SIUNT</li>
-            <li>SiCepat GOKIL</li>
-            <li>SiCepat SDS</li>
-            </ul>
-            </li>
-            <li>Anteraja
-            <ul>
-            <li>Anteraja Regular</li>
-            <li>Anteraja Same Day</li>
-            <li>Anteraja Next Day</li>
-            <li>Anteraja Frozen</li>
-            <li>Anteraja Cargo</li>
-            </ul>
-            </li>
-            </ol>
-            <h2>Jasa Pengiriman Khusus dan Gratis Ongkir</h2>
-            <p>MIJ Komp juga menyediakan Jasa Pengiriman Khusus, yakni:</p>
-            <ol>
-            <li><strong>Taxi / Travel</strong> (ongkir akan diinfokan setelah pengiriman)<br />Khusus provinsi Aceh, Sumut, Sumbar, dan Riau</li>
-            <li><strong>Gratis Ongkir</strong> (Kurir Toko MIJ Komp)<br />Khusus Medan, Binjai, dan Deli Serdang</li>
-            </ol>
-            <h2>Alamat, Nomor Kontak, dan Media Sosial MIJ Komputer<span style="color: #333333; font-size: 22px;">:</span></h2>
-            <ul>
-            <li><strong>Whatsapp:</strong> <a href="https://wa.me/628116181628?text=Halo%20MIJ%20Komp..." target="_blank" rel="noopener">08116181628</a></li>
-            <li><strong>Instagram:</strong> <a href="https://www.instagram.com/mijkomp/" target="_blank" rel="noopener">mijkomp</a></li>
-            <li><strong>Tiktok:</strong> <a href="https://www.tiktok.com/@mijkomp" target="_blank" rel="noopener">mijkomp</a></li>
-            <li><strong>YouTube:</strong> <a href="https://www.youtube.com/@mijkomp8069" target="_blank" rel="noopener">MIJ KOMP</a></li>
-            <li><strong>Website:</strong> <a href="https://mijkomp.id">https://mijkomp.id</a></li>
-            <li><strong>Alamat:</strong> Jl. Pajang No. 8-B Medan 20214, Kelurahan Sei Rengas Permata, Kecamatan Medan Area, Sumatera Utara, Indonesia.</li>
-            <li><strong>Google Map:</strong> <a href="https://goo.gl/maps/1HozbTotkCKgpFaj6" target="_blank" rel="noopener">https://goo.gl/maps/1HozbTotkCKgpFaj6</a></li>
-            </ul>
-            <h2>Sistem Pembayaran di Website MIJK Komp</h2>
-            <p>Untuk memudahkan dan kenyamanan pelanggan dalam berbelanja di website MIJ Komp ini, maka website ini menggunakan sistem pembayaran yang ditenagai oleh <a href="https://midtrans.com/id" target="_blank" rel="noopener">Midtrans</a> sebagai perusahaan penyedia Payment Gateway terpercaya, handal, aman dan terlengkap di Indonesia yang mendukung banyak metode pembayaran online untuk memudahkan customer melakukan transaksi bisnis. Berikut di bawah ini channel pembayaran yang tersedia.</p>
-            <ul>
-            <li><b>Gopay </b></li>
-            <li><strong>Virtual Account : </strong>Mandiri, BNI, Permata</li>
-            <li><strong>Credit Card : </strong>VISA, MasterCard, JCB</li>
-            <li><b>Transfer Bank :</b> BCA 1950918671 An. FEBRIYANTO</li>
-            </ul>
-            </div>  
+  <div class="container py-5">
+    <div class="about-content" data-aos="fade-up">
+      <div class="header text-center mb-5">
+        <div class="d-flex align-items-center justify-content-center gap-4">
+          <div class="line"></div>
+          <h1 class="display-5 mb-0 fw-bold font-title">ABOUT</h1>
+          <div class="line"></div>
         </div>
+      </div>
+
+      <div class="row justify-content-center">
+        <div class="col-lg-10">
+          <div class="intro-section mb-5" data-aos="fade-up" data-aos-delay="100">
+            <p class="lead mb-4">Sebagai spesialis <strong>PC Rakitan</strong> (untuk kebutuhan Gaming, Desain, atau Perkantoran), MIJ Komp punya banyak keunggulan yang membuatnya berbeda dengan PC Builder lainnya, yakni:</p>
+            <div class="features-grid">
+              <div class="feature-card" v-for="(feature, index) in features" :key="index" data-aos="fade-up" :data-aos-delay="150 + (index * 50)">
+                <i :class="feature.icon"></i>
+                <span>{{ feature }}</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="target-section mb-5" data-aos="fade-up" data-aos-delay="200">
+            <h2 class="section-title">Cocok Untuk Siapa Sajakah PC Rakitan MIJ Komp Ini?</h2>
+            <p class="mb-4">Produk PC Rakitan yang dikeluarkan sangat cocok untuk segmen personal ataupun instansi (perusahaan, sekolah, lembaga, dan semacamnya) untuk kebutuhan sebagai berikut:</p>
+            <div class="target-grid">
+              <div class="target-card" v-for="(target, index) in targets" :key="index" data-aos="fade-up" :data-aos-delay="250 + (index * 50)">
+                <div class="target-icon">
+                  <i :class="getTargetIcon(index)"></i>
+                </div>
+                <div class="target-content">
+                  <h3 class="h5 mb-2">{{ target.title }}</h3>
+                  <p class="mb-0 text-muted">{{ target.description }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="products-section mb-5" data-aos="fade-up" data-aos-delay="300">
+            <h2 class="section-title">Variasi Produk PC Rakitan dari MIJ Komp</h2>
+            <p class="mb-4"><strong>MIJ Komp</strong> memiliki variasi produk yang berkualitas:</p>
+            <div class="product-cards">
+              <div class="product-card" v-for="(product, index) in products" :key="index" data-aos="fade-up" :data-aos-delay="350 + (index * 50)">
+                <div class="product-header">
+                  <h3 class="h5 mb-0">{{ product.name }}</h3>
+                </div>
+                <div class="product-body">
+                  <p class="mb-0">{{ product.description }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="shipping-section mb-5" data-aos="fade-up" data-aos-delay="400">
+            <h2 class="section-title">Jasa Pengiriman</h2>
+            <div class="shipping-logos mb-4">
+              <img src="/images/shipping/sicepat.png" alt="SiCepat" class="img-fluid"/>
+              <img src="/images/shipping/jne.png" alt="JNE" class="img-fluid"/>
+              <img src="/images/shipping/anteraja.png" alt="AnterAja" class="img-fluid"/>
+            </div>
+            <div class="shipping-cards">
+              <div class="shipping-card" v-for="(courier, index) in couriers" :key="index" data-aos="fade-up" :data-aos-delay="450 + (index * 50)">
+                <h3 class="h5 mb-3">{{ courier.name }}</h3>
+                <ul class="list-unstyled mb-0">
+                  <li v-for="service in courier.services" :key="service" class="mb-2">
+                    <i class="bi bi-check2-circle me-2 text-success"></i>{{ service }}
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="contact-section" data-aos="fade-up" data-aos-delay="500">
+            <h2 class="section-title">Hubungi Kami</h2>
+            <div class="contact-cards">
+              <div class="contact-card">
+                <div class="contact-icon">
+                  <i class="bi bi-geo-alt-fill"></i>
+                </div>
+                <div class="contact-content">
+                  <h3 class="h6 mb-2">Alamat</h3>
+                  <p class="mb-2">Jl. Pajang No. 8-B Medan 20214</p>
+                  <p class="mb-0 text-muted">Kelurahan Sei Rengas Permata, Kecamatan Medan Area, Sumatera Utara, Indonesia</p>
+                  <a href="https://goo.gl/maps/1HozbTotkCKgpFaj6" target="_blank" class="btn btn-sm btn-outline-primary mt-2">
+                    <i class="bi bi-map me-2"></i>Lihat di Google Maps
+                  </a>
+                </div>
+              </div>
+              <div class="contact-card">
+                <div class="contact-icon">
+                  <i class="bi bi-headset"></i>
+                </div>
+                <div class="contact-content">
+                  <h3 class="h6 mb-2">Kontak</h3>
+                  <a href="https://wa.me/628116181628" target="_blank" class="d-block mb-2 text-decoration-none">
+                    <i class="bi bi-whatsapp me-2"></i>08116181628
+                  </a>
+                  <a href="mailto:info@mijkomp.id" class="d-block text-decoration-none">
+                    <i class="bi bi-envelope me-2"></i>info@mijkomp.id
+                  </a>
+                </div>
+              </div>
+              <div class="contact-card">
+                <div class="contact-icon">
+                  <i class="bi bi-share"></i>
+                </div>
+                <div class="contact-content">
+                  <h3 class="h6 mb-2">Media Sosial</h3>
+                  <div class="social-links">
+                    <a href="https://www.instagram.com/mijkomp/" target="_blank" class="btn btn-sm btn-outline-danger">
+                      <i class="bi bi-instagram"></i>
+                    </a>
+                    <a href="https://www.tiktok.com/@mijkomp" target="_blank" class="btn btn-sm btn-outline-dark">
+                      <i class="bi bi-tiktok"></i>
+                    </a>
+                    <a href="https://www.youtube.com/@mijkomp8069" target="_blank" class="btn btn-sm btn-outline-danger">
+                      <i class="bi bi-youtube"></i>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="payment-section" data-aos="fade-up" data-aos-delay="600">
+            <h2 class="section-title">Metode Pembayaran</h2>
+            <div class="payment-cards">
+              <div class="payment-card">
+                <!-- <img src="/images/bank/gopay.png" alt="Gopay" class="payment-logo"/> -->
+                <img src="" alt="Gopay" class="payment-logo"/>
+                <span>Gopay</span>
+              </div>
+              <div class="payment-card">
+                <div class="d-flex" style="gap: 12px;">
+                    <img src="/images/bank/mandiri-bank.png" alt="Mandiri" class="payment-logo"/>
+                    <img src="/images/bank/bni-bank.png" alt="Mandiri" class="payment-logo"/>
+                    <img src="/images/bank/permata-bank.png" alt="Mandiri" class="payment-logo"/>
+                </div>
+                <span>Virtual Account</span>
+              </div>
+              <div class="payment-card">
+                <div class="d-flex" style="gap: 12px;">
+                    <img src="/images/bank/visa.png" alt="Credit Card" class="payment-logo"/>
+                    <img src="/images/bank/jcb-bank.png" alt="Credit Card" class="payment-logo"/>
+                </div>
+                <span>Credit Card</span>
+              </div>
+              <div class="payment-card">
+                <!-- <img src="/images/bank/bca.png" alt="BCA" class="payment-logo"/> -->
+                <img src="" alt="BCA" class="payment-logo"/>
+                <span>Transfer Bank BCA 1950918671 An. FEBRIYANTO</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
 </template>
+
+<script setup>
+import { ref } from 'vue'
+
+const features = [
+  'Semua Part/Komponen 100% Original, dan Bergaransi Resmi Indonesia',
+  'Bios, Firmware, & Driver Terbaru',
+  'Free Jasa Rakit',
+  'Manajemen Kabel Rapi & Profesional',
+  'Pengujian Intensif (System Stress Test) Sebelum Pengiriman Barang',
+  'Free Pengantaran Untuk Daerah Medan Sekitarnya',
+  'Siap Kirim ke Seluruh Indonesia'
+]
+
+const targets = [
+  { title: 'PC Gaming', description: 'Mulai dari game ringan hingga game berklasifikasi AAA' },
+  { title: 'PC Desain', description: 'Multimedia: Video & Photo Editing' },
+  { title: 'PC Coding', description: 'Kebutuhan sederhana hingga kebutuhan Virtualisasi' },
+  { title: 'PC Simulasi', description: '3D Modeling, Arsitektur, Animasi' },
+  { title: 'PC Office', description: 'Kantor/Kampus/Sekolah' }
+]
+
+const products = [
+  { name: 'MIJ REDUC', description: 'Rakitan PC Gaming Murah dengan CPU dan Chipset lawas yang masih mumpuni' },
+  { name: 'MIJ ECO', description: 'Rakitan PC untuk Kantor dan Sekolah untuk kebutuhan dasar' },
+  { name: 'MIJ BASIC', description: 'Rakitan PC Gaming dan Desain dengan komponen modern harga kompetitif' },
+  { name: 'MIJ CORE', description: 'PC Rakitan Gaming Desain dengan thermal dan estetika optimal' },
+  { name: 'MIJ ELITE', description: 'PC Gaming Desain dengan komponen terbaik di kelasnya' },
+  { name: 'MIJ ULTIMATE', description: 'Best of the best, PC Rakitan Gaming Desain Sultan' },
+  { name: 'MIJ WEE', description: 'PC Gaming Desain dengan Casing Mini namun maksimal' },
+  { name: 'MIJ PYGMY', description: 'PC Gaming Desain Mini dengan komponen terbaik' }
+]
+
+const couriers = [
+  {
+    name: 'JNE',
+    services: ['JNE REGULAR', 'JNE OKE', 'JNE YES', 'JNE TRUCKING']
+  },
+  {
+    name: 'SiCepat',
+    services: ['SiCepat REGULAR', 'SiCepat BEST', 'SiCepat SIUNT', 'SiCepat GOKIL', 'SiCepat SDS']
+  },
+  {
+    name: 'Anteraja',
+    services: ['Anteraja Regular', 'Anteraja Same Day', 'Anteraja Next Day', 'Anteraja Cargo']
+  }
+]
+
+const getTargetIcon = (index) => {
+  const icons = ['bi bi-controller', 'bi bi-palette', 'bi bi-code-slash', 'bi bi-boxes', 'bi bi-building']
+  return icons[index]
+}
+</script>
+
+<style scoped>
+.about-content {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.header .line {
+  height: 2px;
+  width: 100px;
+  background: var(--bs-dark);
+}
+
+.section-title {
+  font-size: 1.75rem;
+  margin-bottom: 1.5rem;
+  position: relative;
+  padding-bottom: 1rem;
+}
+
+.section-title::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 50px;
+  height: 3px;
+  background: var(--bs-warning);
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+.feature-card {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  transition: all 0.3s ease;
+}
+
+.feature-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+}
+
+.target-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.target-card {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+  display: flex;
+  gap: 1rem;
+  transition: all 0.3s ease;
+}
+
+.target-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+}
+
+.target-icon {
+  min-width: 32px;
+  width: 32px;
+  height: 32px;
+  background: var(--bs-warning);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  color: white;
+}
+
+.product-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.product-card {
+  background: white;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+  transition: all 0.3s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+}
+
+.product-header {
+  background: var(--bs-dark);
+  color: white;
+  padding: 1rem;
+}
+
+.product-body {
+  padding: 1rem;
+}
+
+.shipping-logos {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  padding: 2rem;
+  background: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+}
+
+.shipping-logos img {
+  height: 40px;
+  object-fit: contain;
+}
+
+.shipping-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.shipping-card {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+}
+
+.contact-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.contact-card {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+  display: flex;
+  gap: 1rem;
+}
+
+.contact-icon {
+  min-width: 32px;
+  max--width: 32px;
+  height: 32px;
+  background: var(--bs-primary);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  color: white;
+}
+
+.social-links {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.payment-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.payment-card {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  transition: all 0.3s ease;
+}
+
+.payment-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+}
+
+.payment-logo {
+  width: 70px;
+  height: 30px;
+  object-fit: contain;
+}
+
+@media (max-width: 768px) {
+  .about-content {
+    padding: 1rem;
+  }
+
+  .section-title {
+    font-size: 1.5rem;
+  }
+
+  .shipping-logos {
+    flex-direction: column;
+    padding: 1rem;
+  }
+
+  .shipping-logos img {
+    height: 30px;
+  }
+
+  .contact-card {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .contact-icon {
+    margin: 0 auto;
+  }
+
+  .social-links {
+    justify-content: center;
+  }
+}
+</style>

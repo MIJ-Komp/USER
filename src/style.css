@@ -1,7 +1,9 @@
 @import '@fortawesome/fontawesome-free/css/all.min.css';
 
 :root {
+     --gold-rgb: 218, 165, 32;
     --gold: #ffce42;
+
     color-scheme: light;
 
 
@@ -80,8 +82,21 @@
     --font-weight-bold: 700;
     --font-weight-extra-bold: 800;
     --font-weight-black: 900;
+    
+}
+.bg-primary{
+    background-color: var(--gold) !important;
 }
 
+.btn-outline-primary{
+    border-color: var(--gold) !important;
+}
+.btn-outline-primary:hover{
+    background: var(--gold) !important;
+}
+#app{
+    width: 100%;
+}
 h3{
     font-size: 47px !important;
     margin: 0px !important;

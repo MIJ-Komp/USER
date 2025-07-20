@@ -1,28 +1,24 @@
 <template>
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <div class="header mb-2">
-                    <div class="d-flex">
-                    <div class="d-flex flex-grow-1 align-items-center">
-                        <div class="flex-grow-1 border border-dark"></div>
-                        <div class="bg-dark rounded-circle" style="height: 7pt; width: 7pt;"></div>
-                    </div>
-                    <div class="product-name fs-2 mx-5 fw-bold font-title">
-                        Kebijakan dan Privasi
-                    </div>
-                    <div class="d-flex flex-grow-1 align-items-center">
-                        <div class="bg-dark rounded-circle" style="height: 7pt; width: 7pt;"></div>
-                        <div class="flex-grow-1 border border-dark"></div>
-                    </div>
-                    </div>
-                </div>
-            </div>  
-            <div class="col-12">
-               <pre><u>Terakhir diperbarui tanggal 2 Juli 2023</u></pre>
-                <h3>A. PENGEMBALIAN PRODUK:</h3>
-                <ol>
-                <li>Produk/barang yang sudah dibeli dan sesuai dengan nota pembelian / sesuai pesanan tidak dapat di kembalikan (refund/retur) dengan alasan apapun.</li>
+  <div class="container py-5">
+    <div class="row justify-content-center">
+      <div class="col-12 col-lg-10">
+        <!-- Header dengan animasi -->
+        <div class="header mb-4" data-aos="fade-down">
+          <div class="d-flex align-items-center mb-3">
+            <div class="flex-grow-1 border-dark border-2 border"></div>
+            <h1 class="mx-4 mb-0 text-center fw-bold font-title">Kebijakan dan Privasi</h1>
+            <div class="flex-grow-1 border-dark border-2 border"></div>
+          </div>
+          <p class="text-center text-muted mb-0"><u>Terakhir diperbarui tanggal 2 Juli 2023</u></p>
+        </div>
+
+        <!-- Sections dengan animasi fade-up bertahap -->
+        <div class="policy-sections">
+          <!-- Section Pengembalian Produk -->
+          <div class="policy-card mb-4" data-aos="fade-up">
+            <h3 class="section-title">A. PENGEMBALIAN PRODUK</h3>
+            <ol class="policy-list">
+              <li>Produk/barang yang sudah dibeli dan sesuai dengan nota pembelian / sesuai pesanan tidak dapat di kembalikan (refund/retur) dengan alasan apapun.</li>
                 <li>Asuransi adalah wajib untuk setiap pengiriman, kami MIJ Komputer tidak menerima komplain barang pecah, sobek, retak, hilang, dll akibat pengiriman. Asuransi hanya berlaku jika ada video unboxing sebelum paket dibuka, tanpa jeda, dan tidak terputus.</li>
                 <li>Wajib menyertakan Video Unboxing sebelum paket dibuka, tanpa jeda, dan tidak terputus. Tanpa Video Unboxing Komplain kerusakan dan kekurangan tidak diterima.</li>
                 <li>Tidak menerima Video yang setelah Paket dibuka baru direkam ulang atau paket dibungkus ulang baru divideokan.</li>
@@ -31,11 +27,15 @@
                 <li>MIJ Komputer berhak menolak pengembalian produk/barang jika kondisi barang tersebut dalam keadaan segel rusak, unit sudah dipakai, konten tidak lengkap, tersiram cairan, terbakar, dan cacat fisik.</li>
                 <li>Produk/Barang pengganti akan dikirimkan setelah barang yang bermasalah tiba di toko kami dan setelah di lakukan pengecekan oleh tim kami dan juga pihak distributor terkait.</li>
                 <li>Biaya kirim yang timbul atas pengembalian produk dan pengiriman kembali barang ke alamat pelanggan adalah kewajiban dari User/Pelanggan.</li>
-                </ol>
-                <h3 class="wp-block-heading">B. INFORMASI YANG KAMI KUMPULKAN</h3>
-                <p>Kami mengumpulkan berbagai informasi dari Anda ketika Anda mengunjungi situs web Kami, melakukan pembelian, atau berinteraksi dengan Kami di media sosial. Dengan menerima Kebijakan Privasi ini, Anda secara khusus menyetujui pengumpulan data yang kami jelaskan di bawah, penggunaan data oleh Kami, pemrosesan data ini, dan pembagian data oleh Kami dengan pemroses pihak ketiga sebagaimana diperlukan untuk kepentingan bisnis. Informasi yang Kami kumpulkan dapat mencakup:</p>
-                <ol>
-                <li>DATA PRIBADI<br />
+            </ol>
+          </div>
+
+          <!-- Section Informasi yang Dikumpulkan -->
+          <div class="policy-card mb-4" data-aos="fade-up" data-aos-delay="100">
+            <h3 class="section-title">B. INFORMASI YANG KAMI KUMPULKAN</h3>
+            <p class="policy-text">{{ existing_text }}</p>
+            <div class="info-types-grid">
+              <li>DATA PRIBADI<br />
                 Data Pribadi adalah informasi yang dapat digunakan untuk mengidentifikasi Anda secara spesifik, termasuk nama Anda, alamat pengiriman, alamat email, nomor telepon, atau informasi demografis seperti usia, jenis kelamin, atau kota asal Anda. Anda setuju untuk memberikan Kami informasi ini dengan memberikannya kepada Kami secara sukarela di situs web Kami. Anda memberikan beberapa informasi ini ketika Anda mendaftar atau melakukan pembelian dari situs web Kami. Anda juga dapat memberikan informasi ini dengan berpartisipasi dalam berbagai kegiatan yang terkait dengan situs Kami, termasuk menanggapi blog, menghubungi Kami dengan pertanyaan, atau berpartisipasi dalam pelatihan kelompok. Keputusan Anda untuk mengungkapkan data ini sepenuhnya bersifat sukarela. Anda tidak berkewajiban untuk memberikan informasi ini, tetapi penolakan Anda dapat mencegah Anda mengakses manfaat tertentu dari situs web Kami atau melakukan pembelian.</li>
                 <li>DATA DERIVATIF<br />
                 Data turunan adalah informasi yang dikumpulkan oleh server Kami secara otomatis tentang Anda ketika Anda mengakses situs web Kami, seperti alamat IP Anda, jenis browser, tanggal dan waktu Anda mengakses situs web Kami, dan halaman tertentu yang Anda lihat. Jika Anda menggunakan aplikasi seluler, server Kami dapat mengumpulkan informasi tentang nama dan jenis perangkat Anda, nomor telepon Anda, negara asal Anda, dan interaksi lain dengan aplikasi Kami. Data turunan juga dapat mencakup data yang dikumpulkan oleh penyedia layanan pihak ketiga, seperti penyedia iklan dan analitik, dan dapat mencakup cookie, data log, atau suar web. Cookie dibahas lebih lengkap di bawah ini. Data turunan yang dikumpulkan oleh penyedia layanan pihak ketiga umumnya tidak mengidentifikasi individu tertentu.</li>
@@ -47,8 +47,12 @@
                 Jika Anda menggunakan situs web Kami melalui perangkat seluler atau aplikasi, Kami dapat mengumpulkan informasi tentang perangkat seluler Anda, termasuk ID perangkat, model dan pabrikan, dan informasi lokasi.</li>
                 <li>DATA YANG LAIN<br />
                 Terkadang, Anda dapat memberi Kami data tambahan untuk mengikuti kontes atau giveaway atau untuk berpartisipasi dalam survei. Anda akan dimintai informasi ini dan akan menjadi jelas bahwa Anda menawarkan informasi semacam ini sebagai imbalan untuk masuk ke kontes atau pemberian semacam itu.</li>
-                </ol>
-                <h3>C. BAGAIMANA KAMI MENGGUNAKAN INFORMASI ANDA</h3>
+            </div>
+          </div>
+
+          <!-- Section Penggunaan Informasi -->
+          <div class="policy-card mb-4" data-aos="fade-up" data-aos-delay="200">
+            <h3 class="section-title">C. BAGAIMANA KAMI MENGGUNAKAN INFORMASI ANDA</h3>
                 <p>Informasi Anda memungkinkan Kami untuk menawarkan kepada Anda produk dan layanan tertentu, termasuk penggunaan situs web Kami, untuk memenuhi kewajiban Kami kepada Anda, untuk menyesuaikan interaksi Anda dengan perusahaan Kami dan situs web Kami, dan untuk memungkinkan Kami menyarankan produk dan layanan lain yang Kami pikir mungkin Anda minati. Kami biasanya menyimpan data Anda dan mengirimkannya ke pihak ketiga untuk diproses. Namun, sejauh Kami memproses data Anda, Kami melakukannya untuk melayani kepentingan bisnis sah Kami (seperti memberi Anda kesempatan untuk membeli barang atau layanan Kami dan berinteraksi dengan situs web Kami).</p>
                 <p>Secara khusus, Kami dapat menggunakan informasi dan data yang dijelaskan di atas untuk :</p>
                 <ol>
@@ -70,16 +74,24 @@
                 <li aria-level="1">Cegah aktivitas penipuan di situs web Kami dan</li>
                 <li aria-level="1">Analisis tren untuk meningkatkan situs web dan penawaran kami.</li>
                 </ol>
-                <h3>D. DASAR UNTUK MENGGUNAKAN DAN MEMPROSES DATA ANDA</h3>
-                <p>Informasi yang Kami kumpulkan dan simpan digunakan terutama untuk memungkinkan Kami menawarkan barang dan jasa untuk dijual. Selain itu, <strong>MIJ Komputer</strong> dapat mengumpulkan, menggunakan, dan memproses informasi Anda berdasarkan alasan berikut:</p>
+        </div>
+
+          <!-- Section Dasar Penggunaan Data -->
+          <div class="policy-card mb-4" data-aos="fade-up" data-aos-delay="300">
+            <h3 class="section-title">D. DASAR UNTUK MENGGUNAKAN DAN MEMPROSES DATA ANDA</h3>
+           <p>Informasi yang Kami kumpulkan dan simpan digunakan terutama untuk memungkinkan Kami menawarkan barang dan jasa untuk dijual. Selain itu, <strong>MIJ Komputer</strong> dapat mengumpulkan, menggunakan, dan memproses informasi Anda berdasarkan alasan berikut:</p>
                 <ol>
                 <li>Kepentingan Bisnis yang Sah: Kami dapat menggunakan dan memproses data Anda untuk kepentingan bisnis sah Kami, yang mencakup, antara lain, berkomunikasi dengan Anda, meningkatkan barang atau layanan Kami, menyempurnakan situs web Kami, dan menyediakan informasi atau produk yang Anda minta kepada Anda.</li>
                 <li>Pelaksanaan Kontrak: Kami dapat menggunakan dan memproses informasi Anda untuk membuat kontrak dengan Anda dan untuk melaksanakan kewajiban kontraktual Kami kepada Anda.</li>
                 <li>Persetujuan:  Kami dapat menggunakan data Anda, atau mengizinkan pihak ketiga yang dipilih untuk menggunakan data Anda, berdasarkan persetujuan Anda atas penggunaan dan pembagian data tersebut oleh Kami. Anda dapat menarik persetujuan Anda kapan saja, tetapi hal itu dapat mempengaruhi kemampuan Anda untuk menggunakan situs web Kami atau penawaran lainnya.</li>
                 <li>Sebagaimana disyaratkan oleh hukum: Kami juga dapat menggunakan atau memproses data Anda sebagaimana diperlukan bagi Kami untuk mematuhi kewajiban hukum.</li>
                 </ol>
-                <h3>E. MENGAPA KAMI MENGUNGKAPKAN INFORMASI ANDA</h3>
-                <p>Kami dapat membagikan informasi Anda dengan pihak ketiga dalam situasi tertentu. Secara khusus, Kami dapat membagikan data Anda dengan pengolah pihak ketiga sebagaimana diperlukan untuk melayani kepentingan bisnis sah Kami, yang meliputi administrasi situs web Kami, administrasi akun Anda, membuat kontrak dengan Anda, berkomunikasi dengan Anda, menerima pesanan barang atau jasa , mengirimkan barang dan layanan Kami, mengidentifikasi tren, melindungi keamanan perusahaan dan situs web Kami, dan memasarkan barang dan layanan tambahan kepada Anda. Dasar hukum untuk pengungkapan kami atas data Anda adalah Persetujuan Anda terhadap Kebijakan Privasi ini dan hak Kami sendiri untuk melindungi dan mempromosikan kepentingan bisnis sah Kami.</p>
+          </div>
+
+          <!-- Section Pengungkapan Informasi -->
+          <div class="policy-card mb-4" data-aos="fade-up" data-aos-delay="400">
+            <h3 class="section-title">E. MENGAPA KAMI MENGUNGKAPKAN INFORMASI ANDA</h3>
+            <p>Kami dapat membagikan informasi Anda dengan pihak ketiga dalam situasi tertentu. Secara khusus, Kami dapat membagikan data Anda dengan pengolah pihak ketiga sebagaimana diperlukan untuk melayani kepentingan bisnis sah Kami, yang meliputi administrasi situs web Kami, administrasi akun Anda, membuat kontrak dengan Anda, berkomunikasi dengan Anda, menerima pesanan barang atau jasa , mengirimkan barang dan layanan Kami, mengidentifikasi tren, melindungi keamanan perusahaan dan situs web Kami, dan memasarkan barang dan layanan tambahan kepada Anda. Dasar hukum untuk pengungkapan kami atas data Anda adalah Persetujuan Anda terhadap Kebijakan Privasi ini dan hak Kami sendiri untuk melindungi dan mempromosikan kepentingan bisnis sah Kami.</p>
                 <p>Berikut ini adalah alasan khusus mengapa Kami dapat membagikan informasi Anda :</p>
                 <ol>
                 <li>Pemrosesan Pihak Ketiga:   Kami dapat mengungkapkan informasi Anda kepada pihak ketiga yang membantu Kami dengan berbagai tugas, termasuk pemrosesan pembayaran, layanan hosting, pengiriman email, komunikasi, dan layanan pelanggan. Kami mungkin tidak selalu mengungkapkan prosesor pihak ketiga ini jika tidak diwajibkan oleh hukum. Kami tidak mengizinkan mereka untuk menggunakan atau mengungkapkan informasi pribadi Anda kecuali sehubungan dengan penyediaan layanan mereka kepada Perusahaan Kami.</li>
@@ -91,8 +103,12 @@
                 <li>Tautan Eksternal:   Situs web kami mungkin menyertakan hyperlink ke situs web lain yang tidak dikendalikan oleh Kami. Kami menyarankan Anda untuk berhati-hati saat mengklik hyperlink. Meskipun Kami menggunakan kehati-hatian yang wajar dalam menyertakan hyperlink di halaman web Kami sendiri, Kami tidak secara teratur memantau situs web pihak ketiga ini dan tidak bertanggung jawab atas segala kerusakan atau konsekuensi yang Anda derita dengan menggunakan hyperlink ini. Kami tidak terikat oleh Kebijakan Privasi dari situs web pihak ketiga mana pun yang Anda akses melalui hyperlink, juga tidak terikat oleh milik kami. Kami mendorong Anda untuk membaca Kebijakan situs web pihak ketiga tersebut sebelum berinteraksi dengan mereka atau melakukan pembelian. Mereka mungkin mengumpulkan informasi yang berbeda dan dengan metode yang berbeda dari yang Kami lakukan.</li>
                 <li>Tujuan Lain: Kami dapat mengungkapkan data pribadi Anda sebagaimana diperlukan untuk mematuhi kewajiban hukum apa pun atau untuk melindungi kepentingan Anda, atau kepentingan vital orang lain atau perusahaan Kami.</li>
                 </ol>
-                <h3>F. TEKNOLOGI PELACAKAN</h3>
-                <ol>
+          </div>
+
+          <!-- Section Teknologi Pelacakan -->
+          <div class="policy-card" data-aos="fade-up" data-aos-delay="500">
+            <h3 class="section-title">F. TEKNOLOGI PELACAKAN</h3>
+            <ol>
                 <li>File Log: Seperti banyak situs web lain, Kami menggunakan file log. File-file ini hanya mencatat pengunjung ke situs – biasanya prosedur standar untuk perusahaan hosting dan bagian dari analisis layanan hosting. Informasi di dalam file log termasuk alamat protokol internet (IP), jenis browser, Penyedia Layanan Internet (ISP), cap tanggal/waktu, halaman rujukan/keluar, dan mungkin jumlah klik. Informasi ini digunakan untuk menganalisis tren, mengelola situs, melacak pergerakan pengguna di sekitar situs, dan mengumpulkan informasi demografis. Alamat IP dan informasi lain semacam itu tidak terkait dengan informasi apa pun yang dapat diidentifikasi secara pribadi.</li>
                 <li>Cookie:  Kami juga menggunakan cookie — file teks kecil yang dikirimkan kepada Kami oleh komputer Anda — dan web beacon untuk menyimpan informasi tertentu. Kami dapat menggunakan cookie untuk mengotentikasi identitas Anda, untuk menentukan apakah Anda masuk ke situs web Kami, untuk personalisasi, untuk keamanan, untuk iklan bertarget, atau untuk analisis kinerja situs web dan layanan Kami. Misalnya, cookie memungkinkan Kami untuk merekomendasikan posting blog kepada Anda berdasarkan apa yang telah Anda baca di situs Kami di masa lalu. Kami menggunakan cookie yang tidak spesifik untuk akun Anda tetapi cukup unik untuk memungkinkan Kami menganalisis tren dan penggunaan umum, dan untuk menyesuaikan interaksi Anda dengan situs web Kami. Informasi ini membantu Kami untuk memahami penggunaan situs Kami dan untuk meningkatkan situs web dan penawaran layanan Kami. Kami dapat menggunakan salah satu atau semua jenis cookie berikut:
                 <ul>
@@ -106,8 +122,10 @@
                 <li>Konfirmasi Email:  Kami mungkin menerima email konfirmasi saat Anda membuka email dari Kami. Hal ini memungkinkan Kami untuk menentukan apakah pengguna merespons komunikasi email Kami dengan baik dan untuk meningkatkan komunikasi tersebut.</li>
                 <li>Teknologi Lain: Teknologi data lain dapat digunakan untuk mengumpulkan informasi yang sebanding untuk keamanan, deteksi penipuan, dan tujuan serupa, untuk memberi Kami informasi tentang penggunaan Anda atas situs web Kami, dan untuk lebih meningkatkan situs web dan penawaran layanan Kami kepada Anda.</li>
                 </ol>
-                <h3>G. MEMPROSES INFORMASI ANDA</h3>
-                <p>Untuk sebagian besar, Kami tidak memproses informasi Anda sendiri, tetapi memberikannya kepada pemroses pihak ketiga untuk diproses. Misalnya, ketika OVO mengambil informasi pembayaran Anda, mereka adalah pemroses pihak ketiga. Mereka memproses pembayaran Anda dan mengirimkan dana kepada Kami. Jadi dalam banyak kasus, Kami perlu mengirimkan informasi Anda ke prosesor pihak ketiga, karena Kami tidak memiliki kemampuan untuk melakukan fungsi ini. Detail lebih lanjut tentang pemrosesan pihak ketiga dijelaskan di bawah ini.</p>
+          </div>
+          <div class="policy-card" data-aos="fade-up" data-aos-delay="500">
+            <h3 class="section-title">G. MEMPROSES INFORMASI ANDA</h3>
+            <p>Untuk sebagian besar, Kami tidak memproses informasi Anda sendiri, tetapi memberikannya kepada pemroses pihak ketiga untuk diproses. Misalnya, ketika OVO mengambil informasi pembayaran Anda, mereka adalah pemroses pihak ketiga. Mereka memproses pembayaran Anda dan mengirimkan dana kepada Kami. Jadi dalam banyak kasus, Kami perlu mengirimkan informasi Anda ke prosesor pihak ketiga, karena Kami tidak memiliki kemampuan untuk melakukan fungsi ini. Detail lebih lanjut tentang pemrosesan pihak ketiga dijelaskan di bawah ini.</p>
                 <p>Namun, Kami dapat, dari waktu ke waktu, memproses data Anda secara internal. Dasar hukum untuk pemrosesan ini adalah persetujuan Anda terhadap pemrosesan, kebutuhan Kami untuk menjalankan kepentingan bisnis sah Kami, dan untuk mematuhi kewajiban hukum. Tujuan kami dalam memproses informasi ini, jika Kami melakukannya, adalah untuk mengelola, memelihara, dan meningkatkan situs web dan penawaran Kami, untuk membuat kontrak dengan Anda, untuk memenuhi persyaratan kontrak tersebut, untuk menyimpan catatan transaksi dan interaksi Kami, untuk menjadi mampu menyediakan barang dan jasa kepada Anda, untuk mematuhi kewajiban hukum Kami, untuk mendapatkan nasihat profesional, dan untuk melindungi hak dan kepentingan perusahaan Kami, pelanggan Kami (termasuk Anda), dan pihak ketiga mana pun. Kami dapat memproses data berikut:</p>
                 <ol>
                 <li aria-level="1">Data yang terkait dengan akun Anda, seperti nama, alamat, alamat email, dan informasi pembayaran Anda.</li>
@@ -144,7 +162,108 @@
                 <li>Komunikasi Pemasaran: Anda dapat memilih untuk tidak menerima komunikasi pemasaran pihak ketiga atau menggunakan informasi pribadi Anda untuk tujuan pemasaran. Caranya dengan menghubungi Kami di <a href="mailto:hello@mijkomp.id">hello@mijkomp.id</a></li>
                 <li>Keluhan:  Anda berhak untuk mengajukan keluhan kepada otoritas pengawas jika Anda yakin Kami menyalahgunakan data Anda atau telah melanggar salah satu hak Anda berdasarkan Kebijakan Privasi ini atau hukum yang berlaku.</li>
                 </ol>
-            </div>
+
         </div>
+        </div>
+      </div>
     </div>
+  </div>
 </template>
+
+<style scoped>
+/* Base Styles */
+:root {
+  --primary-color: #2c3e50;
+  --secondary-color: #34495e;
+  --accent-color: #3498db;
+  --text-color: #2c3e50;
+  --border-color: #e0e0e0;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+}
+
+/* Header Styles */
+.header {
+  margin-bottom: 3rem;
+}
+
+.font-title {
+  color: var(--primary-color);
+  font-size: 2.5rem;
+}
+
+/* Card Styles */
+.policy-card {
+  background: white;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 4px 6px var(--shadow-color);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.policy-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px var(--shadow-color);
+}
+
+/* Section Title Styles */
+.section-title {
+  color: var(--primary-color);
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--accent-color);
+}
+
+/* List Styles */
+.policy-list {
+  padding-left: 1.2rem;
+}
+
+.policy-list li {
+  margin-bottom: 1rem;
+  line-height: 1.6;
+  color: var(--text-color);
+}
+
+/* Text Styles */
+.policy-text {
+  line-height: 1.8;
+  color: var(--text-color);
+  margin-bottom: 1.5rem;
+}
+
+/* Info Types Grid */
+.info-types-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.info-type-card {
+  background: #f8f9fa;
+  border-radius: 8px;
+  padding: 1.5rem;
+  border: 1px solid var(--border-color);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+  }
+
+  .font-title {
+    font-size: 2rem;
+  }
+
+  .policy-card {
+    padding: 1.5rem;
+  }
+
+  .section-title {
+    font-size: 1.3rem;
+  }
+}
+</style>

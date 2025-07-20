@@ -32,7 +32,7 @@ export default{
                 gap: 1,
                 autoplay: 3000,
                 wrapAround: true,
-                pauseAutoplayOnHover: true,
+                pauseAutoplayOnHover: false,
             }
         }
     },

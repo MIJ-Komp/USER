@@ -17,6 +17,15 @@ import vClickOutside from "click-outside-vue3";
 import * as components from './components/component';
 import "./plugins/vee-validate";
 import ToastService from "primevue/toastservice";
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+
+// Initialize AOS
+AOS.init({
+    duration: 800,
+    easing: 'ease-out-cubic',
+    once: true
+});
 
 const app = createApp(App)
 

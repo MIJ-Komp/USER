@@ -1,161 +1,221 @@
 <template>
-    <div>
+    <div class="home-container">
         <SlideShow/>
-        <div>
-            <div class="different-section">
-                <div class="home-title">
-                    <h3>KENAPA</h3>
-                    <h3>KAMI</h3>
-                    <h3 class="color-gold">Berbeda</h3>
+        
+        <!-- Kenapa Kami Berbeda Section -->
+        <section class="different-section py-5">
+            <div class="container">
+                <div class="section-title text-center mb-5" data-aos="fade-up">
+                    <h2 class="fw-bold text-white">KENAPA KAMI <span class="color-gold">Berbeda</span></h2>
                 </div>
                 <div class="diff-items">
-                    <div class="diff-item-container">
-                        <img class="diff-icon"/>
-                        <div class="diff-label">10% original & bergaransi resmi Indonesia</div>
+                    <div 
+                        v-for="(item, index) in differentPoints" 
+                        :key="index"
+                        class="diff-item-container"
+                        :data-aos="index % 2 === 0 ? 'fade-right' : 'fade-left'"
+                        :data-aos-delay="index * 100"
+                    >
+                        <div class="diff-card h-100 p-4 d-flex flex-column align-items-center">
+                            <img :src="item.icon" class="diff-icon mb-3" :alt="item.label"/>
+                            <div class="diff-label">{{ item.label }}</div>
+                        </div>
                     </div>
-                    <div class="diff-item-container">
-                        <img class="diff-icon" src="../assets//home-icon/bios.png"/>
-                        <div class="diff-label">Bios, Firmware & Drive terbaru</div>
-                    </div>
-                    <div class="diff-item-container">
-                        <img class="diff-icon" src="../assets//home-icon/free.png"/>
-                        <div class="diff-label">Free jasa rakit</div>
-                    </div>
-                    <div class="diff-item-container">
-                        <img class="diff-icon" src="../assets//home-icon/manajemen.png"/>
-                        <div class="diff-label">Manajemen kabel rapi & profesional</div>
-                    </div>
-                    <div class="diff-item-container">
-                        <img class="diff-icon" src="../assets//home-icon/pengujian.png"/>
-                        <div class="diff-label">Pengujian Intensif (System Stress Test) sebelum pengiriman barang</div>
-                    </div>
-                    <div class="diff-item-container">
-                        <img class="diff-icon" src="../assets//home-icon/free-pengantaran.png"/>
-                        <div class="diff-label">Free pengantaran untuk daerah Medan sekitarnya</div>
-                    </div>
-                    <div class="diff-item-container">
-                        <img class="diff-icon" src="../assets//home-icon/siap-kirim.png"/>
-                        <div class="diff-label">Siap kitim ke seluruh Indonesia</div>
-                    </div>
-                    <div class="diff-item-container">
-                        <img class="diff-icon" src="../assets//home-icon/layanan-purna.png"/>
-                        <div class="diff-label">Layanan purna jual yang sanagat memuaskan</div>
-                    </div>
-                </div>
-                <div>
-
                 </div>
             </div>
+        </section>
 
-            <div class="assembly-section">
-                <div class="home-title">
-                    <h3 class="color-black">rakitan </h3>
-                    <h3 class="color-black">pc</h3>
-                    <h3 class="color-gold">berkualitas</h3>
+        <!-- PC Rakitan Section -->
+        <section class="assembly-section py-5">
+            <div class="container">
+                <div class="section-title text-center mb-5" data-aos="fade-up">
+                    <h2 class="fw-bold">RAKITAN PC <span class="color-gold">BERKUALITAS</span></h2>
                 </div>
                 <div class="assembly-items">
-                    <div class="assembly-item-container">
-                        <div class="title">MIJ BASIC</div>
-                        <img class="assembly-icon" src="../assets/home-icon/mij-basic.webp"/>
-                        <div @click="goto('product/mij-basic')" class="assembly-shop-button">SHOP NOW <i class="fas fa-long-arrow-alt-right"/></div>
-                        <div class="find-more">What this?</div>
-                    </div>
-                    <div class="assembly-item-container">
-                        <div class="title">MIJ PRIME</div>
-                        <img class="assembly-icon" src="../assets/home-icon/mij-prime.webp"/>
-                        <div @click="goto('product/mij-prime')" class="assembly-shop-button">SHOP NOW <i class="fas fa-long-arrow-alt-right"/></div>
-                        <div class="find-more">What this?</div>
-                    </div>
-                    <div class="assembly-item-container">
-                        <div class="title">MIJ CORE</div>
-                        <img class="assembly-icon" src="../assets/home-icon/mij-core.webp"/>
-                        <div @click="goto('product/mij-core')" class="assembly-shop-button">SHOP NOW <i class="fas fa-long-arrow-alt-right"/></div>
-                        <div class="find-more">What this?</div>
-                    </div>
-                    <div class="assembly-item-container">
-                        <div class="title">MIJ VEIL</div>
-                        <img class="assembly-icon" src="../assets/home-icon/mij-veil.webp"/>
-                        <div @click="goto('product/mij-veil')" class="assembly-shop-button">SHOP NOW <i class="fas fa-long-arrow-alt-right"/></div>
-                        <div class="find-more">What this?</div>
-                    </div>
-                    <div class="assembly-item-container">
-                        <div class="title">MIJ ESSENCE</div>
-                        <img class="assembly-icon" src="../assets/home-icon/mij-essence.webp"/>
-                        <div @click="goto('product/mij-essence')" class="assembly-shop-button">SHOP NOW <i class="fas fa-long-arrow-alt-right"/></div>
-                        <div class="find-more">What this?</div>
-                    </div>
-                    <div class="assembly-item-container">
-                        <div class="title">MIJ CRUX</div>
-                        <img class="assembly-icon" src="../assets/home-icon/mij-crux.webp"/>
-                        <div @click="goto('product/mij-crux')" class="assembly-shop-button">SHOP NOW <i class="fas fa-long-arrow-alt-right"/></div>
-                        <div class="find-more">What this?</div>
-                    </div>
-                    <div class="assembly-item-container">
-                        <div class="title">MIJ MIST</div>
-                        <img class="assembly-icon" src="../assets/home-icon/mij-mist.webp"/>
-                        <div @click="goto('product/mij-mist')" class="assembly-shop-button">SHOP NOW <i class="fas fa-long-arrow-alt-right"/></div>
-                        <div class="find-more">What this?</div>
-                    </div>
-                    <div class="assembly-item-container">
-                        <div class="title">MIJ SLEEK</div>
-                        <img class="assembly-icon" src="../assets/home-icon/mij-sleek.webp"/>
-                        <div @click="goto('product/mij-sleek')" class="assembly-shop-button">SHOP NOW <i class="fas fa-long-arrow-alt-right"/></div>
-                        <div class="find-more">What this?</div>
+                    <div 
+                        v-for="(pc, index) in pcSeries" 
+                        :key="pc.title"
+                        class="assembly-item-container"
+                        :data-aos="'zoom-in'"
+                        :data-aos-delay="index * 100"
+                    >
+                        <div class="assembly-card h-100">
+                            <div class="title h5 text-center mb-3">{{ pc.title }}</div>
+                            <div class="position-relative assembly-image-container mb-3">
+                                <img :src="pc.image" class="assembly-icon" :alt="pc.title"/>
+                                <div class="find-more-overlay">
+                                    <span>What's this?</span>
+                                </div>
+                            </div>
+                            <button @click="goto(pc.path)" class="btn-shop-now w-100">
+                                SHOP NOW <i class="fas fa-long-arrow-alt-right ms-2"/>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="special-section">
-                <div class="home-title">
-                    <h3>special </h3>
-                    <h3 class="color-gold">series</h3>
-                </div>
-                <div class="assembly-items">
-                    <ProductCard style="color: white;" v-for="product in products" :product="product"/>
-                </div>
-            </div>
+        </section>
 
-            <div style="margin-top: 64px;">
-                <div class="image-right-container">
-                    <div class="content">
-                        <h3>PC RAKITAN KHAS DARI KAMI</h3>
-                        <div>Pilih dari koleksi PC rakitan siap pakai racikan MIJ KOMP! Setiap unit telah dirakit dengan teliti, diuji secara menyeluruh, dan siap dikirim. Tingkatkan pengalaman komputasi Anda dengan performa terbaik dari konfigurasi PC unggulan kami, dirancang untuk memenuhi berbagai kebutuhan Anda.</div>
-                        <button class="shop-now-button">SHOP NOW <i class="ms-2 fas fa-long-arrow-alt-right"/></button>
-                    </div>
-                    <img class="content" src="../assets/home-icon/rakitan-khas.jpg">
+        <!-- Special Series Section -->
+        <section class="special-section py-5">
+            <div class="container">
+                <div class="section-title text-center mb-5" data-aos="fade-up">
+                    <h2 class="fw-bold text-white">SPECIAL <span class="color-gold">SERIES</span></h2>
                 </div>
-                <div class="image-left-container">
-                    <img class="content" src="../assets/home-icon/kunjungi-mij-komp.jpg">
-                    <div class="content">
-                        <h3>KUNJUNGI MIJ KOMP</h3>
-                        <div>MIJ KOMP adalah tempatnya. Dengan bantuan tim ahli kami, Anda bisa melihat dan membandingkan berbagai komponen secara langsung untuk membuat keputusan yang paling tepat. Datanglah ke MIJ KOMP dan lihat langsung bagaimana PC impian Anda dirakit. Dengan transparansi dan keterampilan tinggi, kami pastikan Anda puas dengan setiap langkahnya.</div>
-                        <button class="shop-now-button">VISIT US<i class="ms-2 fas fa-long-arrow-alt-right"/></button>
+                <div class="special-items">
+                    <div 
+                        v-for="(product, index) in products" 
+                        :key="product.id"
+                        :data-aos="'fade-up'"
+                        :data-aos-delay="index * 100"
+                    >
+                        <ProductCard :product="product"/>
                     </div>
-                </div>
-                <div class="image-right-container">
-                    <div class="content">
-                        <h3>KABEL RAPI, KINERJA MAKSIMAL</h3>
-                        <div>MIJ KOMP menawarkan solusi kabel manajemen yang rapi dan profesional. Dengan pengalaman dan keahlian kami, kami siap membantu Anda mengorganisir kabel-kabel dengan cara yang paling efisien dan estetis.</div>
-                        <button class="shop-now-button">Contact Us <i class="fas fa-long-arrow-alt-right"/></button>
-                    </div>
-                    <img class="content" src="../assets/home-icon/kinerja-maksimal.jpg">
                 </div>
             </div>
+        </section>
 
-            <div class="portofolio">
+        <!-- Feature Sections -->
+        <section class="features-section py-5">
+            <div class="container">
+                <div class="feature-card mb-5" data-aos="fade-right">
+                    <div class="row align-items-center">
+                        <div class="col-lg-6 mb-4 mb-lg-0">
+                            <div class="feature-content pe-lg-4">
+                                <h3 class="mb-4">PC RAKITAN KHAS DARI KAMI</h3>
+                                <p class="text-muted">Pilih dari koleksi PC rakitan siap pakai racikan MIJ KOMP! Setiap unit telah dirakit dengan teliti, diuji secara menyeluruh, dan siap dikirim. Tingkatkan pengalaman komputasi Anda dengan performa terbaik dari konfigurasi PC unggulan kami, dirancang untuk memenuhi berbagai kebutuhan Anda.</p>
+                                <button @click="goto('product/desktop-pc')" class="btn-shop-now">SHOP NOW <i class="fas fa-long-arrow-alt-right ms-2"/></button>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <img src="/images/home-icon/rakitan-khas.jpg" class="img-fluid rounded-3" alt="PC Rakitan">
+                        </div>
+                    </div>
+                </div>
 
+                <div class="feature-card mb-5" data-aos="fade-left">
+                    <div class="row align-items-center flex-row-reverse">
+                        <div class="col-lg-6 mb-4 mb-lg-0">
+                            <div class="feature-content ps-lg-4">
+                                <h3 class="mb-4">KUNJUNGI MIJ KOMP</h3>
+                                <p class="text-muted">MIJ KOMP adalah tempatnya. Dengan bantuan tim ahli kami, Anda bisa melihat dan membandingkan berbagai komponen secara langsung untuk membuat keputusan yang paling tepat. Datanglah ke MIJ KOMP dan lihat langsung bagaimana PC impian Anda dirakit.</p>
+                                <button @click="goto('contact-us')" class="btn-shop-now">VISIT US <i class="fas fa-long-arrow-alt-right ms-2"/></button>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <img src="/images/home-icon/kunjungi-mij-komp.jpg" class="img-fluid rounded-3" alt="Kunjungi MIJ KOMP">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="feature-card" data-aos="fade-right">
+                    <div class="row align-items-center">
+                        <div class="col-lg-6 mb-4 mb-lg-0">
+                            <div class="feature-content pe-lg-4">
+                                <h3 class="mb-4">KABEL RAPI, KINERJA MAKSIMAL</h3>
+                                <p class="text-muted">MIJ KOMP menawarkan solusi kabel manajemen yang rapi dan profesional. Dengan pengalaman dan keahlian kami, kami siap membantu Anda mengorganisir kabel-kabel dengan cara yang paling efisien dan estetis.</p>
+                                <button @click="goto('contact-us')" class="btn-shop-now">Contact Us <i class="fas fa-long-arrow-alt-right ms-2"/></button>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <img src="/images/home-icon/kinerja-maksimal.jpg" class="img-fluid rounded-3" alt="Kabel Management">
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
+        </section>
     </div>
 </template>
 
 <script>
 import ProductCard from '../components/ProductCard.vue';
 import SlideShow from '../components/SlideShow.vue'
-export default{
-    components:{ProductCard, SlideShow},
-    data(){
-        return{
-            products:[
+import { onMounted } from 'vue'
+import 'aos/dist/aos.css'
+import AOS from 'aos'
+import { mapActions, mapGetters } from 'vuex';
+import module from '../constant/module';
+export default {
+    components: { ProductCard, SlideShow },
+    data() {
+        return {
+            differentPoints: [
+                {
+                    icon: '/images/home-icon/guarantee.png',
+                    label: '100% original & bergaransi resmi Indonesia'
+                },
+                {
+                    icon: '/images/home-icon/bios.png',
+                    label: 'Bios, Firmware & Drive terbaru'
+                },
+                {
+                    icon: '/images/home-icon/free.png',
+                    label: 'Free jasa rakit'
+                },
+                {
+                    icon: '/images/home-icon/manajemen.png',
+                    label: 'Manajemen kabel rapi & profesional'
+                },
+                {
+                    icon: '/images/home-icon/pengujian.png',
+                    label: 'Pengujian Intensif (System Stress Test) sebelum pengiriman barang'
+                },
+                {
+                    icon: '/images/home-icon/free-pengantaran.png',
+                    label: 'Free pengantaran untuk daerah Medan sekitarnya'
+                },
+                {
+                    icon: '/images/home-icon/siap-kirim.png',
+                    label: 'Siap kirim ke seluruh Indonesia'
+                },
+                {
+                    icon: '/images/home-icon/layanan-purna.png',
+                    label: 'Layanan purna jual yang sangat memuaskan'
+                }
+            ],
+            pcSeries: [
+                {
+                    title: 'MIJ BASIC',
+                    image: '/images/home-icon/mij-basic.webp',
+                    path: 'product/mij-basic'
+                },
+                {
+                    title: 'MIJ PRIME',
+                    image: '/images/home-icon/mij-prime.webp',
+                    path: 'product/mij-prime'
+                },
+                {
+                    title: 'MIJ CORE',
+                    image: '/images/home-icon/mij-core.webp',
+                    path: 'product/mij-core'
+                },
+                {
+                    title: 'MIJ VEIL',
+                    image: '/images/home-icon/mij-veil.webp',
+                    path: 'product/mij-veil'
+                },
+                {
+                    title: 'MIJ ESSENCE',
+                    image: '/images/home-icon/mij-essence.webp',
+                    path: 'product/mij-essence'
+                },
+                {
+                    title: 'MIJ CRUX',
+                    image: '/images/home-icon/mij-crux.webp',
+                    path: 'product/mij-crux'
+                },
+                {
+                    title: 'MIJ MIST',
+                    image: '/images/home-icon/mij-mist.webp',
+                    path: 'product/mij-mist'
+                },
+                {
+                    title: 'MIJ SLEEK',
+                    image: '/images/home-icon/mij-sleek.webp',
+                    path: 'product/mij-sleek'
+                }
+            ],
+            products: [
                 {
                     name: 'MIJ BASIC',
                     image: '/images/image-dummy.png',
@@ -163,218 +223,378 @@ export default{
                     priceStart: 6000000,
                     priceEnd: 7000000,
                 }
-            ]
+            ],
+            menu:null
         }
     },
-    methods:{
-        goto(url){
-            this.$router.replace({ path: `/${url}`});
+    computed:{
+      ...mapGetters(module.menu.name, ["menus"]),
+    },
+    methods: {
+        ...mapActions(module.product.name, ["getAll"]),
+        goto(url) {
+            this.$router.replace({ path: `/${url}` });
+        },
+        findMenuAndCollectCategoryIds(menus, targetName) {
+            let result = {
+                menu: null,
+                categoryIds: []
+            };
+
+            for (const menu of menus) {
+                this.recursiveSearch(menu, targetName, result);
+                if (result.menu) break; // stop kalau sudah ketemu
+            }
+
+            return result;
+        },
+        recursiveSearch(menu, targetName, result) {
+            if (menu.path.toLowerCase() === `/${targetName.toLowerCase()}` || result.menu) {
+            if(!result.menu)
+                result.menu = menu;
+
+            if (menu.menuItems && Array.isArray(menu.menuItems)) {
+                for (const item of menu.menuItems) {
+                if (!result.categoryIds.includes(item.productCategoryId)) {
+                    result.categoryIds.push(item.productCategoryId);
+                }
+                }
+            }
+            if (menu.childs && menu.childs.length > 0) {
+                for (const child of menu.childs) {
+                // lanjut cari child menu
+                this.recursiveSearch(child, targetName, result);
+                }
+            }
+            }
+            else{
+            if (menu.childs && menu.childs.length > 0) {
+                for (const child of menu.childs) {
+                // lanjut cari child menu
+                if (!result.menu) this.recursiveSearch(child, targetName, result);
+                }
+            }
+            }
         }
     },
-     mounted(){
+    async created(){
+       
+    },
+    watch:{
+      menus:{
+        immediate: true,
+        async handler(){
+          if(this.menus){
+            const { menu, categoryIds } = this.findMenuAndCollectCategoryIds(this.menus, 'special-series');
+            this.menu = menu?.name.toUpperCase()
+            console.log(categoryIds)
+            this.products = await this.getAll({
+              productCategoryIds: categoryIds.length <= 0 ? '-1' : categoryIds.join(',')
+            })
+            console.log(this.products)
+          }
+        }
+      }
+    },
+
+    mounted() {
+        AOS.init({
+            duration: 1000,
+            easing: 'ease-in-out',
+            once: true
+        });
+
         for(let index = 1; index < 8; index++) {
             this.products.push({
-                    name: 'MIJ BASIC',
-                    image: '/images/image-dummy.png',
-                    id: index + 1,
-                    price: 7000000,
-                })
+                name: 'MIJ BASIC',
+                image: '/images/image-dummy.png',
+                id: index + 1,
+                price: 7000000,
+            })
         }
     }
 }
 </script>
 
-<style>
-.shop-now-button{
-    border-radius: 8px;
-    background: #14263e;
-    color: #f9ae00!important;
-    font-weight: 600;
-    border: 2px solid #14263e;
-    padding: 8px 26px;
-    margin-top: 20px;
-    align-self: center;
+<style scoped>
+.home-container {
+    overflow-x: hidden;
 }
-.shop-now-button:hover{
-    background: white;
-    color: #14263e !important;
-}
-.image-right-container, .image-left-container{
-    display: flex;
-    justify-content: space-between;
-    margin-top: 40px;
-}
-.image-right-container .content, .image-left-container .content{
-    width: 48%;
-    padding: 24px;
-    text-align: justify;
-}
-.content h3{
-    font-size: 34px !important;
-    font-weight: 600 !important;
-    color: #162B47 !important;
-}
-.home-title{
+
+.section-title h2 {
+    font-size: 2.5rem;
+    font-family: 'Barlow Condensed', sans-serif;
     text-transform: uppercase;
-    color: #FFFFFF !important;
-    text-align: center;
-    display: flex;
-    justify-content: center;
-    margin: 47px;
-    flex-wrap: wrap;
-    gap: 12px;
-}
-h3{
-    font-size: 47px !important;
-    margin: 0px !important;
-    font-family: 'Barlow Condensed', Helvetica, Arial, Lucida, sans-serif !important;
-    font-weight: 600 !important;
-}
-.different-section, .special-section{
-    background: #14263f!important;
-    padding: 32px
-}
-.diff-icon{
-    width: 80%;
-}
-.diff-items{
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(22%, 1fr));
-    row-gap: 40px;
-    column-gap: 40px;
-    padding: 16px;
-    justify-content: center;
-    place-items: center;
-}
-.diff-label{
-    color: white;
-    font-family: 'Titillium Web', Helvetica, Arial, Lucida, sans-serif;
-    font-size: 13px;
-    line-height: 1.2em;
-    margin-top: 12px;
-    text-align: center;
-}
-.assembly-item-container .title{
-    color: #162B47 !important;
-     font-family: 'Barlow Condensed', Helvetica, Arial, Lucida, sans-serif !important;
-    font-weight: 600 !important;
-    text-transform: uppercase !important;
-    font-size: 30px !important;
-}
-.diff-item-container{
-    justify-items: center;
-    width: 50%;
-    text-align: center;
-    align-self: center;
 }
 
-.assembly-section{
-    background: white !important;
-    padding: 32px
-}
-.assembly-items{
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(22%, 1fr));
-    row-gap: 40px;
-    column-gap: 20px;
-    padding: 16px;
-    justify-content: center; 
-}
-.assembly-icon{
-    width: 100%;
-}
-.assembly-item-container{
-    justify-items: center;
-    text-align: center;
-    position: relative;
-    box-shadow: 0px 0px 30px 1px rgba(0,0,0,0.1);
-    border-radius: 8px;
-    padding: 12px;
-}
-.assembly-item-container .find-more{
-    position: absolute;
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    background-color: rgb(241 165 15 / 77%);
-    cursor: zoom-in;
-    display: flex;
-    flex-direction: column;
-    color: white;
-    justify-content: center;
-    font-weight: 500;
-    top: calc(50% - 30px);
-    left: calc(50% - 30px);
-    box-shadow: 0px 0px 30px 5px rgba(0,0,0,0.27);
-    border: 1px solid white
-}
-.assembly-item-container .find-more:hover{
-    background-color: rgba(51,60,69,0.66);
-    color: #f9ae00;
+/* Different Section Styles */
+.different-section {
+    background: #14263f;
 }
 
-.assembly-shop-button{
-    border-radius: 8px;
-    color: #f9ae00;
-    border: 1px solid #14263e;
-    font-size: 16px;
-    font-family: 'PT Sans', Helvetica, Arial, Lucida, sans-serif !important;
-    font-weight: 700 !important;
-    text-transform: uppercase !important;
-    background-color: #14263e;
-    width: 80%;
-    padding: 12px;
-    cursor: pointer;
+.diff-card {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    transition: transform 0.3s ease;
 }
-.assembly-shop-button:hover{
-    color: #14263e;
+
+.diff-card:hover {
+    transform: translateY(-5px);
+}
+
+.diff-icon {
+    width: 64px;
+    height: 64px;
+    object-fit: contain;
+}
+
+.diff-label {
+    color: white;
+    font-size: 0.9rem;
+    text-align: center;
+    line-height: 1.4;
+}
+
+/* Assembly Section Styles */
+.assembly-card {
     background: white;
-    border: 1px solid #14263e;
+    border-radius: 12px;
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-@media screen and (max-width: 800px) {
-    .image-right-container{
-        flex-direction: column-reverse;
+.assembly-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+.assembly-image-container {
+    overflow: hidden;
+    border-radius: 8px;
+}
+
+.assembly-icon {
+    width: 100%;
+    transition: transform 0.3s ease;
+}
+
+.find-more-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(249, 174, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    cursor: pointer;
+    color: white;
+    font-weight: 600;
+}
+
+.assembly-image-container:hover {
+    .find-more-overlay {
+        opacity: 1;
     }
-    .image-left-container{
-        flex-direction: column;
+    .assembly-icon {
+        transform: scale(1.05);
     }
-    .image-right-container .content, .image-left-container .content{
-        width: 100%;
+}
+
+/* Special Section Styles */
+.special-section {
+    background: #14263f;
+}
+
+.special-items, .assembly-items {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.5rem;
+}
+
+/* Feature Section Styles */
+.feature-card {
+    padding: 2rem;
+    border-radius: 12px;
+    background: white;
+    transition: transform 0.3s ease;
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+}
+
+.feature-content h3 {
+    font-size: 2rem;
+    color: #14263f;
+    font-family: 'Barlow Condensed', sans-serif;
+}
+
+.btn-shop-now {
+    background: #14263e;
+    color: #f9ae00;
+    border: 2px solid #14263e;
+    padding: 0.75rem 2rem;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+}
+
+.btn-shop-now:hover {
+    background: white;
+    color: #14263e;
+}
+.diff-items {
+    gap: 12px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+}
+@media (max-width: 991px) {
+    .section-title h2 {
+        font-size: 2rem;
     }
-    .assembly-section{
-        padding: 16px 4px;
+
+    .feature-content {
+        text-align: center;
     }
-    .assembly-items{
-        grid-template-columns: repeat(auto-fit, minmax(40%, 1fr));
+
+    .special-items, .assembly-items {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     }
-    .diff-items{
-        grid-template-columns: repeat(auto-fit, minmax(25%, 1fr));
-        gap: 24px;
-        padding: 8px;
+}
+
+@media (max-width: 576px) {
+    .section-title h2 {
+        font-size: 1.75rem;
     }
-    .different-section, .special-section{
-        padding: 8px;
+
+    .feature-card {
+        padding: 1rem;
     }
-    .diff-item-container{
-        width: 80%;
+
+    .feature-content h3 {
+        font-size: 1.5rem;
     }
-    .assembly-item-container{
-        padding: 4px;
+
+    .diff-items {
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
     }
-    .assembly-item-container .title{
-        font-size: 20px !important;
+
+    .special-items {
+        grid-template-columns: 1fr;
     }
-    .assembly-shop-button, .find-more{
-        padding: 8px !important;
-        font-size: 12px;
+}
+
+/* Animation Classes */
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity 0.5s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+    opacity: 0;
+}
+
+.slide-fade-enter-active {
+    transition: all 0.3s ease-out;
+}
+
+.slide-fade-leave-active {
+    transition: all 0.3s cubic-bezier(1, 0.5, 0.8, 1);
+}
+
+.slide-fade-enter-from,
+.slide-fade-leave-to {
+    transform: translateX(20px);
+    opacity: 0;
+}
+
+.bounce-enter-active {
+    animation: bounce-in 0.5s;
+}
+
+.bounce-leave-active {
+    animation: bounce-in 0.5s reverse;
+}
+
+@keyframes bounce-in {
+    0% {
+        transform: scale(0);
     }
-    .home-title{
-        gap: 8px;
-        margin: 24px;
+    50% {
+        transform: scale(1.25);
     }
-    h3{
-        font-size: 32px;
+    100% {
+        transform: scale(1);
     }
+}
+
+/* Hover Animations */
+.assembly-card {
+    transform-origin: center;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.assembly-card:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+.diff-card {
+    transform-origin: center;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.diff-card:hover {
+    transform: translateY(-5px);
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.btn-shop-now {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.btn-shop-now::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: -100%;
+    background: linear-gradient(
+        120deg,
+        transparent,
+        rgba(255, 255, 255, 0.2),
+        transparent
+    );
+    transition: all 0.5s ease;
+}
+
+.btn-shop-now:hover::after {
+    left: 100%;
+}
+
+/* Loading Skeleton Animation */
+@keyframes shimmer {
+    0% {
+        background-position: -1000px 0;
+    }
+    100% {
+        background-position: 1000px 0;
+    }
+}
+
+.skeleton {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 1000px 100%;
+    animation: shimmer 2s infinite;
 }
 </style>

@@ -1,46 +1,157 @@
 <template>
-  <div class="container">
-    <div class="row">
-      <div class="col">
-        <div class="d-flex">
-          <h4>Keranjang ({{ cartStore.items.length }})</h4>
-        </div>
-      </div>
+  <div class="container py-4">
+    <div class="cart-header mb-4">
+      <h4 class="mb-0">Keranjang <span class="color-gold">({{ cartStore.items.length }})</span></h4>
+      <div class="header-line"></div>
     </div>
 
-    <div class="row">
-      <div class="col-md-8 mb-4">
-        <div v-if="!cartStore.items.length" class="card mb-3 shadow-sm">
-          <div class="card-body">Keranjang anda masih kosong</div>
+    <div class="row g-4">
+      <div :class="cartItems.length ?'col-lg-8':'col-lg-12'">
+        <!-- Empty State -->
+        <div v-if="!cartStore.items.length" class="empty-cart">
+          <i class="fas fa-shopping-cart fa-3x text-muted mb-3"></i>
+          <h5 class="text-muted">Keranjang Anda masih kosong</h5>
+          <router-link to="/" class="btn btn-primary mt-3">
+            <i class="fas fa-shopping-bag me-2"></i>Mulai Belanja
+          </router-link>
         </div>
-        <div v-else class="card mb-3 shadow-sm">
-          <div v-for="cartItem in cartItems" class="border-bottom">
-            <CartItem
-              :key="cartItem.productId"
-              :cartItem="cartItem"
-              :changeQty="changeQty"
-              :removeItem="removeItem"
-            />
-          </div>
 
+        <!-- Cart Items -->
+        <div v-else class="cart-items-container">
+          <TransitionGroup name="list" tag="div">
+            <div v-for="cartItem in cartItems" :key="cartItem.productId" class="cart-item-wrapper">
+              <CartItem
+                :cartItem="cartItem"
+                :changeQty="changeQty"
+                :removeItem="removeItem"
+              />
+            </div>
+          </TransitionGroup>
         </div>
       </div>
 
-      <div class="col-md-4">
-        <div class="card shadow-sm" v-if="cartItems.length">
+      <!-- Order Summary -->
+      <div class="col-lg-4" v-if="cartItems.length">
+        <div class="card summary-card">
           <div class="card-body">
-            <h5>Ringkasan Belanja</h5>
-            <div class="d-flex justify-content-between mb-4">
-              <span>Total</span>
-              <span class="fw-semibold">{{ formatCurrency(totalPrice) }}</span>
+            <h5 class="card-title mb-4">Ringkasan Belanja</h5>
+            <div class="summary-details">
+              <div class="d-flex justify-content-between mb-3">
+                <span>Total Item</span>
+                <span class="fw-semibold">{{ cartStore.items.length }}</span>
+              </div>
+              <div class="d-flex justify-content-between h5">
+                <span>Total Harga</span>
+                <span class="fw-semibold color-gold">{{ formatCurrency(totalPrice) }}</span>
+              </div>
             </div>
-            <button @click="checkout" :disabled="!allowCheckout" class="btn btn-warning w-100 fw-semibold">Beli</button>
+            <button 
+              @click="checkout" 
+              :disabled="!allowCheckout" 
+              class="checkout-btn btn btn-warning w-100 mt-4">
+              <i class="fas fa-shopping-cart me-2"></i>
+              Checkout
+            </button>
+            <div v-if="!allowCheckout" class="alert alert-warning mt-3 mb-0 py-2 small">
+              <i class="fas fa-exclamation-triangle me-2"></i>
+              Beberapa item tidak tersedia atau stoknya tidak mencukupi
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
 </template>
+
+<style scoped>
+.cart-header {
+  position: relative;
+}
+
+.header-line {
+  height: 2px;
+  background: linear-gradient(90deg, var(--gold), transparent);
+  margin-top: 12px;
+  width: 100px;
+}
+
+.empty-cart {
+  text-align: center;
+  padding: 48px;
+  background: #f8f9fa;
+  border-radius: 12px;
+  margin-top: 24px;
+}
+
+.cart-items-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.cart-item-wrapper {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  transition: all 0.3s ease;
+}
+
+.cart-item-wrapper:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.summary-card {
+  position: sticky;
+  top: 80px;
+  border-radius: 12px;
+  border: none;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.summary-details {
+  padding: 16px 0;
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+}
+
+.checkout-btn {
+  padding: 12px;
+  font-weight: 600;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.checkout-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.checkout-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* List Transitions */
+.list-enter-active,
+.list-leave-active {
+  transition: all 0.3s ease;
+}
+
+.list-enter-from,
+.list-leave-to {
+  opacity: 0;
+  transform: translateX(-30px);
+}
+
+@media (max-width: 991px) {
+  .summary-card {
+    position: static;
+    margin-top: 24px;
+  }
+}
+</style>
 
 <script setup>
   import { onMounted, ref, watch } from 'vue';
@@ -49,6 +160,10 @@
   import { useStore } from 'vuex';
   import module from '../constant/module.js';
 import { useRouter } from 'vue-router';
+import { getCurrentInstance } from 'vue'
+
+const { proxy } = getCurrentInstance();
+const $dialog = proxy.$dialog;
 
   const store = useStore();
   const cartStore = useCartStore();
@@ -115,8 +230,11 @@ import { useRouter } from 'vue-router';
     cartStore.changeQty(productId, productSkuId, qty);
   }
 
-  function removeItem(productId, productSkuId) {
-    cartStore.removeItem(productId, productSkuId);
+  async function removeItem(productId, productSkuId) {
+    const confirm = await $dialog.Confirmation.confirm({ title: 'Konfirmasi', message: `Apakah Anda ingin menghapus produk ini dari keranjang?` })
+    if (confirm) {
+      cartStore.removeItem(productId, productSkuId);
+    }
   }
 
   function checkout() {

@@ -6,7 +6,7 @@
     <Confirmation ref="confirmation" />
 
     <Navbar/>
-    <router-view :key="$route.fullPath" class="mb-4"/>
+    <router-view :key="$route.fullPath" style="margin-top: 68px;" class=" mb-4"/>
     <Footer/>
       <ProductComparison />
   </div>

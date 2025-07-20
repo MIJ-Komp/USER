@@ -1,13 +1,17 @@
 <template>
-    <div class="assembly-container px-3">
-        <div class="fs-4 py-1 border-bottom border-2 fw-semibold">RAKIT PC</div>
-        <div class="fw-light my-2" style="font-size: 14px; text-align: justify;">
-            Bangun PC impianmu dengan fitur Rakit PC. Pilih sendiri komponen seperti prosesor, RAM, VGA, motherboard, dan lainnya — kami bantu pastikan semuanya kompatibel dan cocok satu sama lain.
-            Nggak perlu bingung atau takut salah beli!
+    <div class="container assembly-container px-3">
+        <!-- Header section dengan animasi fade-in -->
+        <div class="header-section" data-aos="fade-down">
+            <div class="fs-4 py-3 border-bottom border-2 fw-bold">RAKIT PC</div>
+            <div class="description my-4" style="font-size: 15px; text-align: justify;">
+                Bangun PC impianmu dengan fitur Rakit PC. Pilih sendiri komponen seperti prosesor, RAM, VGA, motherboard, dan lainnya — kami bantu pastikan semuanya kompatibel dan cocok satu sama lain.
+                Nggak perlu bingung atau takut salah beli!
+            </div>
         </div>
 
-        <b-row  class="gx-3 gy-3 align-start show" v-if="hasLoaded">
-            <b-col cols="12" lg="8" md="8" style="flex: 2;" >
+        <b-row class="gx-4 gy-4 align-start show" v-if="hasLoaded">
+            <!-- Kolom komponen dengan animasi fade-up bertahap -->
+            <b-col cols="12" lg="8" md="8" style="flex: 2;" data-aos="fade-up" data-aos-delay="100">
                 <AssemblyComponent :compatibleRules="compatibleRules" :allProducts="products" :componentCode="constant.componentTypeCode.processor" :selectedProduct="form" @toggleShow="toggleShow(1)" :show="menu==1" v-model="form.cpu" label="Processor (CPU)"/>
                 <AssemblyComponent :compatibleRules="compatibleRules" :allProducts="products" :componentCode="constant.componentTypeCode.motherboard" :selectedProduct="form" @toggleShow="toggleShow(2)" :show="menu==2" v-model="form.motherboard" label="Motherboard"/>
                 <AssemblyComponent :compatibleRules="compatibleRules" :allProducts="products" :componentCode="constant.componentTypeCode.ram" :selectedProduct="form" @toggleShow="toggleShow(3)" :show="menu==3" v-model="form.ram" label="RAM (Memory)"/>
@@ -20,120 +24,142 @@
                 <AssemblyComponent :compatibleRules="compatibleRules" :allProducts="products" :componentCode="constant.componentTypeCode.monitor" :selectedProduct="form" @toggleShow="toggleShow(10)" :show="menu==10" v-model="form.monitor" label="Monitor (Optional)"/>
                 <!-- <AssemblyComponent :compatibleRules="compatibleRules" :allProducts="products" :componentCode="constant.componentTypeCode.processor" :selectedProduct="form" @toggleShow="toggleShow()" :show="menu==1" v-model="form.others" :multiple="false" label="Lainnya"/> -->
             </b-col>
-            <b-col cols="12" lg="4" md="4" class="cart-container">
-                <div class="border rounded shadow-sm p-1" style="font-size: 14px;">
-                    <!-- <div style="background: var(--gold);" class="header-component fw-bold">Produk terpilih:</div> -->
-                    <table style="width: 100%;" class="selected-product">
-                        <thead>
-                            <tr style="background-color: var(--gold);">
-                                <td style="min-width: 30%; max-width: 30%; width: 30%;">Jenis</td>
-                                <td style="min-width: 55%; max-width: 55%; width: 55%;">Dipilih</td>
-                                <td style="min-width: 15%; max-width: 15%; width: 15%;">Qty</td>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Processor (CPU)</td>
-                                <td>{{ getProduct(form.cpu?.productId) }}</td>
-                                <td>{{ !form.cpu? '-': 1}}</td>
-                            </tr>
-                             <tr>
-                                <td>Motherboard</td>
-                                <td>{{ getProduct(form.motherboard?.productId) }}</td>
-                                <td>{{ !form.motherboard? '-': 1 }}</td>
-                            </tr>
-                             <tr>
-                                <td>RAM</td>
-                                <td>
-                                    <div v-if="form.ram.length<=0">-</div>
-                                    <div v-for="ram in form.ram">{{ getProduct(ram?.productId) }}</div>
-                                </td>
-                                <td>
-                                    <div v-if="form.ram.length<=0">-</div>
-                                    <div v-for="ram in form.ram">
-                                        <select v-model="ram.qty" style="width: 100%;" :disabled="!ram">
-                                            <option :value="index" v-for="index in 4">{{ index}}</option>
-                                        </select></div>
-                                </td>
-                            </tr>
-                             <tr>
-                                <td>VGA/GPU</td>
-                                <td>{{ getProduct(form.gpu?.productId) }}</td>
-                                <td>{{ !form.gpu? '-': 1 }}</td>
-                            </tr>
-                            <tr>
-                                <td>SSD/HDD</td>
-                                <td>
-                                    <div v-if="form.storage.length<=0">-</div>
-                                    <div v-for="storage in form.storage">{{ getProduct(storage?.productId) }}</div>
-                                </td>
-                                <td>
-                                    <div v-if="form.storage.length<=0">-</div>
-                                    <div v-for="storage in form.storage">
-                                        <select v-model="storage.quantity" style="width: 100%;">
-                                            <option :value="index" v-for="index in 8">{{ index}}</option>
-                                        </select></div>
-                                </td>
-                            </tr>
-                             <tr>
-                                <td>Power Supply</td>
-                                <td>{{ getProduct(form.psu?.productId) }}</td>
-                                <td>{{ !form.psu? '-': 1 }}</td>
-                            </tr>
-                             <tr>
-                                <td>Casing</td>
-                                <td>{{ getProduct(form.case?.productId) }}</td>
-                                <td>{{ !form.case? '-': 1 }}</td>
-                            </tr>
-                             <tr>
-                                <td>Cpu Cooler</td>
-                                <td>{{ getProduct(form.cpuCooler?.productId) }}</td>
-                                <td>{{ !form.cpuCooler? '-': 1 }}</td>
-                            </tr>
-                            <tr>
-                                <td>Case Fan</td>
-                                <td>
-                                    <div v-if="form.caseFan.length<=0">-</div>
-                                    <div v-for="caseFan in form.caseFan">{{ getProduct(caseFan?.productId) }}</div>
-                                </td>
-                                <td>
-                                    <div v-if="form.caseFan.length<=0">-</div>
-                                    <div v-for="caseFan in form.caseFan">
-                                        <select v-model="caseFan.quantity" style="width: 100%;">
-                                            <option :value="index" v-for="index in 4">{{ index}}</option>
-                                        </select></div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Monitor</td>
-                                <td>
-                                    <div v-if="form.monitor.length<=0">-</div>
-                                    <div v-for="monitor in form.monitor">{{ getProduct(monitor?.productId) }}</div>
-                                </td>
-                                <td>
-                                    <div v-if="form.monitor.length<=0">-</div>
-                                    <div v-for="monitor in form.monitor">
-                                        <select v-model="monitor.quantity" style="width: 100%;">
-                                            <option :value="index" v-for="index in 4">{{ index}}</option>
-                                        </select></div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    
-                     <!-- <b-row>
-                        <b-col cols="12" lg="5" class="fw-semibold">Lainnya</b-col>
-                        <b-col cols="12" lg="7">{{ getProduct(form.others) }}</b-col>
-                    </b-row> -->
 
-                    <TextBox :min="1" class="p-1 mt-2" labelType="in" label="Jumlah Unit Rakitan" v-model="form.totalUnit" type="number"/>
-                    <button @click.stop.prevent="addToCart">Tambah ke keranjang</button>
+            <!-- Cart section dengan efek sticky dan animasi -->
+            <b-col cols="12" lg="4" md="4" class="cart-container" data-aos="fade-left" data-aos-delay="200">
+                <div class="cart-summary border rounded shadow p-3">
+                    <h4 class="mb-3 fw-bold">Ringkasan Rakitan</h4>
+                    <div class="selected-items-container">
+                        <table class="selected-product w-100">
+                            <thead>
+                                <tr style="background-color: var(--gold);">
+                                    <td style="min-width: 30%; max-width: 30%; width: 30%;">Jenis</td>
+                                    <td style="min-width: 55%; max-width: 55%; width: 55%;">Dipilih</td>
+                                    <td style="min-width: 15%; max-width: 15%; width: 15%;">Qty</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Processor (CPU)</td>
+                                    <td>{{ getProduct(form.cpu?.productId) }}</td>
+                                    <td>{{ !form.cpu? '-': 1}}</td>
+                                </tr>
+                                 <tr>
+                                    <td>Motherboard</td>
+                                    <td>{{ getProduct(form.motherboard?.productId) }}</td>
+                                    <td>{{ !form.motherboard? '-': 1 }}</td>
+                                </tr>
+                                 <tr>
+                                    <td>RAM</td>
+                                    <td>
+                                        <div v-if="form.ram.length<=0">-</div>
+                                        <div v-for="ram in form.ram">{{ getProduct(ram?.productId) }}</div>
+                                    </td>
+                                    <td>
+                                        <div v-if="form.ram.length<=0">-</div>
+                                        <div v-for="ram in form.ram">
+                                            <select v-model="ram.qty" style="width: 100%;" :disabled="!ram">
+                                                <option :value="index" v-for="index in 4">{{ index}}</option>
+                                            </select></div>
+                                    </td>
+                                </tr>
+                                 <tr>
+                                    <td>VGA/GPU</td>
+                                    <td>{{ getProduct(form.gpu?.productId) }}</td>
+                                    <td>{{ !form.gpu? '-': 1 }}</td>
+                                </tr>
+                                <tr>
+                                    <td>SSD/HDD</td>
+                                    <td>
+                                        <div v-if="form.storage.length<=0">-</div>
+                                        <div v-for="storage in form.storage">{{ getProduct(storage?.productId) }}</div>
+                                    </td>
+                                    <td>
+                                        <div v-if="form.storage.length<=0">-</div>
+                                        <div v-for="storage in form.storage">
+                                            <select v-model="storage.quantity" style="width: 100%;">
+                                                <option :value="index" v-for="index in 8">{{ index}}</option>
+                                            </select></div>
+                                    </td>
+                                </tr>
+                                 <tr>
+                                    <td>Power Supply</td>
+                                    <td>{{ getProduct(form.psu?.productId) }}</td>
+                                    <td>{{ !form.psu? '-': 1 }}</td>
+                                </tr>
+                                 <tr>
+                                    <td>Casing</td>
+                                    <td>{{ getProduct(form.case?.productId) }}</td>
+                                    <td>{{ !form.case? '-': 1 }}</td>
+                                </tr>
+                                 <tr>
+                                    <td>Cpu Cooler</td>
+                                    <td>{{ getProduct(form.cpuCooler?.productId) }}</td>
+                                    <td>{{ !form.cpuCooler? '-': 1 }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Case Fan</td>
+                                    <td>
+                                        <div v-if="form.caseFan.length<=0">-</div>
+                                        <div v-for="caseFan in form.caseFan">{{ getProduct(caseFan?.productId) }}</div>
+                                    </td>
+                                    <td>
+                                        <div v-if="form.caseFan.length<=0">-</div>
+                                        <div v-for="caseFan in form.caseFan">
+                                            <select v-model="caseFan.quantity" style="width: 100%;">
+                                                <option :value="index" v-for="index in 4">{{ index}}</option>
+                                            </select></div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Monitor</td>
+                                    <td>
+                                        <div v-if="form.monitor.length<=0">-</div>
+                                        <div v-for="monitor in form.monitor">{{ getProduct(monitor?.productId) }}</div>
+                                    </td>
+                                    <td>
+                                        <div v-if="form.monitor.length<=0">-</div>
+                                        <div v-for="monitor in form.monitor">
+                                            <select v-model="monitor.quantity" style="width: 100%;">
+                                                <option :value="index" v-for="index in 4">{{ index}}</option>
+                                            </select></div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        
+                         <!-- <b-row>
+                            <b-col cols="12" lg="5" class="fw-semibold">Lainnya</b-col>
+                            <b-col cols="12" lg="7">{{ getProduct(form.others) }}</b-col>
+                        </b-row> -->
+
                     </div>
+                </div>
+                <TextBox 
+                            :min="1" 
+                            class="quantity-input" 
+                            labelType="in" 
+                            label="Jumlah Unit Rakitan" 
+                            v-model="form.totalUnit" 
+                            type="number"
+                        />
+                        <button 
+                            @click.stop.prevent="addToCart"
+                            class="add-to-cart-btn mt-1"
+                        >
+                            <i class="fas fa-shopping-cart me-2"></i>
+                            Tambah ke Keranjang
+                        </button>
+
             </b-col>
         </b-row>
+
+        <!-- Loading skeleton -->
+        <div v-else class="loading-skeleton">
+            <div class="skeleton-animation"></div>
+        </div>
     </div>
 </template>
-
 <script>
 import constant from '../constant/constant';
 import module from '../constant/module';
@@ -305,60 +331,155 @@ export default{
     }
 }
 </script>
+<style scoped>
 
-<style>
-table.selected-product{
-    border-radius: 8px !important;
+table.selected-product {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  font-size: 12px !important;
+  background-color: white;
 }
-  table.selected-product th,
-  table.selected-product td {
-    padding: 4px;
-    border: 1px solid #ddd;
-  }
-    .cart-container {
-        position: sticky;
-        top: 64px;
-        height: fit-content;
-        z-index: 10;
-    }
-        .assembly-container {
-            font-family: 'Inter', sans-serif;
-        }
-        .assembly-container button{
-            background: var(--gold);
-            width: 100%;
-            padding: 8px;
-            border-radius: 8px;
-            margin-top: 12px;
-            font-weight: bold;
-        }
-        .assembly-container button:hover{
-            background: var(--yellow-400);
-        }
-        .component-card {
-            transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
-        }
-        .component-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-        }
-        .component-card.selected {
-            border-color: #4f46e5;
-            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.4);
-            transform: translateY(-2px);
-        }
-        .component-section.disabled {
-            opacity: 0.5;
-            pointer-events: none;
-        }
 
-        .assembly-container h3{
-            font-size: 18px !important;
-        }
-    @media (max-width: 991px) {
-  .cart-container {
-    position: static !important; /* biar gak sticky di mobile */
-    margin-top: 20px;
-  }
+table.selected-product thead {
+  background-color: var(--gold); /* Gold */
+  color: #333;
+}
+
+table.selected-product th,
+table.selected-product td {
+  padding: 6px 12px;
+  border: 1px solid #e0e0e0;
+  text-align: left;
+}
+
+table.selected-product th {
+  font-weight: 600;
+}
+
+table.selected-product tbody tr:nth-child(odd) {
+  background-color: #fffaf0; /* Light gold-ish striping */
+}
+
+table.selected-product tbody tr:hover {
+  background-color: #fff2cc; /* soft highlight on hover */
+}
+.assembly-container {
+    font-family: 'Inter', sans-serif;
+    padding-top: 2rem;
+    padding-bottom: 4rem;
+}
+
+.header-section {
+    margin-bottom: 2rem;
+}
+
+.description {
+    color: #666;
+    line-height: 1.6;
+}
+
+.cart-summary {
+    background: #fff;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+}
+
+.cart-container {
+    position: sticky;
+    top: 80px;
+    height: fit-content;
+    z-index: 10;
+}
+
+.selected-items-container {
+    max-height: 60vh;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--gold) #f1f1f1;
+}
+
+.selected-items-container::-webkit-scrollbar {
+    width: 6px;
+}
+
+.selected-items-container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+.selected-items-container::-webkit-scrollbar-thumb {
+    background: var(--gold);
+    border-radius: 10px;
+}
+
+.quantity-input {
+    background: #f8f9fa;
+    border-radius: 8px;
+    padding: 0.5rem;
+}
+
+.add-to-cart-btn {
+    background: var(--gold);
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border: 1px solid #dedede;
+}
+
+.add-to-cart-btn:hover {
+    background: var(--yellow-400);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.add-to-cart-btn:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Loading Skeleton */
+.loading-skeleton {
+    padding: 20px;
+    background: #f0f0f0;
+    border-radius: 8px;
+    overflow: hidden;
+    position: relative;
+}
+
+.skeleton-animation {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+}
+
+@media (max-width: 991px) {
+    .cart-container {
+        position: static;
+        margin-top: 2rem;
+    }
+
+    .selected-items-container {
+        max-height: 40vh;
+    }
 }
 </style>

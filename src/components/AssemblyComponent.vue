@@ -1,46 +1,76 @@
 <template>
-    <div class="border-1 border p-2 mb-2 rounded shadow-sm">
-        <div class="fs-5 fw-medium header-component" :class="(Array.isArray(modelValue)? modelValue.length > 0 : modelValue )?'filled': ''" @click="$emit('toggleShow')">
-            <div>Pilih {{ label }} <i v-if="(Array.isArray(modelValue)? modelValue.length > 0 : modelValue )" class="fa-circle-check text-success fa-solid"/></div>
-            <i class="fa" :class="show? 'fa-angle-up': 'fa-angle-down'"/>
+    <div class="component-section border p-3 mb-3 rounded shadow-sm" :class="{ 'expanded': show }">
+        <div class="component-header" :class="{ 'selected': isSelected }" @click="$emit('toggleShow')">
+            <div class="d-flex align-items-center gap-2">
+                <span class="component-label">{{ label }}</span>
+                <span v-if="isSelected" class="selected-badge">
+                    <i class="fa-solid fa-check"></i>
+                </span>
+            </div>
+            <i class="fa" :class="show ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
         </div>
-        <div class="body-component" :class="show? 'show': ''">
-            <TextBox v-model="keyword" class="border rounded" placeholder="Cari komponen..." :required="false"/>
-            <div v-if="compatibleComponent.length <=0" class="text-center w-100 my-3">Tidak ada produk yang tersedia</div>
 
-            <div class="component-container my-3">
-                 <div style="position: relative; height: fit-content;" v-for="component in compatibleComponent">
-                 <div v-show="selectedComponent(component.id)" class="flag-selected">Dipilih</div>
-                 <div @click="viewDetail(component.id)" class="see-detail">Detail</div>
-                <div @click="selectComponent(component)" :class="selectedComponent(component.id)? 'selected': ''" class="component-item border shadow-sm rounded">
-                   
-                    <div>
-                        <img
-                            class="card-img-top"
-                            :src="component.imageIds && component.imageIds.length> 0 ?
-                            `http://localhost:5000/api/files?id=${component.imageIds[0]}`
-                            : constant.DEFAULT_PRODUCT_IMAGE"
-                            @error="useFallback"
-                        />
-                        <div class="fw-bold fs-6">{{ component.name }}</div>
-                        <div class="fw-bold color-gold fs-5 stroke-green">{{ component.priceLabel }}</div>
-                        <div class="">{{ component.brand?.name }}</div>
-                        <div class="" v-html="component.description"></div>
-                        <div class="" v-for="(spec, index) in component.productSkus[0]?.componentSpecs">
-                                                            {{($getSpecName(spec.specKey))}} : <span class="fw-bold">{{ component.productSkus
-                                                                .map(sku => sku.componentSpecs[index].specValue)
-                                                                .filter(v => v !== undefined)
-                                                                .join(', ') }}</span></div>
-                                            
+        <div class="component-body" :class="{ 'show': show }">
+            <div class="search-bar mb-3">
+                <i class="fas fa-search search-icon"></i>
+                <input 
+                    v-model="keyword" 
+                    type="text" 
+                    class="search-input" 
+                    placeholder="Cari komponen..."
+                >
+            </div>
+
+            <div v-if="compatibleComponent.length <= 0" class="empty-state">
+                <i class="fas fa-box-open mb-2"></i>
+                <p>Tidak ada produk yang cocok atau tersedia</p>
+            </div>
+
+            <div class="component-grid" v-else>
+                <div 
+                    v-for="component in compatibleComponent" 
+                    :key="component.id"
+                    class="component-card"
+                    :class="{ 'selected': selectedComponent(component.id) }"
+                >
+                    <div class="selected-indicator" v-if="selectedComponent(component.id)">
+                        <i class="fas fa-check"></i>
+                    </div>
+                    
+                    <div class="card-content">
+                        <div class="image-container">
+                            <img
+                                :src="component.imageIds?.length > 0 
+                                    ? `http://localhost:5000/api/files?id=${component.imageIds[0]}` 
+                                    : constant.DEFAULT_PRODUCT_IMAGE"
+                                @error="useFallback"
+                                alt="Product image"
+                            >
+                        </div>
+                        
+                        <div class="product-info">
+                            <h5 class="product-name">{{ component.name }}</h5>
+                            <div class="product-brand">{{ component.brand?.name }}</div>
+                            <div class="product-price">{{ component.priceLabel }}</div>
+                            <div class="product-description" v-html="component.description"></div>
+                        </div>
+
+                        <div class="card-actions">
+                            <button class="action-btn select-btn" @click="selectComponent(component)">
+                                {{ selectedComponent(component.id) ? 'Batal Pilih' : 'Pilih' }}
+                            </button>
+                            <button class="action-btn detail-btn" @click.stop="viewDetail(component.id)">
+                                <i class="fas fa-info-circle"></i> Detail
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
-            </div>
         </div>
+        
         <ProductDetailModal :productId="selectedProductId" ref="productDetailModal"/>
     </div>
 </template>
-
 <script>
 import { mapActions } from 'vuex';
 import module from '../constant/module';
@@ -257,128 +287,236 @@ export default{
     }
 }
 </script>
-<style>
+<style scoped>
+.component-section {
+    background: #fff;
+    transition: all 0.3s ease;
+    height: 68px;
+    overflow: hidden;
+}
 
-.header-component{
+.component-section.expanded {
+    height: fit-content;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.component-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    align-self: center;
-    margin: -8px;
-    padding: 8px;
-    margin-bottom: 8px;
+    padding: 0.5rem;
     cursor: pointer;
+    border-radius: 8px;
     background: var(--yellow-100);
-}
-.header-component.filled{
-    background: var(--gold);
-}
-.component-container{
-    display: grid;
-    gap: 12px;
-    padding-top: 20px;
-    grid-template-columns: repeat(auto-fit, calc(50% - 7px));
-    max-height: 400px;
-    overflow: auto;
-}
-.body-component{
-    transform: scaleY(0);
-    transform-origin: top;
     transition: all 0.3s ease;
-    height: 0;
-    opacity: 0;
 }
-.body-component.show {
-  transform: scaleY(1);
-  opacity: 1;
-  height: auto;
+
+.component-header:hover {
+    background: var(--yellow-200);
 }
-.component-item{
-    padding: 12px;
-    cursor: pointer;
+
+.component-header.selected {
+    background: var(--gold);
+    color: #fff;
+}
+
+.component-label {
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.selected-badge {
+    background: #fff;
+    color: var(--gold);
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+}
+
+.search-bar {
     position: relative;
-    font-size: 12px;
-    max-height: 240px;
-    min-height: 240px;
+    margin-top: 1rem;
+}
+
+.search-icon {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #666;
+}
+
+.search-input {
+    width: 100%;
+    padding: 10px 10px 10px 35px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+}
+
+.search-input:focus {
+    border-color: var(--gold);
+    box-shadow: 0 0 0 2px rgba(var(--gold-rgb), 0.2);
+}
+
+.empty-state {
+    text-align: center;
+    padding: 2rem;
+    color: #666;
+}
+
+.empty-state i {
+    font-size: 2rem;
+    color: #999;
+}
+
+.component-grid {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    margin-top: 1rem;
+    max-height: 600px;
+    overflow-y: auto;
+    padding: 0.5rem;
+}
+
+.component-card {
+    position: relative;
+    border: 1px solid #ddd;
+    border-radius: 12px;
     overflow: hidden;
-    
-    box-shadow: inset 0 -6px 7px -6px rgba(0, 0, 0, 0.5) !important
-}
-.component-item:hover{
-    border-color: var(--gold) !important;
+    transition: all 0.3s ease;
 }
 
-.flag-selected{
-    background: var(--gold);
-    text-align: center;
-    font-size: 14px;
-    align-content: center;
-    border-radius: 12px;
+.component-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.component-card.selected {
+    border-color: var(--gold);
+    box-shadow: 0 0 0 2px rgba(var(--gold-rgb), 0.2);
+}
+
+.selected-indicator {
     position: absolute;
-    top: -11px;
-    left: calc(50% - 40px);
-    height: 22px;
-    width: 80px;
-    font-weight: bold;
+    top: 10px;
+    right: 10px;
+    background: var(--gold);
+    color: white;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     z-index: 1;
 }
-.see-detail{
-    background: var(--gold);
-    text-align: center;
-    font-size: 14px;
-    border-radius: 12px;
+
+.card-content {
+    padding: 1rem;
+}
+
+.image-container {
+    position: relative;
+    padding-top: 75%;
+    overflow: hidden;
+    border-radius: 8px;
+    background: #f8f9fa;
+}
+
+.image-container img {
     position: absolute;
-    bottom: 4px;
-    right: 4px;
-    height: 22px;
-    align-content: center;
-    width: 80px;
-    z-index: 1;
-    font-weight: bold;
-    cursor: pointer;
-}
-.see-detail:hover{
-    background: var(--yellow-300);
-}
-.component-container .selected{
-    border-color: var(--gold) !important;
-    border-width: 2px !important;
-    /* box-shadow: 0px 0px 30px 1px rgba(0,0,0,0.1) !important; */
-    /* box-shadow: inset 0 -6px 7px -6px rgba(0, 0, 0, 0.5) !important */
-}
-.component-item img{
-    height: 140px;
-    width: auto;
-    float: left;
-    margin-right: 8px;
-    margin-bottom: 4px;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    transition: transform 0.3s ease;
 }
 
-@media screen and (max-width: 1100px) {
-    .component-container{
-        /* padding: 4px; */
-        grid-template-columns: repeat(auto-fit, 100%);
-    }
-    .component-item{
-        padding: 4px;
-    }
-    .component-item img{
-        height: 232px;
-        width: auto;
-    }
-}
-@media screen and (max-width: 800px) {
-    .component-container{
-        grid-template-columns: repeat(auto-fit, 100%);
-    }
-    .component-item img{
-        width: 40%;
-        height: auto;
-    }
-    .see-detail{
-        bottom: 12px;
-        right: 12px;
-    }
+.component-card:hover .image-container img {
+    transform: scale(1.05);
 }
 
+.product-info {
+    margin-top: 1rem;
+}
+
+.product-name {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.product-brand {
+    color: #666;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+}
+
+.product-price {
+    color: var(--gold);
+    font-weight: 600;
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+}
+
+.product-description {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 1rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.card-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.action-btn {
+    flex: 1;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    border: 1px solid #dedede;
+}
+
+.select-btn {
+    background: var(--gold);
+    color: black;
+}
+
+.select-btn:hover {
+    background: var(--yellow-400);
+}
+
+.detail-btn {
+    background: #f8f9fa;
+    color: #333;
+}
+
+.detail-btn:hover {
+    background: #e9ecef;
+}
+
+@media (max-width: 768px) {
+    .component-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .card-actions {
+        flex-direction: column;
+    }
+}
 </style>

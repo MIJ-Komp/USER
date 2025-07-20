@@ -13,7 +13,7 @@
         <h5 class="card-title">{{ cartItem?.product?.name}}</h5>
         <p class="card-text">{{formatCurrency(productSku?.price || 0)}}</p>
         
-        <div class="d-flex flex-column align-items-end">     
+        <div class="d-flex flex-column align-items-end p-2">     
           <span class="fs-sm" :class="productSku?.stock && cartItem?.qty > productSku?.stock? 'text-warning' : ''" v-if="productSku?.stock && productSku?.stock > 0">Stok: {{productSku?.stock}}</span>
           <span class="fs-sm text-danger" v-else>Stok Habis</span>
           <div>

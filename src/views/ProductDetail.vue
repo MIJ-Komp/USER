@@ -1,209 +1,255 @@
 <template>
-  <div class="container">
-    <!-- Header  -->
-    <div class="row mb-4">
-      <div class="col-12">
-        <div class="text-center fw-semibold">PRODUK</div>
-        <!-- <div class="d-flex justify-content-center my-2">
-          <div class="bg-dark rounded-circle m-2" style="height: 7pt; width: 7pt;"></div>
-          <div class="bg-dark rounded-circle m-2" style="height: 7pt; width: 7pt;"></div>
-        </div> -->
-        <div class="d-flex">
-          <div class="d-flex flex-grow-1 align-items-center">
-            <div class="flex-grow-1 border border-dark"></div>
-            <div class="bg-dark rounded-circle" style="height: 7pt; width: 7pt;"></div>
-          </div>
-          <div class="product-name fs-1 mx-5 fw-bold font-title">
-            {{ product?.name }}
-          </div>
-          <div class="d-flex flex-grow-1 align-items-center">
-            <div class="bg-dark rounded-circle" style="height: 7pt; width: 7pt;"></div>
-            <div class="flex-grow-1 border border-dark"></div>
-          </div>
-        </div>
+  <div class="container product-detail-container">
+    <!-- Header dengan animasi -->
+    <div class="product-header" data-aos="fade-down">
+      <div class="product-title">
+        <div class="title-line"></div>
+        <h1 class="product-name">{{ product?.name }}</h1>
+        <div class="title-line"></div>
       </div>
     </div>
 
-    <!-- Body -->
-    <div class="row mb-4">
-      <div class="col-md-4">
-        <img
-          v-if="selectedImage"
-          class="card-img-top shadow-sm"
-          :src="selectedImage"
-          @error="useFallback"
-        />
-        <b-row v-if="product?.imageIds.length > 1">
-          <b-col cols="auto" class="mt-3" v-for="image in product?.imageIds">
-            <img
-              @click.stop.prevent="selectedImage = image"
-              style="width: 100px; height: 100px; object-fit: contain; cursor: pointer;"
-              :class="selectedImage != image ? 'blur' : ''"
-              class="card-img-bottom shadow-sm"
-              :src="image"
-              @error="useFallback"
-            />
-          </b-col>
-        </b-row>
+    <!-- Content Section -->
+    <div class="product-content" data-aos="fade-up" data-aos-delay="200">
+      <!-- Image Gallery -->
+      <div class="product-gallery">
+        <div class="main-image-container">
+          <img
+            v-if="selectedImage"
+            :src="selectedImage"
+            @error="useFallback"
+            class="main-image"
+            :class="{ 'zoom-effect': isZoomed }"
+            @mousemove="handleZoom"
+            @mouseleave="isZoomed = false"
+          />
+        </div>
+        
+        <div v-if="product?.imageIds.length > 1" class="thumbnail-container">
+          <div 
+            v-for="image in product?.imageIds" 
+            :key="image"
+            class="thumbnail"
+            :class="{ 'active': selectedImage === image }"
+            @click="selectedImage = image"
+          >
+            <img :src="image" @error="useFallback" />
+          </div>
+        </div>
       </div>
-      <div class="col-md-6">
-        <div class="mb-4">
-          <div class="mb-4">
-            <div class="mb-2 fs-2 fw-bold">
-              <div v-if="minPrice === maxPrice">
-                {{ formatCurrency(minPrice) }}
+
+      <!-- Product Info -->
+      <div class="product-info">
+        <div class="price-section">
+          <div class="price" v-if="minPrice === maxPrice">
+            {{ formatCurrency(minPrice) }}
+          </div>
+          <div class="price-range" v-else>
+            {{ formatCurrency(minPrice) }} - {{ formatCurrency(maxPrice) }}
+          </div>
+        </div>
+
+        <!-- SKU Selection -->
+        <div class="sku-section">
+          <h4 class="section-title">{{product?.productSkus.length > 1 ? 'Pilih' :''}} Variasi</h4>
+          <div class="sku-grid">
+            <div 
+              v-for="sku in product?.productSkus" 
+              :key="sku.id"
+              class="sku-option"
+              :class="{ 'selected': sku.id === selectedSku?.id }"
+              @click="selectedSku = sku"
+            >
+              <div class="sku-name">{{ sku.name }}</div>
+              <div class="sku-stock">
+                <span>Stock:</span>
+                <span :class="getStockClass(sku.stock)">{{ sku.stock> 0? sku.stock: 'kosong' }}</span>
               </div>
-              <div v-else>
-                {{ formatCurrency(minPrice) }} - {{ formatCurrency(maxPrice) }}
-              </div>
-            </div>
-            <!-- <div>
-              Stock : {{ selectedSku?.stock ?? 'N/A' }}
-            </div> -->
-            <div class="mt-2 mb-2 fw-bold">{{product?.productSkus.length > 1 ? 'Pilih' :''}} Variasi :</div>
-            <b-row class="ms-2">
-              <b-col v-for="sku in product?.productSkus" :key="sku.id" cols="auto">
-                <div @click.stop.prevent="selectedSku = sku" 
-                :class="sku.id == selectedSku.id ? 'primary-sku': 'secondary-sku'"
-                >
-                  <div class="fw-bold">{{ sku.name }}</div>
-                  <div>stock : <span class="fw-bold">{{ sku.stock }}</span></div>
-                </div>
-              </b-col>
-            </b-row>
-            
-
-            <Button :disabled="selectedSku?.stock <= 0" class="p-2 mt-4" label="Tambah ke keranjang" iconFa="fa fa-shopping-cart" @click.stop.prevent="addToCart" v-if="!productId"/>
-
-            <div class="border-bottom mt-4 mb-4 border-3"></div>
-            <div v-if="selectedSku && selectedSku.productGroupItems.length > 0" class="mt-2">
-              <div class="fs-5 fw-bold py-2" v-if="selectedSku.name"> {{ selectedSku.name }}</div>
-              <table border="1" cellpadding="8" cellspacing="0" class="productSpec">
-                <thead>
-                  <tr>
-                    <th>Qty</th>
-                    <th>Produk</th>
-                    <!-- <th>Garansi</th> -->
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr v-for="product in selectedSku.productGroupItems" :key="product.id">
-                    <td>{{ product.qty }}</td>
-                    <td>{{ product.product?.name }}</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-
-            <div v-if="selectedSku && selectedSku.componentSpecs.length > 0" class="mt-2">
-              <div class="fs-5 fw-bold py-2" v-if="selectedSku.name">Spec : {{ selectedSku.name }}</div>
-              <table border="1" cellpadding="8" cellspacing="0" class="productSpec">
-                <thead>
-                  <tr>
-                    <th>Spec</th>
-                    <th>Spec Value</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr v-for="spec in selectedSku.componentSpecs" :key="spec.id">
-                    <td>{{ $getSpecName(spec.specKey) }}</td>
-                    <td>{{ spec.specValue }}</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-          <div class="flex fs-sm mb-1">
-            <span class="text-secondary">Tags : </span>
-            <span v-for="(tag, i) in tags" :key="i">
-              <a class="text-decoration-none text-info" :href="`/products?tag=${tag}`">{{ tag }}</a>{{ i === tags.length - 1 ? '' : ', ' }}
-            </span>
-          </div>
-          <div class="flex fs-sm">
-            <span class="text-secondary">Brand : </span>
-            <a class="text-decoration-none text-info" :href="`/products?brandId=${product?.brand?.id}`">{{ product?.brand?.name }}</a>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-2" v-if="!productId">
-        <div class="card mb-4">
-          <div class="card-body text-center">
-            <img src="../assets/products/free-ongkir.png" width="50px" />
-            <div class="fw-semibold fs-6">GRATIS ONGKIR</div>
-            <span style="font-size: 12px;">daerah Medan, Binjai, Deli Serdang dan sekitarnya</span>
-            <img src="../assets/products/fast-delivery.png" style="width: 50px;" />
-          </div>
-        </div>
-        <div class="card" v-if="!productId">
-          <div class="card-body text-center">
-            <img src="../assets/products/xendit_logo.svg" width="100px" />
-            <div class="fs-6 fw-semibold">Secure Online Payment and Bank Transfer</div>
-            <div class="bank-list">
-              <img class="border m-1 rounded p-1" height="25px" src="../assets/products/bni-bank.png" />
-              <img class="border m-1 rounded p-1" height="25px" src="../assets/products/mandiri-bank.png" />
-              <img class="border m-1 rounded p-1" height="25px" src="../assets/products/permata-bank.png" />
-              <img class="border m-1 rounded p-1" height="25px" src="../assets/products/jcb-bank.png" />
             </div>
           </div>
         </div>
-      </div>
-    </div>
 
-    <!-- Tab View  -->
-    <div class="row mb-4">
-      <TabView class="TabView">
-        <TabPanel header="Deskripsi">
-          <div v-for="(sku, i) in product?.productSkus">
-          <div v-if="sku.productGroupItems.length > 0" class="fs-5 fw-bold py-2">{{ sku.name??i+1 }}</div>
-            <table v-if="sku.productGroupItems.length > 0" border="1" cellpadding="8" cellspacing="0" class="productSpec">
-              <thead>
-                  <tr>
-                    <th>Qty</th>
-                    <th>Produk</th>
-                    <!-- <th>Garansi</th> -->
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr v-for="product in sku.productGroupItems" :key="product.id">
-                    <td>{{ product.qty }}</td>
-                    <td>{{ product.product?.name }}</td>
-                  </tr>
-                </tbody>
-            </table>
-            </div>
-          <div v-html="product?.description"></div>
-        </TabPanel>
-        <TabPanel header="Spesifikasi">
-          <!-- <div v-html="product?.productSpec"></div> -->
-          <div v-for="(sku, i) in product?.productSkus">
-            <div v-if="sku.componentSpecs.length > 0" class="fs-5 fw-bold py-2">{{ sku.name }}</div>
-            <table v-if="sku.componentSpecs.length > 0" border="1" cellpadding="8" cellspacing="0" class="productSpec">
+        <!-- Add to Cart Button -->
+        <button 
+          class="add-to-cart-btn" 
+          :disabled="selectedSku?.stock <= 0"
+          @click="addToCart"
+          v-if="!productId"
+        >
+          <i class="fas fa-shopping-cart"></i>
+          <span>Tambah ke Keranjang</span>
+        </button>
+
+        <!-- Product Specifications -->
+        <div v-if="selectedSku?.productGroupItems.length > 0" class="specs-section">
+          <h4 class="section-title">{{ selectedSku.name || 'Spesifikasi Produk' }}</h4>
+          <div class="specs-table-container">
+            <table class="specs-table">
               <thead>
                 <tr>
-                  <th>Spec</th>
-                  <th>Spec Value</th>
+                  <th>Qty</th>
+                  <th>Produk</th>
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="spec in sku.componentSpecs" :key="spec.id">
+                <tr v-for="item in selectedSku.productGroupItems" :key="item.id">
+                  <td>{{ item.qty }}</td>
+                  <td>{{ item.product?.name }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Component Specifications -->
+        <div  v-if="false && selectedSku?.componentSpecs.length > 0" class="specs-section">
+          <h4 class="section-title">Spesifikasi {{ selectedSku.name }}</h4>
+          <div class="specs-table-container">
+            <table class="specs-table">
+              <thead>
+                <tr>
+                  <th>Spesifikasi</th>
+                  <th>Nilai</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="spec in selectedSku.componentSpecs" :key="spec.id">
                   <td>{{ $getSpecName(spec.specKey) }}</td>
                   <td>{{ spec.specValue }}</td>
                 </tr>
               </tbody>
             </table>
           </div>
+        </div>
+
+        <!-- Tags and Brand -->
+        <div class="meta-info">
+          <div class="tags">
+            <span class="label">Tags:</span>
+            <div class="tag-list">
+              <a 
+                v-for="(tag, i) in tags" 
+                :key="i"
+                :href="`/products?tag=${tag}`"
+                class="tag"
+              >{{ tag }}</a>
+            </div>
+          </div>
+          <div class="brand">
+            <span class="label">Brand:</span>
+            <a :href="`/products?brandId=${product?.brand?.id}`" class="brand-link">
+              {{ product?.brand?.name }}
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Shipping Info -->
+      <div class="shipping-info" v-if="!productId">
+        <div class="info-card free-shipping">
+          <img src="../assets/products/free-ongkir.png" alt="Free Shipping" />
+          <h4>GRATIS ONGKIR</h4>
+          <p>daerah Medan, Binjai, Deli Serdang dan sekitarnya</p>
+          <img src="../assets/products/fast-delivery.png" alt="Fast Delivery" />
+        </div>
+
+        <div class="info-card payment-info">
+          <img src="../assets/products/xendit_logo.svg" alt="Xendit" />
+          <h4>Secure Online Payment and Bank Transfer</h4>
+          <div class="bank-list">
+            <img src="../assets/products/bni-bank.png" alt="BNI" />
+            <img src="../assets/products/mandiri-bank.png" alt="Mandiri" />
+            <img src="../assets/products/permata-bank.png" alt="Permata" />
+            <img src="../assets/products/jcb-bank.png" alt="JCB" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Product Details Tabs -->
+    <div class="product-tabs" data-aos="fade-up" data-aos-delay="400">
+      <TabView>
+        <TabPanel header="Deskripsi">
+          <div class="tab-content description-content">
+            <div v-for="(sku, i) in product?.productSkus" :key="i">
+              <div v-if="sku.productGroupItems.length > 0">
+                <h4>{{ sku.name || `Paket ${i + 1}` }}</h4>
+                <table class="specs-table">
+                  <thead>
+                    <tr>
+                      <th>Qty</th>
+                      <th>Produk</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr v-for="item in sku.productGroupItems" :key="item.id">
+                      <td>{{ item.qty }}</td>
+                      <td>{{ item.product?.name }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="product-description" v-html="product?.description"></div>
+          </div>
         </TabPanel>
-        <TabPanel header="Penting! Baca Info Shipping">
-          <p>Disini adalah informasi penting tentang Pengantaran Barang</p>
+
+        <TabPanel header="Spesifikasi">
+          <div class="tab-content specs-content">
+            <div v-for="(sku, i) in product?.productSkus" :key="i">
+              <div v-if="sku.componentSpecs.length > 0">
+                <h3>{{ sku.name }}</h3>
+                <table class="specs-table">
+                  <thead>
+                    <tr>
+                      <th>Spesifikasi</th>
+                      <th>Nilai</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr v-for="spec in sku.componentSpecs" :key="spec.id">
+                      <td>{{ $getSpecName(spec.specKey) }}</td>
+                      <td>{{ spec.specValue }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </TabPanel>
+
+        <TabPanel header="Info Pengiriman">
+          <div class="tab-content shipping-content">
+            <h3>Informasi Penting Pengiriman</h3>
+            <div class="shipping-details">
+              <div class="shipping-item">
+                <i class="fas fa-truck"></i>
+                <h4>Gratis Ongkir</h4>
+                <p>Untuk area Medan, Binjai, Deli Serdang dan sekitarnya</p>
+              </div>
+              <div class="shipping-item">
+                <i class="fas fa-box"></i>
+                <h4>Packaging Aman</h4>
+                <p>Dikemas dengan aman menggunakan bubble wrap dan box yang kokoh</p>
+              </div>
+              <div class="shipping-item">
+                <i class="fas fa-clock"></i>
+                <h4>Estimasi Pengiriman</h4>
+                <p>1-3 hari kerja untuk area Medan dan sekitarnya</p>
+              </div>
+            </div>
+          </div>
         </TabPanel>
       </TabView>
     </div>
 
-    <!-- Related Product -->
-    <div class="row" v-if="!productId">
-      <p class="fw-semibold mb-2 fs-4">Related Products</p>
-      <div v-for="product in relatedProducts.value" :key="product.id" class="col-md-3 col-lg-2">
-        <ProductCard :product="product" />
+    <!-- Related Products -->
+    <div class="related-products" v-if="!productId" data-aos="fade-up" data-aos-delay="600">
+      <h2>Produk Terkait</h2>
+      <div class="products-grid">
+        <div v-for="product in relatedProducts.value" :key="product.id" class="product-card-wrapper">
+          <ProductCard :product="product" />
+        </div>
       </div>
     </div>
   </div>
@@ -326,65 +372,455 @@ onMounted(async () => {
     console.error('Gagal memuat produk:', err)
   }
 })
+
+// Add new reactive refs
+const isZoomed = ref(false)
+
+// Add new methods
+const handleZoom = (event) => {
+  const image = event.target
+  const { left, top, width, height } = image.getBoundingClientRect()
+  const x = (event.clientX - left) / width * 100
+  const y = (event.clientY - top) / height * 100
+  
+  image.style.transformOrigin = `${x}% ${y}%`
+  isZoomed.value = true
+}
+
+const getStockClass = (stock) => {
+  if (stock <= 0) return 'out-of-stock'
+  if (stock <= 5) return 'low-stock'
+  return 'in-stock'
+}
 </script>
 
-<style>
-.primary-sku{
-  cursor: pointer;
-  border-radius: 8px;
-  padding: 4px 24px;
-  background: var(--yellow-100);
-  border: 4px solid var(--gold) !important;
-}
-.secondary-sku{
-  cursor: pointer;
-  border-radius: 8px;
-  padding: 4px 24px;
-  border: 2px solid var(--grey-700) !important;
-}
-.secondary-sku:hover{
-  border: 4px solid var(--yellow-300) !important;
+<style scoped>
+.product-detail-container {
+  padding: 2rem 0;
 }
 
-.skuOption{
-  cursor: pointer;
+/* Product Header */
+.product-header {
+  margin-bottom: 3rem;
 }
-.skuOption:hover{
+
+.product-title {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.title-line {
+  flex: 1;
+  height: 2px;
+  background: linear-gradient(to right, transparent, var(--gold), transparent);
+}
+
+.product-name {
+  font-size: 2rem;
+  font-weight: 700;
+  text-align: center;
+  color: #333;
+  margin: 0;
+  white-space: nowrap;
+}
+
+/* Product Content Layout */
+.product-content {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr 300px;
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+
+/* Image Gallery */
+.product-gallery {
+  position: sticky;
+  top: 80px;
+}
+
+.main-image-container {
+  aspect-ratio: 1;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.main-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+}
+
+.main-image.zoom-effect {
+  transform: scale(1.5);
+}
+
+.thumbnail-container {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+  overflow-x: auto;
+  padding: 0.5rem;
+}
+
+.thumbnail {
+  width: 80px;
+  height: 80px;
+  border-radius: 8px;
+  overflow: hidden;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: all 0.3s ease;
+}
+
+.thumbnail.active {
   border-color: var(--gold);
 }
 
-table.productSpec {
+.thumbnail img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Product Info */
+.product-info {
+  padding: 1rem;
+}
+
+.price-section {
+  margin-bottom: 2rem;
+}
+
+.price,
+.price-range {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--gold);
+}
+
+/* SKU Selection */
+.sku-section {
+  margin-bottom: 2rem;
+}
+
+.section-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+.sku-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.sku-option {
+  padding: 1rem;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.sku-option:hover {
+  border-color: var(--gold);
+  transform: translateY(-2px);
+}
+
+.sku-option.selected {
+  border-color: var(--gold);
+  background: rgba(var(--gold-rgb), 0.1);
+}
+
+.sku-name {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.sku-stock {
+  font-size: 0.9rem;
+  display: flex;
+  gap: 12px;
+  /* justify-content: space-between; */
+}
+
+.out-of-stock { color: #dc3545; }
+.low-stock { color: #ffc107; }
+.in-stock { color: #28a745; }
+
+/* Add to Cart Button */
+.add-to-cart-btn {
+  width: 100%;
+  padding: 1rem;
+  background: var(--gold);
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin: 2rem 0;
+}
+
+.add-to-cart-btn:hover {
+  background: var(--yellow-400);
+  transform: translateY(-2px);
+}
+
+.add-to-cart-btn:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+/* Specs Table */
+.specs-table-container {
+  margin: 1rem 0;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.specs-table {
   width: 100%;
   border-collapse: collapse;
   border-radius: 8px;
   overflow: hidden;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
-  font-size: 14px;
-  background-color: white;
+  font-size: 12px !important;
+  background: white;
 }
 
-table.productSpec thead {
-  background-color: var(--gold); /* Gold */
+.specs-table th {
+  background: var(--gold);
   color: #333;
-}
-
-table.productSpec th,
-table.productSpec td {
-  padding: 6px 12px;
-  border: 1px solid #e0e0e0;
+  padding: 1rem;
   text-align: left;
-}
-
-table.productSpec th {
   font-weight: 600;
 }
 
-table.productSpec tbody tr:nth-child(odd) {
+.specs-table td {
+  padding: 1rem;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.specs-table tr:last-child td {
+  border-bottom: none;
+}
+.specs-table tr:nth-child(odd) {
   background-color: #fffaf0; /* Light gold-ish striping */
 }
 
-table.productSpec tbody tr:hover {
+.specs-table tr:hover {
   background-color: #fff2cc; /* soft highlight on hover */
 }
 
+/* Meta Info */
+.meta-info {
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid #e0e0e0;
+}
+
+.tags,
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.label {
+  color: #666;
+  font-weight: 500;
+}
+
+.tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.tag {
+  padding: 0.25rem 0.75rem;
+  background: #f5f5f5;
+  border-radius: 20px;
+  color: #666;
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+}
+
+.tag:hover {
+  background: var(--gold);
+  color: white;
+}
+
+.brand-link {
+  color: var(--gold);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+/* Shipping Info Cards */
+.shipping-info {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.info-card {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.info-card img {
+  width: auto;
+  height: 50px;
+  margin-bottom: 1rem;
+}
+
+.info-card h4 {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.info-card p {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.bank-list {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.bank-list img {
+  width: 100%;
+  height: auto;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  padding: 0.25rem;
+}
+
+/* Product Tabs */
+.product-tabs {
+  margin: 3rem 0;
+}
+
+.tab-content {
+  padding: 2rem;
+}
+
+.shipping-details {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.shipping-item {
+  text-align: center;
+  padding: 2rem;
+  background: #f8f9fa;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+}
+
+.shipping-item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.shipping-item i {
+  font-size: 2rem;
+  color: var(--gold);
+  margin-bottom: 1rem;
+}
+
+/* Related Products */
+.related-products {
+  margin-top: 4rem;
+}
+
+.related-products h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 2rem;
+}
+
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 2rem;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .product-content {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .shipping-info {
+    grid-column: span 2;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 991px) {
+  .product-content {
+    grid-template-columns: 1fr;
+  }
+
+  .product-gallery {
+    position: static;
+  }
+
+  .shipping-info {
+    grid-column: auto;
+    grid-template-columns: 1fr;
+  }
+
+  .products-grid {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .product-title {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .title-line {
+    height: 1px;
+  }
+
+  .product-name {
+    font-size: 1.5rem;
+  }
+
+  .sku-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .shipping-details {
+    grid-template-columns: 1fr;
+  }
+}
 </style>

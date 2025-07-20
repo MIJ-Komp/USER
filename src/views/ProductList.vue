@@ -1,6 +1,6 @@
 <template>
-  <div class="container">
-    <div class="d-flex">
+  <div class="container py-4">
+    <div class="d-flex gap-4">
       <!-- Sidebar -->
       <aside
         class="sidebar"
@@ -9,106 +9,141 @@
           'd-block': isLargeScreen || isSidebarVisible
         }"
       >
-        <div class="card filter-container">
-          <div class="card-header d-flex justify-content-between align-items-center">
-              <div class="d-flex" style="align-items: center;">
-                  <i class="fa fa-filter me-2"/>
-                  <div>Filter Produk</div>
-              </div>
-              <div 
-                  v-if="isSidebarVisible && !isLargeScreen"
-                  @click="toggleSidebar"
-                  style="cursor: pointer; border: 1px solid #dedede; padding: 4px 24px; border-radius: 8px;">
-                  Close
-              </div>
+        <div class="card filter-container shadow-sm">
+          <div style="background-color:var(--gold) !important; color: black !important;" class="text-black card-header bg-primary text-white d-flex justify-content-between align-items-center py-3">
+            <div class="d-flex align-items-center">
+              <i class="fa fa-filter me-2"/>
+              <div class="fw-bold">Filter Produk</div>
+            </div>
+            <button 
+              v-if="isSidebarVisible && !isLargeScreen"
+              @click="toggleSidebar"
+              class="btn btn-sm btn-light">
+              <i class="fas fa-times"></i>
+            </button>
           </div>
-          <div class="card-body">
-              <div class="filter-product">
-                  <div>
-                      <div>
-                          <div>Rentang Harga</div>
-                      </div>
-                      <PriceRange v-model="filter.priceRange" @update:modelValue="handleRangeUpdate" />
-                  </div>
-                  <div>
-                      <div>
-                          <div>Urutkan</div>
-                      </div>
-                      <Select showClear  size="small" name="sortList.label" :options="sortList" optionLabel="label" placeholder="Urutkan berdasarkan" fluid />
-                  </div>
-                  <div>
-                      <div>
-                          <div>CPU</div>
-                      </div>
-                      <MultiSelect showClear  style="width: 100%;" size="small" name="sortList.label" :options="cpuList" optionLabel="label" placeholder="Pilih CPU" fluid />
-                  </div>
-                  <div>
-                      <div>
-                          <div>VGA</div>
-                      </div>
-                      <MultiSelect showClear  size="small" name="sortList.label" :options="vgaList" optionLabel="label" placeholder="Pilih VGA" fluid />
-                  </div>
-                  <div>
-                      <div>
-                          <div>Stock Status</div>
-                      </div>
-                      <Select showClear  size="small" name="sortList.label" :options="stockStatusList" optionLabel="label" placeholder="Pilih Stock Status" fluid />
-                  </div>
-                  <div>
-                      <div>On Sale</div>
-                      <Checkbox label="" name="filterDiscount" class="me-2 ms-3"/>
-                      <label for="filterDiscount" style="font-size: 12px;"> Sedang Diskon! </label>
-                  </div>
+          <div class="card-body p-3">
+            <div class="filter-product d-flex flex-column gap-3">
+              <!-- Price Range -->
+              <div class="filter-section">
+                <h6 class="filter-title mb-2">Rentang Harga</h6>
+                <PriceRange v-model="filter.priceRange" @update:modelValue="handleRangeUpdate" />
               </div>
-              <Button class="mt-2" @click="applyFilter()" label="Apply Filter"/>
+
+              <!-- Sort -->
+              <div class="filter-section">
+                <h6 class="filter-title mb-2">Urutkan</h6>
+                <Select 
+                  v-model="filter.sort"
+                  class="w-100" 
+                  showClear 
+                  size="small" 
+                  :options="sortList" 
+                  optionLabel="label" 
+                  placeholder="Urutkan berdasarkan" 
+                />
+              </div>
+
+              <!-- CPU Filter -->
+              <div class="filter-section">
+                <h6 class="filter-title mb-2">CPU</h6>
+                <MultiSelect 
+                  v-model="filter.cpu"
+                  class="w-100" 
+                  showClear 
+                  size="small" 
+                  :options="cpuList" 
+                  optionLabel="label" 
+                  placeholder="Pilih CPU" 
+                />
+              </div>
+
+              <!-- VGA Filter -->
+              <div class="filter-section">
+                <h6 class="filter-title mb-2">VGA</h6>
+                <MultiSelect 
+                  v-model="filter.vga"
+                  class="w-100" 
+                  showClear 
+                  size="small" 
+                  :options="vgaList" 
+                  optionLabel="label" 
+                  placeholder="Pilih VGA" 
+                />
+              </div>
+
+              <!-- Stock Status -->
+              <div class="filter-section">
+                <h6 class="filter-title mb-2">Status Stok</h6>
+                <Select 
+                  v-model="filter.stockStatus" 
+                  class="w-100"
+                  showClear 
+                  size="small" 
+                  :options="stockStatusList" 
+                  :optionValue="'label'" 
+                  optionLabel="label" 
+                  placeholder="Pilih Status Stok" 
+                />
+              </div>
+
+              <!-- On Sale -->
+              <div class="filter-section">
+                <div class="form-check">
+                  <Checkbox 
+                    v-model="filter.onSale"
+                    :binary="true"
+                    class="me-2"
+                  />
+                  <label class="form-check-label">Sedang Diskon!</label>
+                </div>
+              </div>
+
+              <!-- Apply Filter Button -->
+              <!-- <button @click="applyFilter" class="btn btn-primary w-100 mt-2">
+                <i class="fas fa-search me-2"></i>Terapkan Filter
+              </button> -->
+            </div>
           </div>
         </div>
       </aside>
 
       <!-- Main Content -->
       <div class="flex-grow-1">
-        <div class="container">
-          <div class="row mb-2 pl-4">
-            <div class="col">
+        <!-- Mobile Filter Button -->
+        <div class="d-lg-none mb-3">
+          <button @click="toggleSidebar" class="btn btn-outline-primary text-black w-100 d-flex align-items-center justify-content-center gap-2">
+            <i class="fa fa-filter" />
+            <span>Tampilkan Filter</span>
+          </button>
+        </div>
 
-              <div @click="toggleSidebar" v-if="!isSidebarVisible" class="btn btn-outline-primary d-flex align-items-center">
-                <i class="fa fa-filter me-2" />
-                <div>filter</div>
-              </div>
+        <!-- Header -->
+        <div class="product-header mb-4">
+          <div class="text-center mb-3">
+            <h4 class="text-uppercase mb-0">{{ menu || 'Produk' }}</h4>
+            <div class="header-divider">
+              <div class="line"></div>
+              <div class="dot"></div>
+              <div class="line"></div>
             </div>
           </div>
+        </div>
 
-          <div class="row">
-            <div class="col">
-              <div class="header mb-2">
-                <div class="text-center">PRODUK</div>
-                <!-- <div class="d-flex justify-content-center mt-2 mb-2">
-                  <div>{{ route.params?.menu }}</div>
-                  <div class="bg-dark rounded-circle mx-2" style="height: 5pt; width: 5pt;"></div>
-                  <div class="bg-dark rounded-circle mx-2" style="height: 5pt; width: 5pt;"></div>
-                </div> -->
-                <div class="d-flex">
-                  <div class="d-flex flex-grow-1 align-items-center">
-                    <div class="flex-grow-1 border border-dark"></div>
-                    <div class="bg-dark rounded-circle" style="height: 7pt; width: 7pt;"></div>
-                  </div>
-                  <div class="product-name fs-3 mx-5 fw-bold font-title">
-                    {{ menu }}
-                  </div>
-                  <div class="d-flex flex-grow-1 align-items-center">
-                    <div class="bg-dark rounded-circle" style="height: 7pt; width: 7pt;"></div>
-                    <div class="flex-grow-1 border border-dark"></div>
-                  </div>
-                </div>
-              </div>
+        <!-- Product Grid -->
+        <div v-if="getProductFiltered.length > 0" class="product-list-container">
+          <ProductCard 
+            v-for="product in getProductFiltered" 
+            :key="product.id" 
+            :product="product"
+          />
+        </div>
 
-              <!-- List Produk -->
-              <div class="fs-2 text-center mt-4 mb-4" v-if="getProductFiltered.length <=0" style="width: 100%;">Produk tidak ditemukan</div>
-              <div class="product-list-container">
-                  <ProductCard :product="product" v-for="product in getProductFiltered" :key="product"/>
-              </div>
-            </div>
-          </div>
+        <!-- Empty State -->
+        <div v-else class="text-center py-5">
+          <i class="fas fa-search fa-3x text-muted mb-3"></i>
+          <h5 class="text-muted">Produk tidak ditemukan</h5>
+          <p class="text-muted">Coba ubah filter pencarian Anda</p>
         </div>
       </div>
     </div>
@@ -173,7 +208,24 @@ export default {
   computed:{
       ...mapGetters(module.menu.name, ["menus"]),
       getProductFiltered(){
-        return this.products
+        console.log(this.products)
+        return this.products.filter(data=>{
+          const prices = data.productSkus.map(item => item.price)
+          var priceValid = true;
+          var stockValid = true;
+
+          if(prices.length){
+              priceValid = this.filter.priceRange[1] >= Math.min(...prices) &&
+                          (this.filter.priceRange[0] <= Math.max(...prices) || 
+                           this.filter.priceRange[0] <= Math.min(...prices))  
+          }
+          console.log(this.filter.stockStatus)
+          stockValid =  !this.filter.stockStatus || this.filter.stockStatus == this.stockStatusList[0].label ? true :
+                        this.filter.stockStatus == this.stockStatusList[1].label ? data.productSkus.find(x=> x.stock > 0) : 
+                        data.productSkus.find(x=> x.stock <= 0); 
+          return priceValid && stockValid;
+        }
+        )
       }
   },
   watch:{
@@ -215,8 +267,9 @@ export default {
           {label:"RTX 4070 Ti SUPER 16GB"}
       ],
       stockStatusList:[
-          {label:"On Stock"},
-          {label:"Out of Stock"}
+          {label:"Semua"},
+          {label:"Stok Tersedia"},
+          {label:"Stok Habis"}
       ],
       sortList:[
           {label:"Default"},
@@ -231,34 +284,18 @@ export default {
       ],
       filter:{
           priceRange:[0, 100000000],
-          sort:{
-              label: 'Urutkan',
-          },
-          cpu:{
-              label: 'CPU',
-              module:'cpu',
-              isMultipleSelect: true
-          },
-          vga:{
-              label: 'VGA',
-              module:'vga',
-              isMultipleSelect: true
-          },
-          stockStatus:{
-              label: 'Stock status',
-              options:[
-                  {label:'In Stock'},
-                  {label:'Out of Stock'},
-              ]
-          },
-          onSale:{
-          }
+          sort:null,
+          cpu:null,
+          vga:null,
+          stockStatus:null,
+          onSale:null
       },
       products:[],
       menu: null
     };
   },
   mounted() {
+    this.filter.stockStatus = this.stockStatusList[0].label
     this.handleResize(); // initial state
     window.addEventListener("resize", this.handleResize);
 
@@ -291,32 +328,86 @@ export default {
 </script>
 
 <style scoped>
-  .product-list-container{
-    display: grid;
-    gap: 12px;
-    grid-template-columns: repeat(auto-fit, 230px);
-    justify-content: center;
-  }
+.filter-container {
+  position: sticky;
+  top: 64px;
+  height: fit-content;
+  z-index: 10;
+  border: none;
+  border-radius: 8px;
+}
+
+.filter-title {
+  color: #2c3e50;
+  font-weight: 600;
+}
+
+.filter-section {
+  padding-bottom: 12px;
+  border-bottom: 1px solid #eee;
+}
+
+.filter-section:last-child {
+  border-bottom: none;
+}
+
+.product-list-container {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+}
+
+.sidebar {
+  width: 300px;
+  flex-shrink: 0;
+  position: sticky;
+  top: 64px;
+  height: fit-content;
+}
+
+.header-divider {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.header-divider .line {
+  flex: 1;
+  height: 1px;
+  background-color: #2c3e50;
+}
+
+.header-divider .dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #2c3e50;
+}
+
+@media (max-width: 991px) {
   .sidebar {
-    min-width: 300px;
-    max-width: 300px;
-    position: sticky;
-    top: 64px;
-    height: fit-content;
-    /* z-index: 10; */
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100%;
+    max-width: 350px;
+    background: white;
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    z-index: 1000;
+    overflow-y: auto;
   }
-  @media (max-width: 800px) {
-    .sidebar {
-      z-index: 10;
-      position: fixed !important; /* biar gak sticky di mobile */
-      max-width: 94vw;
-    }
-    .product-list-container{
-    grid-template-columns: repeat(auto-fit, 100%);
-    }
-    .filter-container{
-      height: 92vh;
-    }
+
+  .product-list-container {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   }
+}
+
+@media (max-width: 576px) {
+  .product-list-container {
+    grid-template-columns: 1fr;
+  }
+}
 </style>
 

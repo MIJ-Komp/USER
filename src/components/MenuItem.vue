@@ -1,124 +1,193 @@
 <template>
-    <div v-for="menu in menus" class="menu-item-container" :class="isChild? 'menu-item-child-container':''" @mouseover="menu.open = true" @mouseleave="menu.open= false">
-            <div @click.prevent="goto(menu)" :class="isChild? 'menu-child':'menu'">
-                <div class="menu-label me-3 uppercase">{{menu.name.toUpperCase()}}</div>
-                <i v-if="menu.childs && menu.childs.length > 0" 
-                    :class="!isChild ? (!menu.open ? 'fa fa-angle-down' : 'fa fa-angle-up'):
-                (!menu.open ? 'fa fa-angle-right' : 'fa fa-angle-left')"/>
-            </div>
+    <div v-for="menu in menus" :key="menu.name" class="menu-item-container" :class="{ 'menu-item-child-container': isChild }" @mouseover="menu.open = true" @mouseleave="menu.open = false">
+        <div @click.prevent="goto(menu)" :class="['menu-base', isChild ? 'menu-child' : 'menu']">
+            <div class="menu-label uppercase">{{ menu.name.toUpperCase() }}</div>
+            <i v-if="menu.childs?.length" :class="getMenuIconClass(menu, isChild)" />
+        </div>
 
-            <div :class="!isChild ? 'menu-item' : 'menu-item-child'" v-if="menu.childs && menu.childs.length > 0 && menu.open">
-                <MenuItem :menus="menu.childs" :isChild="true"/>
+        <Transition name="fade">
+            <div :class="['menu-item-base', !isChild ? 'menu-item' : 'menu-item-child']" v-if="menu.childs?.length && menu.open">
+                <MenuItem :menus="menu.childs" :isChild="true" />
             </div>
+        </Transition>
     </div>
 
-    <div v-for="menu in menus" class="menu-item-mobile ps-2 pt-2">
-        <div style="display: flex; justify-content: space-between;">
-            <div class="menu-label me-3 uppercase" @click.stop.prevent="goto(menu)">{{menu.name}}</div>
-            <i style="padding-left: 24px;" @click="menu.open = !menu.open" v-if="menu.childs && menu.childs.length > 0" 
-            :class="!menu.open ? 'fa fa-angle-right' : 'fa fa-angle-down'"/>
+    <div v-for="menu in menus" :key="menu.name" class="menu-item-mobile">
+        <div class="mobile-menu-header">
+            <div class="menu-label uppercase" @click.stop.prevent="goto(menu)">{{ menu.name }}</div>
+            <i v-if="menu.childs?.length" @click="menu.open = !menu.open" :class="getMobileMenuIconClass(menu)" />
         </div>
 
-        <div v-if="menu.childs && menu.childs.length > 0 && menu.open">
-            <MenuItem class="ms-3" :menus="menu.childs" :isChild="true"/>
-        </div>
+        <Transition name="slide">
+            <div v-if="menu.childs?.length && menu.open" class="mobile-submenu">
+                <MenuItem :menus="menu.childs" :isChild="true" />
+            </div>
+        </Transition>
     </div>
 </template>
 
 <script>
-
-export default{
-    props:{
-        isChild:{ default: false},
-        menus:{
-            default: ()=>[]
+export default {
+    name: 'MenuItem',
+    props: {
+        isChild: {
+            type: Boolean,
+            default: false
+        },
+        menus: {
+            type: Array,
+            default: () => []
         }
     },
-    methods:{
+    methods: {
         goto(menu) {
-         menu.open = false
-         
-            // this.$router.replace(`/${url}`);
-           const cleanPath = menu.path.startsWith('/')
-            ? menu.path.slice(1) // hilangkan "/" di awal
-            : menu.path;
-
-            this.$router.replace({ path: `/product/${cleanPath}` }).then(() => {
-            window.location.reload();
-            });
-      },
+            menu.open = false;
+            const cleanPath = menu.path.startsWith('/') ? menu.path.slice(1) : menu.path;
+            this.$router.replace({ path: `/product/${cleanPath}` })
+                .then(() => window.location.reload());
+        },
+        getMenuIconClass(menu, isChild) {
+            return !isChild
+                ? (!menu.open ? 'fa fa-angle-down' : 'fa fa-angle-up')
+                : (!menu.open ? 'fa fa-angle-right' : 'fa fa-angle-left');
+        },
+        getMobileMenuIconClass(menu) {
+            return !menu.open ? 'fa fa-angle-right' : 'fa fa-angle-down';
+        }
     }
-}
+};
 </script>
 
-<style>
+<style scoped>
+.menu-base {
+    display: flex;
+    width: 100%;
+    height: fit-content;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #333;
+    cursor: pointer;
+    padding: 0.5rem 0.8rem;
+    border-radius: 8px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    transition: all 0.3s ease;
+}
 
-.menu-item-container{
+.menu:hover {
+    background: rgba(var(--gold-rgb), 0.1);
+    color: var(--gold);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.menu-child {
+    padding: 8px 0;
+    border-bottom: 1px solid #dedede;
+    padding-right: 10px;
+}
+
+.menu-child:hover {
+    background: rgba(var(--gold-rgb), 0.1);
+    color: var(--gold);
+}
+
+.menu-item-container {
     width: fit-content;
     position: relative;
     cursor: pointer;
     height: 100%;
+    font-weight: 600;
+    align-content: center;
 }
-.menu-item-container:hover{
-    color: var(--gold);
-}
-.menu-item-child-container{
+
+.menu-item-child-container {
     width: 100%;
 }
-.menu-child{
-    padding: 8px 0;
-    border-bottom: 1px solid #dedede;
-    padding-right: 10px;
-    align-items: center;
-    width: 100%;
-    display: flex;
-    height: 100%;
-    justify-content: space-between;
-}
-.menu{
-    display: flex;
-    width: 100%;
-    height: 100%;
-    align-items: center;
-    justify-content: space-between;
-}
-.menu-item{
-    width: 250px;
-    min-width: 250px;
+
+.menu-item-base {
     background: white;
     padding: 12px;
     border-radius: 4px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
     position: absolute;
     border: 1px solid #dedede;
-    border-top: 2px solid #ffce42;
+    border-top: 2px solid var(--gold);
+    width: 250px;
+    min-width: 250px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.menu-item {
     top: 40px;
-    left: 0px;
+    left: 0;
 }
-.menu-item-child{
-    width: 250px;
-    min-width: 250px;
-    background: white;
-    padding: 12px;
-    border-radius: 4px;
-    position: absolute;
-    border: 1px solid #dedede;
-    border-top: 2px solid #ffce42;
-    top: 0px;
+
+.menu-item-child {
+    top: 0;
     left: 220px;
 }
-.menu-item-mobile{
-        display: none;
-}
-.menu-label{
+
+.menu-label {
     height: 100%;
     align-content: center;
 }
-@media screen and (max-width: 800px) {
-    .menu-item-container{
+
+/* Mobile Styles */
+.menu-item-mobile {
+    display: none;
+    padding: 0.5rem 1rem;
+}
+
+.mobile-menu-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 0;
+}
+
+.mobile-submenu {
+    margin-left: 1rem;
+    border-left: 2px solid var(--gold);
+    padding-left: 1rem;
+}
+
+/* Transitions */
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+    opacity: 0;
+    transform: translateY(-10px);
+}
+
+.slide-enter-active,
+.slide-leave-active {
+    transition: all 0.3s ease;
+    max-height: 300px;
+    overflow: hidden;
+}
+
+.slide-enter-from,
+.slide-leave-to {
+    max-height: 0;
+    opacity: 0;
+}
+
+@media screen and (max-width: 1100px) {
+    .menu-item-container {
         display: none;
     }
-    .menu-item-mobile{
+    .menu-item-mobile {
         display: block;
+        width: 100%;
     }
 }
 </style>
