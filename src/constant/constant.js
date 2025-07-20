@@ -123,6 +123,7 @@ const constant={
     { label: 'RAM Module Type', value: 'ram_module_type', groupId: 'RAM' },
 
     // 🔹 GPU
+    { label: 'GPU Model', value: 'gpu_model', groupId: 'GPU' },
     { label: 'GPU PCIe Version', value: 'gpu_pci_version', groupId: 'GPU' },
     { label: 'GPU Length (mm)', value: 'gpu_length_mm', groupId: 'GPU' },
     { label: 'Recommended PSU Wattage', value: 'gpu_recommended_psu_watt', groupId: 'GPU' },
