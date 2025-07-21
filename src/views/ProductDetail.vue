@@ -60,21 +60,22 @@
         <!-- SKU Selection -->
         <div class="sku-section">
           <h4 class="section-title">{{product?.productSkus.length > 1 ? 'Pilih' :''}} Variasi</h4>
-          <div class="sku-grid">
-            <div 
+          <b-row gap="2">
+            <b-col
+              cols="auto" 
               v-for="sku in product?.productSkus" 
               :key="sku.id"
               class="sku-option"
               :class="{ 'selected': sku.id === selectedSku?.id }"
               @click="selectedSku = sku"
             >
-              <div class="sku-name">{{ sku.name }}</div>
-              <div class="sku-stock">
-                <span>Stock:</span>
-                <span :class="getStockClass(sku.stock)">{{ sku.stock> 0? sku.stock: 'kosong' }}</span>
-              </div>
-            </div>
-          </div>
+              <div class="sku-name">{{ getSkuName(sku) }} ( <small :class="getStockClass(sku.stock)">{{ sku.stock> 0? sku.stock: 'kosong' }}</small> )</div>
+              <!-- <div class="sku-stock"> -->
+                <!-- <span>Stock:</span> -->
+                <!-- <span :class="getStockClass(sku.stock)">{{ sku.stock> 0? sku.stock: 'kosong' }}</span> -->
+              <!-- </div> -->
+            </b-col>
+          </b-row>
         </div>
 
         <!-- Add to Cart Button -->
@@ -90,7 +91,7 @@
 
         <!-- Product Specifications -->
         <div v-if="selectedSku?.productGroupItems.length > 0" class="specs-section">
-          <h4 class="section-title">{{ selectedSku.name || 'Spesifikasi Produk' }}</h4>
+          <h4 class="section-title">{{ getSkuName(selectedSku) || 'Spesifikasi Produk' }}</h4>
           <div class="specs-table-container">
             <table class="specs-table">
               <thead>
@@ -111,7 +112,7 @@
 
         <!-- Component Specifications -->
         <div  v-if="selectedSku?.componentSpecs.length > 0" class="specs-section">
-          <h4 class="section-title">Spesifikasi {{ selectedSku.name }}</h4>
+          <h4 class="section-title">Spesifikasi {{ getSkuName(selectedSku) }}</h4>
           <div class="specs-table-container">
             <table class="specs-table">
               <thead>
@@ -182,7 +183,7 @@
             <b-row>
               <b-col cols="12" md="6" v-for="(sku, i) in product?.productSkus" :key="i">
                 <div v-if="sku.productGroupItems.length > 0">
-                <h4>{{ sku.name || `Paket ${i + 1}` }}</h4>
+                <h4>{{ getSkuName(sku) || `Paket ${i + 1}` }}</h4>
                 <table class="specs-table">
                   <thead>
                     <tr>
@@ -209,7 +210,7 @@
             <b-row>
               <b-col cols="12" md="6" v-for="(sku, i) in product?.productSkus" :key="i">
                 <div v-if="sku.componentSpecs.length > 0">
-                  <h5>{{ sku.name }}</h5>
+                  <h5>{{ getSkuName(sku) }}</h5>
                   <table class="specs-table">
                     <thead>
                       <tr>
@@ -420,6 +421,18 @@ const handleZoom = (event) => {
   image.style.transformOrigin = `${x}% ${y}%`
   isZoomed.value = true
 }
+function getSkuName(sku){
+    // console.log(product.value)
+    // return sku.name
+    const currentProduct = product.value
+
+    if(!currentProduct?.productSkuVariants || currentProduct?.productSkuVariants.length <=0){
+      return sku.name
+    }
+    return currentProduct?.productSkuVariants?.filter(data=> data.productSkuId == sku.id)
+          .map(ps=> currentProduct.productVariantOptionValues.find(p=> p.id == ps.productVariantOptionValueId)?.name)
+          .join('/')
+}
 
 const getStockClass = (stock) => {
   if (stock <= 0) return 'out-of-stock'
@@ -588,6 +601,7 @@ const getStockClass = (stock) => {
 }
 
 .sku-option {
+  margin: 4px;
   padding: 1rem;
   border: 2px solid #e0e0e0;
   border-radius: 8px;
@@ -607,7 +621,7 @@ const getStockClass = (stock) => {
 
 .sku-name {
   font-weight: 600;
-  margin-bottom: 0.5rem;
+  /* margin-bottom: 0.5rem; */
 }
 
 .sku-stock {

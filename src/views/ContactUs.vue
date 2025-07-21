@@ -1,6 +1,8 @@
 <template>
   <div class="container py-5">
-    <!-- Header dengan animasi -->
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <!-- Header dengan animasi -->
         <div class="header text-center mb-5" data-aos="fade-down">
           <h1 class="display-4 fw-bold font-title mb-4">CONTACT US</h1>
           <div class="divider d-flex align-items-center justify-content-center">
@@ -9,8 +11,7 @@
             <div class="line"></div>
           </div>
         </div>
-    <div class="row justify-content-center">
-      <div class="col-lg-6 p-1">
+
         <!-- Contact Cards -->
         <div class="contact-cards">
           <!-- Address Card -->
@@ -19,7 +20,7 @@
               <i class="fa-solid fa-location-dot"></i>
             </div>
             <div class="content">
-              <h4>Address</h4>
+              <h3>Address</h3>
               <p>Jl. Pajang No. 8-B Medan, Sumatera Utara, Indonesia 20214</p>
             </div>
           </div>
@@ -30,7 +31,7 @@
               <i class="fa-solid fa-mobile-screen-button"></i>
             </div>
             <div class="content">
-              <h4>Phone</h4>
+              <h3>Phone</h3>
               <a href="tel:+628116181628" class="contact-link">+62 81 1618 1628</a>
             </div>
           </div>
@@ -38,7 +39,7 @@
           <!-- Social Media Card -->
           <div class="contact-card" data-aos="fade-up" data-aos-delay="300">
             <div class="content">
-              <h4 class="mb-4">Follow Us</h4>
+              <h3 class="mb-4">Follow Us</h3>
               <div class="social-icons">
                 <a href="https://www.instagram.com/mijkomp/" class="social-icon instagram" title="Follow on Instagram" target="_blank">
                   <i class="fa-brands fa-instagram"></i>
@@ -67,11 +68,6 @@
               </div>
             </a>
           </div>
-        </div>
-      </div>
-      <div class="col-lg-6 p-1">
-        <div data-aos="fade-up" data-aos-delay="100">
-            <iframe  src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d3982.0250130974778!2d98.6934112!3d3.5817287!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x303131ae493c93eb%3A0x6c28cb3ce17b5351!2sMIJ%20Komputer%20-%20PC%20Rakitan%20Gaming%20di%20Medan!5e0!3m2!1sid!2sid!4v1752999625543!5m2!1sid!2sid"  height="450" style="width:100%; border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
         </div>
       </div>
     </div>
@@ -127,7 +123,7 @@
   font-size: 1.5rem;
 }
 
-.content h4 {
+.content h3 {
   font-size: 1.25rem;
   margin-bottom: 0.5rem;
 }
@@ -161,7 +157,6 @@
   align-items: center;
   justify-content: center;
   color: white;
-  text-decoration: none;
   font-size: 1.25rem;
   transition: transform 0.3s ease;
 }
