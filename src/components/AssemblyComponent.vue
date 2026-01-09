@@ -41,7 +41,7 @@
                         <div class="image-container">
                             <img
                                 :src="component.imageIds?.length > 0 
-                                    ? `http://localhost:5000/api/files?id=${component.imageIds[0]}` 
+                                    ? `${constant.BASE_URL_API}/files?id=${component.imageIds[0]}` 
                                     : constant.DEFAULT_PRODUCT_IMAGE"
                                 @error="useFallback"
                                 alt="Product image"

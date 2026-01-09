@@ -74,7 +74,7 @@ import constant from '../constant/constant';
   const imageUrl = computed(() => {
     const ids = cartItem.value?.product.imageIds
     if (!ids || !ids.length) return ''
-    return `http://localhost:5000/api/files?id=${ids[0]}`
+    return `${constant.BASE_URL_API}/files?id=${ids[0]}`
   })
 </script>
 

@@ -296,6 +296,7 @@ import { useStore } from 'vuex'
 import module from '../constant/module.js'
 import { useCartStore } from '../store/cartStore'
 import { getCurrentInstance } from 'vue'
+import constant from '../constant/constant.js'
 
 const { proxy } = getCurrentInstance();
 const $showToast = proxy.$showToast;
@@ -310,7 +311,7 @@ const maxPrice = ref(0)
 const stock = ref(0)
 const relatedProducts = ref([])
 const fallbackUsed = ref(false)
-const backendURL = import.meta.env.VITE_API_URL
+const backendURL = constant.BASE_URL_API
 
 const selectedImage = ref(null)
 

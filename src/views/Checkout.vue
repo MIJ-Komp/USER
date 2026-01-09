@@ -158,7 +158,7 @@
               <div v-for="item in cartItems" :key="item.productId" class="order-item mb-3 pb-3 border-bottom">
                 <div class="d-flex gap-3">
                   <div class="item-image">
-                    <img :src="item.product?.imageIds?.[0] ? `http://localhost:5000/api/files?id=${item.product.imageIds[0]}` : '/images/image-dummy.png'" 
+                    <img :src="item.product?.imageIds?.[0] ? `${constant.BASE_URL_API}/files?id=${item.product.imageIds[0]}` : '/images/image-dummy.png'" 
                          :alt="item.product?.name"
                          class="rounded">
                   </div>

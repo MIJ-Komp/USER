@@ -10,7 +10,7 @@ const cache = new Map();
 // // console.log('API Base URL:', process.env);
 
 const apiClient = axios.create({
-   baseURL: import.meta.env.VITE_API_URL, // Ganti dengan URL API Anda
+   baseURL: constant.BASE_URL_API,
    timeout: 60000, // Waktu tunggu (optional)
 });
 

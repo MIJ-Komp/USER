@@ -1,9 +1,9 @@
+import constant from "./constant";
 export const GenerateImageUrl = (imageId) => {
-    const baseUrl = import.meta.env.VITE_API_URL
+    const baseUrl = constant.BASE_URL_API
     if (!id) return ''
     return `${baseUrl}/files?id=${id}`
 }
-import constant from "./constant";
 
 const GetLabel = () => {
    var language = localStorage.getItem("language");

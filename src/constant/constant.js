@@ -1,5 +1,7 @@
 const constant={
     DEFAULT_PRODUCT_IMAGE : "/images/image-dummy.png",
+    BASE_URL_API : "https://sandbox-api.mijkomp.id/api",
+    BASE_URL : "https://sandbox.mijkomp.id/",
     menus: [
         {
             name: "SPECIAL SERIES",
