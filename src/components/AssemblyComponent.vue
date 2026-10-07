@@ -1,6 +1,6 @@
 <template>
-    <div class="component-section border p-3 mb-3 rounded shadow-sm" :class="{ 'expanded': show }">
-        <div class="component-header" :class="{ 'selected': isSelected }" @click="$emit('toggleShow')">
+    <div class="component-section border p-3 mb-3 rounded shadow-sm" :class="{ expanded: show }">
+        <div class="component-header" :class="{ selected: isSelected }" @click="$emit('toggleShow')">
             <div class="d-flex align-items-center gap-2">
                 <span class="component-label">{{ label }}</span>
                 <span v-if="isSelected" class="selected-badge">
@@ -10,15 +10,10 @@
             <i class="fa" :class="show ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
         </div>
 
-        <div class="component-body" :class="{ 'show': show }">
+        <div class="component-body" :class="{ show: show }">
             <div class="search-bar mb-3">
                 <i class="fas fa-search search-icon"></i>
-                <input 
-                    v-model="keyword" 
-                    type="text" 
-                    class="search-input" 
-                    placeholder="Cari komponen..."
-                >
+                <input v-model="keyword" type="text" class="search-input" placeholder="Cari komponen..." />
             </div>
 
             <div v-if="compatibleComponent.length <= 0" class="empty-state">
@@ -27,27 +22,20 @@
             </div>
 
             <div class="component-grid" v-else>
-                <div 
-                    v-for="component in compatibleComponent" 
-                    :key="component.id"
-                    class="component-card"
-                    :class="{ 'selected': selectedComponent(component.id) }"
-                >
+                <div v-for="component in compatibleComponent" :key="component.id" class="component-card"
+                    :class="{ selected: selectedComponent(component.id) }">
                     <div class="selected-indicator" v-if="selectedComponent(component.id)">
                         <i class="fas fa-check"></i>
                     </div>
-                    
+
                     <div class="card-content">
                         <div class="image-container">
-                            <img
-                                :src="component.imageIds?.length > 0 
-                                    ? `${constant.BASE_URL_API}/files?id=${component.imageIds[0]}` 
-                                    : constant.DEFAULT_PRODUCT_IMAGE"
-                                @error="useFallback"
-                                alt="Product image"
-                            >
+                            <img :src="component.imageIds?.length > 0
+                                    ? `${constant.BASE_URL_API}/files?id=${component.imageIds[0]}`
+                                    : constant.DEFAULT_PRODUCT_IMAGE
+                                " @error="useFallback" alt="Product image" />
                         </div>
-                        
+
                         <div class="product-info">
                             <h5 class="product-name">{{ component.name }}</h5>
                             <div class="product-brand">{{ component.brand?.name }}</div>
@@ -57,7 +45,7 @@
 
                         <div class="card-actions">
                             <button class="action-btn select-btn" @click="selectComponent(component)">
-                                {{ selectedComponent(component.id) ? 'Batal Pilih' : 'Pilih' }}
+                                {{ selectedComponent(component.id) ? "Batal Pilih" : "Pilih" }}
                             </button>
                             <button class="action-btn detail-btn" @click.stop="viewDetail(component.id)">
                                 <i class="fas fa-info-circle"></i> Detail
@@ -67,60 +55,58 @@
                 </div>
             </div>
         </div>
-        
-        <ProductDetailModal :productId="selectedProductId" ref="productDetailModal"/>
-        
+
+        <ProductDetailModal :productId="selectedProductId" ref="productDetailModal" />
     </div>
     <!-- Modal Pilih Varian -->
-         <Dialog class="dialog" v-model:visible="showVariantModal" modal :header="`Pilih Varian ${selectedVariantProduct?.name}`" :style="{ width: '50vw' }" 
-            :closable="true" :breakpoints="{ '1199px': '60vw', '575px': '90vw' }">
-            <div @click.stop>
-                    <div class="variant-list">
-                        <div 
-                            v-for="sku in selectedVariantProduct?.productSkus" 
-                            :key="sku.id"
-                            class="variant-item"
-                            @click="selectVariant(sku)"
-                        >
-                            <div class="variant-info">
-                                <h6 class="variant-name mb-1">{{ sku.name }}</h6>
-                                <div class="variant-price">Rp {{ helper.ConvertNumberFormat(sku.price, 0) }}</div>
-                            </div>
-                            <div class="variant-stock" :class="{ 'out-of-stock': sku.stock <= 0 }">
-                                {{ sku.stock > 0 ? 'Tersedia' : 'Stok Habis' }}
-                            </div>
+    <Dialog class="dialog" v-model:visible="showVariantModal" modal
+        :header="`Pilih Varian ${selectedVariantProduct?.name}`" :style="{ width: '50vw' }" :closable="true"
+        :breakpoints="{ '1199px': '60vw', '575px': '90vw' }">
+        <div @click.stop>
+            <div class="variant-list">
+                <div v-for="sku in selectedVariantProduct?.productSkus" :key="sku.id" class="variant-item"
+                    @click="selectVariant(sku)">
+                    <div class="variant-info">
+                        <h6 class="variant-name mb-1">{{ sku.name }}</h6>
+                        <div class="variant-price">
+                            Rp {{ helper.ConvertNumberFormat(sku.price, 0) }}
                         </div>
+                    </div>
+                    <div class="variant-stock" :class="{ 'out-of-stock': sku.stock <= 0 }">
+                        {{ sku.stock > 0 ? "Tersedia" : "Stok Habis" }}
+                    </div>
                 </div>
             </div>
-        </Dialog>
+        </div>
+    </Dialog>
 </template>
 <script>
-import { mapActions } from 'vuex';
-import module from '../constant/module';
-import constant from '../constant/constant';
-import helper from '../constant/helper'
-import ProductDetailModal from './modal/ProductDetailModal.vue';
-import { Dialog } from 'primevue';
+import { mapActions } from "vuex";
+import module from "../constant/module";
+import constant from "../constant/constant";
+import helper from "../constant/helper";
+import ProductDetailModal from "./modal/ProductDetailModal.vue";
+import { Dialog } from "primevue";
 
-export default{
-    components:{
-        Dialog
+export default {
+    components: {
+        Dialog,
     },
-    props:{
-        selectedProduct:{default: ()=>[]},
-        componentCode:{default: ''},
-        label:{default: ()=>[]},
-        allProducts:{default: ()=>[]},
-        compatibleRules:{default: ()=>[]},
-        show:{default: false},
+    props: {
+        selectedProduct: { default: () => [] },
+        componentCode: { default: "" },
+        label: { default: () => [] },
+        allProducts: { default: () => [] },
+        compatibleRules: { default: () => [] },
+        show: { default: false },
         modelValue: {
-         type: [String, Number, Array],
-         required: false,
-         default: null,
+            type: [String, Number, Array],
+            required: false,
+            default: null,
         },
     },
-    data(){
-        return{
+    data() {
+        return {
             helper,
             constant,
             currentRules: null,
@@ -128,106 +114,130 @@ export default{
             keyword: null,
             selectedProductId: null,
             showVariantModal: false,
-            selectedVariantProduct: null
-        }
+            selectedVariantProduct: null,
+
+            initialProductOrder: null,
+        };
     },
-    watch:{
-    },
-    mounted(){
-            // const rules = this.compatibleRules.filter(data=>
-            //     data.sourceComponentTypeCode.toLowerCase() == this.componentCode.toLowerCase() ||
-            //     data.targetComponentTypeCode.toLowerCase() == this.componentCode.toLowerCase()
-            // )
-            // const grouped = {};
-
-            // rules.forEach(rule => {
-            //     const sourceKey = rule.sourceComponentTypeCode.toLowerCase();
-
-            //     if (!grouped[sourceKey]) {
-            //         grouped[sourceKey] = [];
-            //     }
-
-            //     grouped[sourceKey].push({
-            //         id: rule.id,
-            //         targetComponentTypeCode: rule.targetComponentTypeCode,
-            //         sourceKey: rule.sourceKey,
-            //         targetKey: rule.targetKey,
-            //         condition: rule.condition
-            //     });
-            // });
-
-            // this.currentRules = grouped
-            this.hasLoaded = true
-    },
-    computed:{
-        compatibleComponent() {
-   if (!this.hasLoaded) return []
-
-   var products = this.allProducts
-      .filter(data =>
-         data.componentType &&
-         data.componentType.code.toLowerCase() == this.componentCode.toLowerCase()
-         &&
-         (
-            !this.keyword ||
-            this.keyword.trim().length <= 0 ||
-            data.name.toLowerCase().includes(this.keyword.toLowerCase())
-         )
-      )
-      .map(data => {
-         if (!data.productSkus || data.productSkus.length <= 0) {
-            return data
-         }
-
-         const prices = data.productSkus.sort((a, b) => a.price - b.price)
-         const minPrice = prices[0].price
-         const maxPrice = prices[prices.length - 1].price
-
-         return Object.assign(data, {
-            specs: data.productSkus.flatMap(
-               sku => sku.componentSpecs || []
-            ),
-            priceLabel: minPrice == maxPrice
-               ? `Rp ${helper.ConvertNumberFormat(minPrice, 0)}`
-               : `Rp ${helper.ConvertNumberFormat(minPrice, 0)} - ${helper.ConvertNumberFormat(maxPrice, 0)}`
-         })
-      })
-
-   products = products.filter(data =>
-      this.isCompatible(
-         data,
-         this.selectedProduct,
-         this.componentCode.toLowerCase()
-      )
-   )
-
-   // Product yang dipilih tampil paling atas
-   products.sort((a, b) => {
-      const aSelected = this.selectedComponent(a.id)
-      const bSelected = this.selectedComponent(b.id)
-
-      if (aSelected && !bSelected) return -1
-      if (!aSelected && bSelected) return 1
-
-      return 0
-   })
-
-   return products
-}
-        
-    },
-    methods:{
-        viewDetail(id){
-            this.selectedProductId = id
-
-            this.$refs['productDetailModal'].show();
-        },
-        selectedComponent(id){
-            if(Array.isArray(this.modelValue)){
-                return this.modelValue.findIndex(data=> data?.productId == id) >= 0
+    watch: {
+        show(newValue) {
+            if (newValue) {
+                this.setInitialProductOrder();
+            } else {
+                this.initialProductOrder = null;
             }
-            else{
-                return this.modelValue?.productId == id
+        },
+    },
+    mounted() {
+        // const rules = this.compatibleRules.filter(data=>
+        //     data.sourceComponentTypeCode.toLowerCase() == this.componentCode.toLowerCase() ||
+        //     data.targetComponentTypeCode.toLowerCase() == this.componentCode.toLowerCase()
+        // )
+        // const grouped = {};
+
+        // rules.forEach(rule => {
+        //     const sourceKey = rule.sourceComponentTypeCode.toLowerCase();
+
+        //     if (!grouped[sourceKey]) {
+        //         grouped[sourceKey] = [];
+        //     }
+
+        //     grouped[sourceKey].push({
+        //         id: rule.id,
+        //         targetComponentTypeCode: rule.targetComponentTypeCode,
+        //         sourceKey: rule.sourceKey,
+        //         targetKey: rule.targetKey,
+        //         condition: rule.condition
+        //     });
+        // });
+
+        // this.currentRules = grouped
+        this.hasLoaded = true;
+    },
+    computed: {
+        compatibleComponent() {
+            if (!this.hasLoaded) return [];
+
+            var products = this.allProducts
+                .filter(
+                    (data) =>
+                        data.componentType &&
+                        data.componentType.code.toLowerCase() ==
+                        this.componentCode.toLowerCase() &&
+                        (!this.keyword ||
+                            this.keyword.trim().length <= 0 ||
+                            data.name.toLowerCase().includes(this.keyword.toLowerCase())),
+                )
+                .map((data) => {
+                    if (!data.productSkus || data.productSkus.length <= 0) {
+                        return data;
+                    }
+
+                    const prices = data.productSkus.sort((a, b) => a.price - b.price);
+                    const minPrice = prices[0].price;
+                    const maxPrice = prices[prices.length - 1].price;
+
+                    return Object.assign(data, {
+                        specs: data.productSkus.flatMap((sku) => sku.componentSpecs || []),
+                        priceLabel:
+                            minPrice == maxPrice
+                                ? `Rp ${helper.ConvertNumberFormat(minPrice, 0)}`
+                                : `Rp ${helper.ConvertNumberFormat(minPrice, 0)} - ${helper.ConvertNumberFormat(maxPrice, 0)}`,
+                    });
+                });
+
+            products = products.filter((data) =>
+                this.isCompatible(
+                    data,
+                    this.selectedProduct,
+                    this.componentCode.toLowerCase(),
+                ),
+            );
+
+            if (this.initialProductOrder?.length) {
+                products.sort((a, b) => {
+                    const aIndex = this.initialProductOrder.indexOf(a.id)
+                    const bIndex = this.initialProductOrder.indexOf(b.id)
+
+                    if (aIndex === -1 && bIndex === -1) return 0
+                    if (aIndex !== -1 && bIndex === -1) return -1
+                    if (aIndex === -1 && bIndex !== -1) return 1
+
+                    return aIndex - bIndex
+                })
+            }
+
+            return products;
+        },
+    },
+    methods: {
+        setInitialProductOrder() {
+            if (this.initialProductOrder) return;
+
+            const selectedIds = [];
+
+            if (Array.isArray(this.modelValue)) {
+                this.modelValue.forEach((item) => {
+                    if (item?.productId) {
+                        selectedIds.push(item.productId);
+                    }
+                });
+            } else if (this.modelValue?.productId) {
+                selectedIds.push(this.modelValue.productId);
+            }
+
+            this.initialProductOrder = selectedIds;
+        },
+        viewDetail(id) {
+            this.selectedProductId = id;
+
+            this.$refs["productDetailModal"].show();
+        },
+        selectedComponent(id) {
+            if (Array.isArray(this.modelValue)) {
+                return this.modelValue.findIndex((data) => data?.productId == id) >= 0;
+            } else {
+                return this.modelValue?.productId == id;
             }
         },
         getComponentFromForm(form, type) {
@@ -238,39 +248,57 @@ export default{
         },
 
         isCompatible(candidateComp, form, rules, componentType) {
-            var compatible = true 
-            var selectedComponents = []
-            
-            Object.keys(form).forEach(code => {
-                if(code != componentType && code != 'totalUnit'){
-                    if(Array.isArray(form[code])){
-                        form[code].forEach(data => {
+            var compatible = true;
+            var selectedComponents = [];
+
+            Object.keys(form).forEach((code) => {
+                if (code != componentType && code != "totalUnit") {
+                    if (Array.isArray(form[code])) {
+                        form[code].forEach((data) => {
                             selectedComponents.push(
-                                this.allProducts.find(p=> p.id == data.productId)
-                            )
+                                this.allProducts.find((p) => p.id == data.productId),
+                            );
                         });
-                    }
-                    else if(form[code]){
-                      selectedComponents.push(this.allProducts.find(p=> p.id == form[code]?.productId))  
+                    } else if (form[code]) {
+                        selectedComponents.push(
+                            this.allProducts.find((p) => p.id == form[code]?.productId),
+                        );
                     }
                 }
             });
-            if(selectedComponents.length <= 0) return true
+            if (selectedComponents.length <= 0) return true;
 
-            selectedComponents.forEach(product => {
-                const rules = this.compatibleRules.filter(data=>
-                    (data.sourceComponentTypeCode.toLowerCase() == product?.componentType?.code.toLowerCase() && data.targetComponentTypeCode.toLowerCase() == this.componentCode.toLowerCase())
-                 || (data.sourceComponentTypeCode.toLowerCase() == this.componentCode.toLowerCase() && data.targetComponentTypeCode.toLowerCase() == product?.componentType?.code.toLowerCase())
-                )
+            selectedComponents.forEach((product) => {
+                const rules = this.compatibleRules.filter(
+                    (data) =>
+                        (data.sourceComponentTypeCode.toLowerCase() ==
+                            product?.componentType?.code.toLowerCase() &&
+                            data.targetComponentTypeCode.toLowerCase() ==
+                            this.componentCode.toLowerCase()) ||
+                        (data.sourceComponentTypeCode.toLowerCase() ==
+                            this.componentCode.toLowerCase() &&
+                            data.targetComponentTypeCode.toLowerCase() ==
+                            product?.componentType?.code.toLowerCase()),
+                );
 
                 for (let index = 0; index < rules.length; index++) {
                     const rule = rules[index];
 
-                    if(rule.sourceComponentTypeCode.toLowerCase() == this.componentCode.toLowerCase()){
-                        compatible = this.evaluateRuleFromSource(rule, candidateComp, product)
-                    }
-                    else{
-                        compatible = this.evaluateRuleFromSource(rule, product, candidateComp)
+                    if (
+                        rule.sourceComponentTypeCode.toLowerCase() ==
+                        this.componentCode.toLowerCase()
+                    ) {
+                        compatible = this.evaluateRuleFromSource(
+                            rule,
+                            candidateComp,
+                            product,
+                        );
+                    } else {
+                        compatible = this.evaluateRuleFromSource(
+                            rule,
+                            product,
+                            candidateComp,
+                        );
                     }
                 }
             });
@@ -289,77 +317,106 @@ export default{
         },
 
         evaluateRuleFromSource(rule, sourceComp, targetComp) {
-            const aVal = sourceComp?.productSkus.flatMap(sku => sku.componentSpecs || []).find(s=> s.specKey == rule.sourceKey)?.specValue;
-            const bVal = targetComp?.productSkus.flatMap(sku => sku.componentSpecs || []).find(s=> s.specKey == rule.targetKey)?.specValue;
+            const aVal = sourceComp?.productSkus
+                .flatMap((sku) => sku.componentSpecs || [])
+                .find((s) => s.specKey == rule.sourceKey)?.specValue;
+            const bVal = targetComp?.productSkus
+                .flatMap((sku) => sku.componentSpecs || [])
+                .find((s) => s.specKey == rule.targetKey)?.specValue;
             let fulfilled = false;
 
             switch (rule.condition) {
-                case 'equals':
-                fulfilled = aVal === bVal;
-                break;
-                case 'min':
-                fulfilled = typeof aVal === 'number' && typeof bVal === 'number' && bVal >= aVal;
-                break;
-                case 'max':
-                fulfilled = typeof aVal === 'number' && typeof bVal === 'number' && bVal <= aVal;
-                break;
-                case 'includes':
-                fulfilled = !aVal ? false : aVal.split(',').map(s => s.trim()).includes(bVal);
-                break;
-                case 'one_of':
-                fulfilled = !bVal ? false : bVal.split(',').map(s => s.trim()).includes(aVal);
-                break;
+                case "equals":
+                    fulfilled = aVal === bVal;
+                    break;
+                case "min":
+                    fulfilled =
+                        typeof aVal === "number" &&
+                        typeof bVal === "number" &&
+                        bVal >= aVal;
+                    break;
+                case "max":
+                    fulfilled =
+                        typeof aVal === "number" &&
+                        typeof bVal === "number" &&
+                        bVal <= aVal;
+                    break;
+                case "includes":
+                    fulfilled = !aVal
+                        ? false
+                        : aVal
+                            .split(",")
+                            .map((s) => s.trim())
+                            .includes(bVal);
+                    break;
+                case "one_of":
+                    fulfilled = !bVal
+                        ? false
+                        : bVal
+                            .split(",")
+                            .map((s) => s.trim())
+                            .includes(aVal);
+                    break;
                 default:
-                fulfilled = false;
+                    fulfilled = false;
             }
-            console.log(`hasil = ${fulfilled}, aVal = ${aVal}, bVal = ${bVal}, condition = ${rule.condition} , rule = ${JSON.stringify(rule)}\------------------`)
+            console.log(
+                `hasil = ${fulfilled}, aVal = ${aVal}, bVal = ${bVal}, condition = ${rule.condition} , rule = ${JSON.stringify(rule)}\------------------`,
+            );
 
             return fulfilled;
         },
         selectComponent(component) {
-            if (component.productSkus.length == 1 || this.selectedComponent(component.id)) {
-                this.handleComponentSelection(component, component.productSkus[0].id)
+            if (
+                component.productSkus.length == 1 ||
+                this.selectedComponent(component.id)
+            ) {
+                this.handleComponentSelection(component, component.productSkus[0].id);
             } else {
-                this.selectedVariantProduct = component
-                this.showVariantModal = true
+                this.selectedVariantProduct = component;
+                this.showVariantModal = true;
             }
         },
         selectVariant(sku) {
-            if (sku.stock <= 0) return
-            this.handleComponentSelection(this.selectedVariantProduct, sku.id)
-            this.closeVariantModal()
+            if (sku.stock <= 0) return;
+            this.handleComponentSelection(this.selectedVariantProduct, sku.id);
+            this.closeVariantModal();
         },
         handleComponentSelection(component, skuId) {
-            var temp = JSON.parse(JSON.stringify(this.modelValue))
+            var temp = JSON.parse(JSON.stringify(this.modelValue));
 
             if (Array.isArray(temp)) {
-                var exist = temp.findIndex(data => data.productId == component.id)
+                var exist = temp.findIndex((data) => data.productId == component.id);
                 if (exist >= 0) {
-                    temp.splice(exist, 1)
+                    temp.splice(exist, 1);
                 } else {
                     temp.push({
                         productId: component.id,
                         productSkuId: skuId,
-                        qty: 1
-                    })
+                        qty: 1,
+                    });
                 }
-                this.$emit("update:modelValue", temp)
+                this.$emit("update:modelValue", temp);
             } else {
-                this.$emit("update:modelValue", this.modelValue && component.id == this.modelValue?.productId ? null : {
-                    productId: component.id,
-                    productSkuId: skuId,
-                })
+                this.$emit(
+                    "update:modelValue",
+                    this.modelValue && component.id == this.modelValue?.productId
+                        ? null
+                        : {
+                            productId: component.id,
+                            productSkuId: skuId,
+                        },
+                );
             }
         },
         closeVariantModal() {
-            this.showVariantModal = false
-            this.selectedVariantProduct = null
+            this.showVariantModal = false;
+            this.selectedVariantProduct = null;
         },
 
         ...mapActions(module.product.name, ["getAll"]),
-
-    }
-}
+    },
+};
 </script>
 <style scoped>
 .variant-modal {
@@ -464,7 +521,7 @@ export default{
 
 .component-section.expanded {
     height: fit-content;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .component-header {
@@ -557,7 +614,7 @@ export default{
 
 .component-card:hover {
     transform: translateY(-4px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .component-card.selected {
@@ -685,97 +742,24 @@ export default{
         flex-direction: column;
     }
 }
+.variant-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+background: rgba(0, 0, 0, 0.5); display: flex; align-items: center;
+justify-content: center; z-index: 1000; } .variant-modal-content { background:
+white; border-radius: 12px; width: 90%; max-width: 500px; max-height: 90vh;
+overflow-y: auto; } .variant-modal-header { padding: 1rem; border-bottom: 1px
+solid #eee; display: flex; justify-content: space-between; align-items: center;
+} .variant-modal-body { padding: 1rem; } .variant-list { display: flex;
+flex-direction: column; gap: 0.5rem; } .variant-item { padding: 1rem; border:
+1px solid #eee; border-radius: 8px; display: flex; justify-content:
+space-between; align-items: center; cursor: pointer; transition: all 0.3s ease;
+} .variant-item:hover { border-color: var(--gold); background: #fff9e6; }
+.variant-name { font-weight: 600; } .variant-price { color: var(--gold);
+font-weight: 600; } .variant-stock { padding: 4px 12px; border-radius: 4px;
+background: #e8f5e9; color: #2e7d32; font-size: 0.9rem; }
+.variant-stock.out-of-stock { background: #ffebee; color: #c62828; } .btn-close
+{ background: none; border: none; font-size: 1.25rem; color: #666; cursor:
+pointer; padding: 0.5rem; transition: transform 0.3s ease; } .btn-close:hover {
+transform: rotate(90deg); color: #333; }
 </style>
 
-.variant-modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000;
-}
 
-.variant-modal-content {
-    background: white;
-    border-radius: 12px;
-    width: 90%;
-    max-width: 500px;
-    max-height: 90vh;
-    overflow-y: auto;
-}
-
-.variant-modal-header {
-    padding: 1rem;
-    border-bottom: 1px solid #eee;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.variant-modal-body {
-    padding: 1rem;
-}
-
-.variant-list {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-}
-
-.variant-item {
-    padding: 1rem;
-    border: 1px solid #eee;
-    border-radius: 8px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.variant-item:hover {
-    border-color: var(--gold);
-    background: #fff9e6;
-}
-
-.variant-name {
-    font-weight: 600;
-}
-
-.variant-price {
-    color: var(--gold);
-    font-weight: 600;
-}
-
-.variant-stock {
-    padding: 4px 12px;
-    border-radius: 4px;
-    background: #e8f5e9;
-    color: #2e7d32;
-    font-size: 0.9rem;
-}
-
-.variant-stock.out-of-stock {
-    background: #ffebee;
-    color: #c62828;
-}
-
-.btn-close {
-    background: none;
-    border: none;
-    font-size: 1.25rem;
-    color: #666;
-    cursor: pointer;
-    padding: 0.5rem;
-    transition: transform 0.3s ease;
-}
-
-.btn-close:hover {
-    transform: rotate(90deg);
-    color: #333;
-}
