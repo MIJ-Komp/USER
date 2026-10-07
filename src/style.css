@@ -141,3 +141,10 @@ body{
 .cursor-pointer {
     cursor: pointer;
 }
+.container {
+   min-width: 95% !important;
+}
+input{
+    background-color: #f0f0f0 !important;
+    color: black !important;
+}

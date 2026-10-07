@@ -10,7 +10,7 @@
         }"
       >
         <div class="card filter-container shadow-sm">
-          <div style="background-color:var(--gold) !important; color: black !important;" class="text-black card-header bg-primary text-white d-flex justify-content-between align-items-center py-3">
+          <div style="background-color:var(--gold) !important; color: black !important;" class="text-black card-header bg-primary text-white d-flex justify-content-between align-items-center py-2">
             <div class="d-flex align-items-center">
               <i class="fa fa-filter me-2"/>
               <div class="fw-bold">Filter Produk</div>
@@ -23,16 +23,16 @@
             </button>
           </div>
           <div class="card-body p-3">
-            <div class="filter-product d-flex flex-column gap-3">
+            <div class="filter-product d-flex flex-column gap-1">
               <!-- Price Range -->
               <div class="filter-section">
-                <h6 class="filter-title mb-2">Rentang Harga</h6>
+                <h7 class="filter-title mb-2">Rentang Harga</h7>
                 <PriceRange v-model="filter.priceRange" @update:modelValue="handleRangeUpdate" />
               </div>
 
               <!-- Sort -->
               <div class="filter-section">
-                <h6 class="filter-title mb-2">Urutkan</h6>
+                <h7 class="filter-title mb-2">Urutkan</h7>
                 <Select 
                   v-model="filter.sort"
                   class="w-100" 
@@ -46,7 +46,7 @@
 
               <!-- CPU Filter -->
               <div class="filter-section">
-                <h6 class="filter-title mb-2">CPU</h6>
+                <h7 class="filter-title mb-2">CPU</h7>
                 <MultiSelect 
                   v-model="filter.cpu"
                   class="w-100" 
@@ -60,7 +60,7 @@
 
               <!-- VGA Filter -->
               <div class="filter-section">
-                <h6 class="filter-title mb-2">VGA</h6>
+                <h7 class="filter-title mb-2">VGA</h7>
                 <MultiSelect 
                   v-model="filter.vga"
                   class="w-100" 
@@ -74,7 +74,7 @@
 
               <!-- RAM Type Filter -->
               <div class="filter-section">
-                <h6 class="filter-title mb-2">Jenis RAM</h6>
+                <h7 class="filter-title mb-2">Jenis RAM</h7>
                 <MultiSelect
                   v-model="filter.ramType"
                   class="w-100"
@@ -88,7 +88,7 @@
 
               <!-- Stock Status -->
               <div class="filter-section">
-                <h6 class="filter-title mb-2">Status Stok</h6>
+                <h7 class="filter-title mb-2">Status Stok</h7>
                 <Select 
                   v-model="filter.stockStatus" 
                   class="w-100"
@@ -406,6 +406,7 @@ export default {
 .filter-section {
   padding-bottom: 12px;
   border-bottom: 1px solid #eee;
+  font-size: 13px;
 }
 
 .filter-section:last-child {
@@ -489,7 +490,7 @@ function findMenuAndCollectCategoryIds(menus, targetName) {
   };
 
   function recursiveSearch(menu) {
-    if (menu.path.toLowerCase() === `/${targetName.toLowerCase()}` || result.menu) {
+    if (menu.path.toLowerCase() === `/${targetName.toLowerCase()}` || menu.path.toLowerCase() === `${targetName.toLowerCase()}` || result.menu) {
       if(!result.menu)
         result.menu = menu;
 
@@ -633,7 +634,15 @@ export default {
           await this.setFilterData()
         }
       }
-    }
+    },
+    getProductFiltered() {
+      this.$nextTick(() => {
+         window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+         });
+      });
+   }
   },
   data() {
     return {
@@ -694,6 +703,7 @@ export default {
     async setFilterData(){
       const { menu, categoryIds } = findMenuAndCollectCategoryIds(this.menus, this.route.params?.menu);
       this.menu = menu?.name.toUpperCase()
+      console.log(this.menus, this.route.params?.menu, menu, categoryIds)
 
       this.products = await this.getAll({
         brandIds: this.route.query?.brandIds,

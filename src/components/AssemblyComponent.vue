@@ -160,31 +160,60 @@ export default{
             this.hasLoaded = true
     },
     computed:{
-        compatibleComponent(){
-            if(!this.hasLoaded) return []
+        compatibleComponent() {
+   if (!this.hasLoaded) return []
 
-            var products = this.allProducts.filter(data=>
-                data.componentType && data.componentType.code.toLowerCase() == this.componentCode.toLowerCase()
-                && (!this.keyword || this.keyword.trim().length <= 0 || data.name.toLowerCase().includes(this.keyword.toLowerCase()))// && !this.selectedProduct[this.componentCode]
-            )
-            .map(data=> {
-                if(!data.productSkus || data.productSkus.length <=0) return data
+   var products = this.allProducts
+      .filter(data =>
+         data.componentType &&
+         data.componentType.code.toLowerCase() == this.componentCode.toLowerCase()
+         &&
+         (
+            !this.keyword ||
+            this.keyword.trim().length <= 0 ||
+            data.name.toLowerCase().includes(this.keyword.toLowerCase())
+         )
+      )
+      .map(data => {
+         if (!data.productSkus || data.productSkus.length <= 0) {
+            return data
+         }
 
-                const prices = data.productSkus.sort((a, b) => a.price - b.price);
-                const minPrice = prices[0].price
-                const maxPrice = prices[prices.length - 1].price
+         const prices = data.productSkus.sort((a, b) => a.price - b.price)
+         const minPrice = prices[0].price
+         const maxPrice = prices[prices.length - 1].price
 
+         return Object.assign(data, {
+            specs: data.productSkus.flatMap(
+               sku => sku.componentSpecs || []
+            ),
+            priceLabel: minPrice == maxPrice
+               ? `Rp ${helper.ConvertNumberFormat(minPrice, 0)}`
+               : `Rp ${helper.ConvertNumberFormat(minPrice, 0)} - ${helper.ConvertNumberFormat(maxPrice, 0)}`
+         })
+      })
 
-                return Object.assign(data, {
-                    specs: data.productSkus.flatMap(sku => sku.componentSpecs || []),
-                    priceLabel: minPrice == maxPrice ? 
-                    `Rp ${helper.ConvertNumberFormat(minPrice, 0)}` :
-                    `Rp ${helper.ConvertNumberFormat(minPrice, 0)} -  ${helper.ConvertNumberFormat(maxPrice, 0)}`
-                })
-            })
-            products = products.filter(data=> this.isCompatible(data, this.selectedProduct, this.componentCode.toLowerCase()))
-            return products
-        },
+   products = products.filter(data =>
+      this.isCompatible(
+         data,
+         this.selectedProduct,
+         this.componentCode.toLowerCase()
+      )
+   )
+
+   // Product yang dipilih tampil paling atas
+   products.sort((a, b) => {
+      const aSelected = this.selectedComponent(a.id)
+      const bSelected = this.selectedComponent(b.id)
+
+      if (aSelected && !bSelected) return -1
+      if (!aSelected && bSelected) return 1
+
+      return 0
+   })
+
+   return products
+}
         
     },
     methods:{
@@ -511,12 +540,11 @@ export default{
 
 .component-grid {
     display: grid;
-    gap: 1rem;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 0.7rem;
+    grid-template-columns: repeat(auto-fill, minmax(248px, 1fr));
     margin-top: 1rem;
     max-height: 600px;
     overflow-y: auto;
-    padding: 0.5rem;
 }
 
 .component-card {
@@ -606,7 +634,7 @@ export default{
 }
 
 .product-description {
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     color: #666;
     margin-bottom: 1rem;
     display: -webkit-box;
